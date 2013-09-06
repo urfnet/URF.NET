@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Unity.Interception</id>
+    <version>3.0.1304.0</version>
+    <title>Unity Interception Extension</title>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <licenseUrl>http://www.opensource.org/licenses/ms-pl</licenseUrl>
+    <projectUrl>http://msdn.microsoft.com/unity</projectUrl>
+    <iconUrl>http://nuget.org/Media/Default/Packages/Unity/2.0/entlib_new_icon_100x100.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Unity interception enables you to effectively capture calls to objects and add additional functionality to the target object. Interception is useful when you want to modify the behavior for individual objects but not the entire class, very much as you would do when using the Decorator pattern. It provides a flexible approach for adding new behaviors to an object at run time.</description>
+    <summary>Unity interception enables you to effectively capture calls to objects and add additional functionality to the target object.</summary>
+    <releaseNotes />
+    <copyright />
+    <language>en-US</language>
+    <tags>Unity Unity3 EntLib entlib6 IoC DI container interception AOP aspect LOB Windows8</tags>
+    <dependencies>
+      <dependency id="Unity" version="3.0.1304.0" />
+    </dependencies>
+  </metadata>
+</package>

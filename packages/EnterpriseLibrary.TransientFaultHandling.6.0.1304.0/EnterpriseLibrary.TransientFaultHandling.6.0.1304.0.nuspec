@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>EnterpriseLibrary.TransientFaultHandling</id>
+    <version>6.0.1304.0</version>
+    <title>Enterprise Library - Transient Fault Handling Application Block</title>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <licenseUrl>http://www.opensource.org/licenses/ms-pl</licenseUrl>
+    <projectUrl>http://msdn.microsoft.com/entlib</projectUrl>
+    <iconUrl>http://nuget.org/Media/Default/Packages/Unity/2.0/entlib_new_icon_100x100.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>The Transient Fault Handling Application Block for Windows Azure ("Topaz") provides a set of reusable and testable components for adding retry logic into your Windows Azure applications leveraging Windows Azure SQL Database, Windows Azure storage, Service Bus and Caching Service. This makes your Windows Azure application more reliable and resilient to transient faults (such as temporary network connectivity issues or temporary service unavailability). This improves overall application stability.</description>
+    <summary>The Transient Fault Handling Application Block for Windows Azure ("Topaz") makes your Windows Azure application more resilient to transient failures by providing intelligent retry logic mechanisms.</summary>
+    <copyright>© 2013 Microsoft Corporation</copyright>
+    <tags>entlib entlib6 enterprise library elazure retry retries transient fault exception handling failure network topaz async</tags>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="mscorlib" targetFramework=".NETFramework4.5" />
+    </frameworkAssemblies>
+  </metadata>
+</package>
