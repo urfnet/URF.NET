@@ -1,0 +1,56 @@
+﻿
+<div id="app"></div>
+
+@section scripts
+{
+    <script>
+        var kendoViews = {};
+        var templateLoader = (function ($, host) {
+            return {
+                loadExtTemplate: function (name, path, forceRemoteLoad) {
+                    var isRemotelyLoaded = false; // was view loaded remotely from server or from cache (e.g. view was loaded for the first time
+                    if (kendoViews[name] == null || forceRemoteLoad) { // check if we have already loaded in cache, could store this in browser local storage for larger apps
+                        isRemotelyLoaded = true;
+                        $.ajax({
+                            async: false,
+                            url: path,
+                            cache: false,
+                            success: function (result) {
+                                kendoViews[name] = new kendo.View(result); // cache view
+                            },
+                            error: function (result) {
+                                alert("Error Loading View/Template -- TODO: Better Error Handling");
+                            }
+                        });
+                    }
+                    return { isRemotelyLoaded: isRemotelyLoaded, view: kendoViews[name] }; //return view that was was from cache or that was just cached
+                }
+            };
+        })(jQuery, document);
+
+        var router = new kendo.Router();
+
+        $(function () {
+            var layout = new kendo.Layout("<div id='viewRegion'></div>");
+            layout.render("#app");
+
+            var addRoute = function (route, name, path, forceRemoteLoad) {
+                forceRemoteLoad = typeof forceRemoteLoad !== "undefined" ? forceRemoteLoad : false;
+                router.route(route, function () {
+                    kendo.fx($("#viewRegion")).slideInRight().reverse().then(function () { // transition, slide view left
+                        var result = templateLoader.loadExtTemplate(name, path, forceRemoteLoad); // load the view
+                        layout.showIn("#viewRegion", result.view); // switch view
+                        $(document).trigger("viewSwtichedEvent", { route: route, name: name, path: path, isRemotelyLoaded: result.isRemotelyLoaded }); // publish event view has been loaded (EventAggregator pattern)
+                        kendo.fx($("#viewRegion")).slideInRight().play(); // transition, slide view back to the right (center)
+                    });
+                });
+            };
+
+            addRoute("/", "home", "/spa/product/home");
+            addRoute("/list", "list", "/spa/product/list");
+            addRoute("/edit/:id", "edit", "/spa/product/edit");
+
+            router.start();
+        });
+    </script>
+}    
