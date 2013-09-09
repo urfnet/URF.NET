@@ -855,10 +855,6 @@
       <Project>{6E682A14-C872-4813-B620-76E108DEA683}</Project>
       <Name>Repository</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Validation\Validation.csproj">
-      <Project>{6BB1B17C-ADB6-4019-9028-EA8865DB8E7B}</Project>
-      <Name>Validation</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
