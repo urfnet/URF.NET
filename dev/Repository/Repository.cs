@@ -45,7 +45,8 @@ namespace Repository
 
         public virtual void Delete(object id)
         {
-            TEntity entity = DbSet.Find(id);
+            var entity = DbSet.Find(id);
+
             ((IObjectState) entity).State = ObjectState.Deleted;
             Delete(entity);
         }
@@ -64,6 +65,7 @@ namespace Repository
         public virtual IRepositoryQuery<TEntity> Query()
         {
             var repositoryGetFluentHelper = new RepositoryQuery<TEntity>(this);
+
             return repositoryGetFluentHelper;
         }
 
@@ -77,22 +79,27 @@ namespace Repository
             IQueryable<TEntity> query = DbSet;
 
             if (includeProperties != null)
+            {
                 includeProperties.ForEach(i => query = query.Include(i));
+            }
 
             if (filter != null)
+            {
                 query = query.Where(filter);
+            }
 
             if (orderBy != null)
+            {
                 query = orderBy(query);
+            }
 
             if (page != null && pageSize != null)
+            {
                 query = query
                     .Skip((page.Value - 1)*pageSize.Value)
                     .Take(pageSize.Value);
-
-            IQueryable<TEntity> results = query;
-
-            return results;
+            }
+            return query;
         }
     }
 }
