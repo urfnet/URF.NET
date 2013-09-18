@@ -17,7 +17,7 @@ namespace Repository
         private bool _disposed;
         private Hashtable _repositories;
 
-        public UnitOfWork(IDbContext context )
+        public UnitOfWork(IDbContext context)
         {
             _context = context;
             _instanceId = Guid.NewGuid();
@@ -28,7 +28,7 @@ namespace Repository
         {
             get { return _instanceId; }
         }
-                     
+
         public void Dispose()
         {
             Dispose(true);
@@ -45,15 +45,15 @@ namespace Repository
             if (_repositories == null)
                 _repositories = new Hashtable();
 
-            var type = typeof(T).Name;
+            string type = typeof (T).Name;
 
             if (_repositories.ContainsKey(type))
-                return (IRepository<T>)_repositories[type];
+                return (IRepository<T>) _repositories[type];
 
-            var repositoryType = typeof(Repository<>);
-            _repositories.Add(type, Activator.CreateInstance(repositoryType.MakeGenericType(typeof(T)), _context));
+            Type repositoryType = typeof (Repository<>);
+            _repositories.Add(type, Activator.CreateInstance(repositoryType.MakeGenericType(typeof (T)), _context));
 
-            return (IRepository<T>)_repositories[type];
+            return (IRepository<T>) _repositories[type];
         }
 
         public virtual void Dispose(bool disposing)

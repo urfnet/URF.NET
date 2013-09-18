@@ -4,6 +4,7 @@ namespace Repository
 {
     public interface IRepository<TEntity> where TEntity : class
     {
+        Guid InstanceId { get; }
         TEntity FindById(object id);
         void InsertGraph(TEntity entity);
         void Update(TEntity entity);
@@ -11,6 +12,5 @@ namespace Repository
         void Delete(TEntity entity);
         void Insert(TEntity entity);
         IRepositoryQuery<TEntity> Query();
-        Guid InstanceId { get; }
     }
 }

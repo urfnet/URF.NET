@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using Repository;
 
 #endregion
 
@@ -46,7 +45,7 @@ namespace Repository
 
         public virtual void Delete(object id)
         {
-            var entity = DbSet.Find(id);
+            TEntity entity = DbSet.Find(id);
             ((IObjectState) entity).State = ObjectState.Deleted;
             Delete(entity);
         }
@@ -91,7 +90,7 @@ namespace Repository
                     .Skip((page.Value - 1)*pageSize.Value)
                     .Take(pageSize.Value);
 
-            var results = query;
+            IQueryable<TEntity> results = query;
 
             return results;
         }

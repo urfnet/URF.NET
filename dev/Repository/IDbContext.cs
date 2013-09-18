@@ -12,12 +12,12 @@ namespace Repository
 {
     public interface IDbContext
     {
+        DbContextConfiguration Configuration { get; }
+        Guid InstanceId { get; }
         IDbSet<T> Set<T>() where T : class;
         int SaveChanges();
         void Dispose();
         IEnumerable<DbEntityValidationResult> GetValidationErrors();
         void ApplyStateChanges();
-        DbContextConfiguration Configuration { get; }
-        Guid InstanceId { get; }
     }
 }

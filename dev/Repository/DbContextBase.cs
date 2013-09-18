@@ -2,6 +2,7 @@
 
 using System;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
 #endregion
@@ -24,7 +25,7 @@ namespace Repository
 
         public void ApplyStateChanges()
         {
-            foreach (var dbEntityEntry in ChangeTracker.Entries())
+            foreach (DbEntityEntry dbEntityEntry in ChangeTracker.Entries())
             {
                 var entityState = dbEntityEntry.Entity as IObjectState;
                 if (entityState == null)
@@ -40,16 +41,16 @@ namespace Repository
             return base.Set<T>();
         }
 
-        protected override void OnModelCreating(DbModelBuilder builder)
-        {
-            builder.Conventions.Remove<PluralizingTableNameConvention>();
-            base.OnModelCreating(builder);
-        }
-
         public override int SaveChanges()
         {
             ApplyStateChanges();
             return base.SaveChanges();
+        }
+
+        protected override void OnModelCreating(DbModelBuilder builder)
+        {
+            builder.Conventions.Remove<PluralizingTableNameConvention>();
+            base.OnModelCreating(builder);
         }
     }
 }
