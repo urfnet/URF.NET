@@ -20,6 +20,7 @@ namespace Northwind.Entity.Models
         public string ProductName { get; set; }
         [ForeignKey("Supplier")]
         public Nullable<int> SupplierID { get; set; }
+        [ForeignKey("Category")]
         public Nullable<int> CategoryID { get; set; }
         public string QuantityPerUnit { get; set; }
         public Nullable<decimal> UnitPrice { get; set; }
@@ -27,6 +28,7 @@ namespace Northwind.Entity.Models
         public Nullable<short> UnitsOnOrder { get; set; }
         public Nullable<short> ReorderLevel { get; set; }
         public bool Discontinued { get; set; }
+        
         public virtual Category Category { get; set; }
         public virtual ICollection<OrderDetail> Order_Details { get; set; }
         public virtual Supplier Supplier { get; set; }

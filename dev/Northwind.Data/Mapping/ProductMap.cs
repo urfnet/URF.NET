@@ -39,7 +39,6 @@ namespace Northwind.Data.Mapping
             this.HasOptional(t => t.Supplier)
                 .WithMany(t => t.Products)
                 .HasForeignKey(d => d.SupplierID);
-
         }
     }
 }
