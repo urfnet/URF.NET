@@ -1,52 +1,53 @@
-﻿#region
-
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Http.OData;
 using Northwind.Entity.Models;
 using Repository;
 
-#endregion
-
 namespace Northwind.Web.Areas.Spa.Api
 {
+    [ODataNullValue]
     public class ProductController : EntitySetController<Product, int>
     {
-        private readonly IUnitOfWork _unitOfWork;
+        #region Private Fields
+        private readonly IUnitOfWork _db;
+        #endregion Private Fields
 
-        public ProductController(IUnitOfWork unitOfWork)
+        #region Constractor / Dispose
+        public ProductController(IUnitOfWork db)
         {
-            _unitOfWork = unitOfWork;
+            _db = db;
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            _db.Dispose();
+            base.Dispose(disposing);
+        }
+        #endregion Constractor / Dispose
 
         public override IQueryable<Product> Get()
         {
-            return _unitOfWork.Repository<Product>().Query().Get();
+            return _db.Repository<Product>().Query().Get();
         }
 
         protected override Product GetEntityByKey(int key)
         {
-            return _unitOfWork.Repository<Product>().FindById(key);
+            return _db.Repository<Product>().Find(key);
         }
 
         protected override Product UpdateEntity(int key, Product update)
         {
             update.State = ObjectState.Modified;
-            _unitOfWork.Repository<Product>().Update(update);
-            _unitOfWork.Save();
+            _db.Repository<Product>().Update(update);
+            _db.Save();
 
             return update;
         }
 
         public override void Delete([FromODataUri] int key)
         {
-            _unitOfWork.Repository<Product>().Delete(key);
-            _unitOfWork.Save();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            _unitOfWork.Dispose();
-            base.Dispose(disposing);
+            _db.Repository<Product>().Delete(key);
+            _db.Save();
         }
     }
 }
