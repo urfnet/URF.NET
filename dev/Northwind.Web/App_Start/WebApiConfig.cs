@@ -1,32 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
-using System.Web.Http.OData.Builder;
-using Northwind.Entity.Models;
+﻿using System.Web.Http;
+using System.Web.Http.Cors;
 
+// ReSharper disable once CheckNamespace
 namespace Northwind.Web
 {
     public static class WebApiConfig
     {
         public static void Register(HttpConfiguration config)
         {
+            config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
+
+            //TODO: Development purpose only. Channge for PROD
+            var cors = new EnableCorsAttribute("*", "*", "*");
+            config.EnableCors(cors);
+
+            // enables attribute routing
+            config.MapHttpAttributeRoutes();
+
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            ODataModelBuilder modelBuilder = new ODataConventionModelBuilder();
-            var entitySetConfiguration = modelBuilder.EntitySet<Product>("Product");
-            entitySetConfiguration.EntityType.Ignore(t => t.Order_Details);
-            entitySetConfiguration.EntityType.Ignore(t => t.Category);
-            entitySetConfiguration.EntityType.Ignore(t => t.Supplier);
+            ODataConfig.Register(config);
 
-            var model = modelBuilder.GetEdmModel();
-            config.Routes.MapODataRoute("ODataRoute", "odata", model);
+            // To disable tracing in your application, please comment out or remove the following line of code. For more information, refer to: http://www.asp.net/web-api
+            config.EnableSystemDiagnosticsTracing();
 
-            config.EnableQuerySupport();
+            //Uncomment when upgraded to Microsoft.AspNet.WebApi.Core 5.0.0 RTM
+            //config.EnsureInitialized();
         }
     }
 }
