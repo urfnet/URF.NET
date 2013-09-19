@@ -1,19 +1,15 @@
-#region
-
 using System.Linq;
 using System.Web.Mvc;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Mvc;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
-using Northwind.Web.App_Start;
+using Northwind.Web;
 using WebActivatorEx;
-
-#endregion
 
 [assembly: PreApplicationStartMethod(typeof (UnityWebActivator), "Start")]
 
-namespace Northwind.Web.App_Start
+namespace Northwind.Web
 {
     /// <summary>Provides the bootstrapping for integrating Unity with ASP.NET MVC.</summary>
     public static class UnityWebActivator

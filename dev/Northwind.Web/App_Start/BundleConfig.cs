@@ -1,6 +1,6 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
+// ReSharper disable once CheckNamespace
 namespace Northwind.Web
 {
     public class BundleConfig

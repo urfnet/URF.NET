@@ -7,7 +7,8 @@ using Repository;
 
 #endregion
 
-namespace Northwind.Web.App_Start
+// ReSharper disable once CheckNamespace
+namespace Northwind.Web
 {
     /// <summary>
     ///     Specifies the Unity configuration for the main container.
@@ -15,10 +16,10 @@ namespace Northwind.Web.App_Start
     public class UnityConfig
     {
         #region Unity Container
-
         private static Lazy<IUnityContainer> container = new Lazy<IUnityContainer>(() =>
         {
             var container = new UnityContainer();
+
             RegisterTypes(container);
             return container;
         });
@@ -30,7 +31,6 @@ namespace Northwind.Web.App_Start
         {
             return container.Value;
         }
-
         #endregion
 
         /// <summary>Registers the type mappings with the Unity container.</summary>
