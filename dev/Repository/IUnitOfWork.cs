@@ -1,20 +1,19 @@
-﻿#region
-
-
-
-#endregion
+﻿using System.Threading;
+using System.Threading.Tasks;
 
 namespace Repository
 {
     public interface IUnitOfWork : IUnitOfWorkForService
     {
         void Save();
+        Task<int> SaveAsync();
+        Task<int> SaveAsync(CancellationToken cancellationToken);
         void Dispose(bool disposing);
         void Dispose();
     }
 
     public interface IUnitOfWorkForService
     {
-        IRepository<T> Repository<T>() where T : class, new();
+        IRepository<TEntity> Repository<TEntity>() where TEntity : class, new();
     }
 }

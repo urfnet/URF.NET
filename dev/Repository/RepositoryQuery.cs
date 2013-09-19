@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
+using System.Web.Http;
 
 #endregion
 
@@ -24,42 +26,51 @@ namespace Repository
             _includeProperties = new List<Expression<Func<TEntity, object>>>();
         }
 
-        public RepositoryQuery<TEntity> Filter(
-            Expression<Func<TEntity, bool>> filter)
+        public RepositoryQuery<TEntity> Filter(Expression<Func<TEntity, bool>> filter)
         {
             _filter = filter;
             return this;
         }
 
-        public RepositoryQuery<TEntity> OrderBy(
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy)
+        public RepositoryQuery<TEntity> OrderBy(Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy)
         {
             _orderByQuerable = orderBy;
             return this;
         }
 
-        public RepositoryQuery<TEntity> Include(
-            Expression<Func<TEntity, object>> expression)
+        public RepositoryQuery<TEntity> Include(Expression<Func<TEntity, object>> expression)
         {
             _includeProperties.Add(expression);
             return this;
         }
 
-        public IEnumerable<TEntity> GetPage(
-            int page, int pageSize, out int totalCount)
+        public IEnumerable<TEntity> GetPage(int page, int pageSize, out int totalCount)
         {
             _page = page;
             _pageSize = pageSize;
             totalCount = _repository.Get(_filter).Count();
 
-            return _repository.Get(
-                _filter, _orderByQuerable, _includeProperties, _page, _pageSize);
+            return _repository.Get(_filter, _orderByQuerable, _includeProperties, _page, _pageSize);
         }
 
         public IQueryable<TEntity> Get()
         {
-            return _repository.Get(
-                _filter, _orderByQuerable, _includeProperties, _page, _pageSize);
+            return _repository.Get(_filter, _orderByQuerable, _includeProperties, _page, _pageSize);
+        }
+
+        public async Task<IEnumerable<TEntity>> GetAsync()
+        {
+            return await _repository.GetAsync(_filter, _orderByQuerable, _includeProperties, _page, _pageSize);
+        }
+
+        public IQueryable<TEntity> SqlQuery(string query, params object[] parameters)
+        {
+            return _repository.SqlQuery(query, parameters).AsQueryable();
+        }
+
+        public SingleResult<TEntity> GetSingleResult()
+        {
+            return SingleResult.Create(Get());
         }
     }
 }

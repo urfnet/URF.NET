@@ -4,6 +4,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
+using System.Threading;
+using System.Threading.Tasks;
 
 #endregion
 
@@ -11,22 +13,19 @@ namespace Repository
 {
     public class UnitOfWork : IDisposable, IUnitOfWork
     {
+        #region Private Fields
         private readonly IDbContext _context;
-        private readonly Guid _instanceId;
-
-        private bool _disposed;
         private Hashtable _repositories;
+        private bool _disposed;
+        private readonly Guid _instanceId; //TODO: Whhy do we need this?
+        #endregion Private Fields
 
+        #region Constuctor/Dispose
         public UnitOfWork(IDbContext context)
         {
             _context = context;
-            _instanceId = Guid.NewGuid();
             _context.Configuration.LazyLoadingEnabled = false;
-        }
-
-        public Guid InstanceId
-        {
-            get { return _instanceId; }
+            _instanceId = Guid.NewGuid();
         }
 
         public void Dispose()
@@ -34,35 +33,52 @@ namespace Repository
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+        
+        public virtual void Dispose(bool disposing)
+        {
+            if (!_disposed && disposing)
+            {
+                _context.Dispose();
+            }
+            _disposed = true;
+        }
+        #endregion Constuctor/Dispose
+
+        public Guid InstanceId { get { return _instanceId; } }
 
         public void Save()
         {
             _context.SaveChanges();
         }
 
-        public IRepository<T> Repository<T>() where T : class, new()
+        public Task<int> SaveAsync()
         {
-            if (_repositories == null)
-                _repositories = new Hashtable();
-
-            string type = typeof (T).Name;
-
-            if (_repositories.ContainsKey(type))
-                return (IRepository<T>) _repositories[type];
-
-            Type repositoryType = typeof (Repository<>);
-            _repositories.Add(type, Activator.CreateInstance(repositoryType.MakeGenericType(typeof (T)), _context));
-
-            return (IRepository<T>) _repositories[type];
+            return _context.SaveChangesAsync();
         }
 
-        public virtual void Dispose(bool disposing)
+        public Task<int> SaveAsync(CancellationToken cancellationToken)
         {
-            if (!_disposed)
-                if (disposing)
-                    _context.Dispose();
+            return _context.SaveChangesAsync(cancellationToken);
+        }
 
-            _disposed = true;
+        public IRepository<TEntity> Repository<TEntity>() where TEntity : class, new()
+        {
+            if (_repositories == null)
+            {
+                _repositories = new Hashtable();
+            }
+
+            string type = typeof(TEntity).Name;
+
+            if (_repositories.ContainsKey(type))
+            {
+                return (IRepository<TEntity>)_repositories[type];
+            }
+
+            var repositoryType = typeof(Repository<>);
+            _repositories.Add(type, Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)), _context));
+
+            return (IRepository<TEntity>)_repositories[type];
         }
 
         public IEnumerable<DbEntityValidationResult> GetValidationErrors()
