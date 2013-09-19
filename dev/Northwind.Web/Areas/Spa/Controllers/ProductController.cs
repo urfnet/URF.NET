@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Northwind.Web.Areas.Spa.Controllers
@@ -19,6 +15,11 @@ namespace Northwind.Web.Areas.Spa.Controllers
         }
 
         public ActionResult List()
+        {
+            return View();
+        }
+
+        public ActionResult ListAsync()
         {
             return View();
         }
