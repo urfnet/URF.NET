@@ -52,6 +52,7 @@ namespace Northwind.Web.Areas.Spa.Api
         [Queryable]
         public override async Task<IEnumerable<Product>> Get()
         {
+            //TODO: Check db traffic
             return await _db.Repository<Product>().Query().GetAsync();
         }
 
@@ -65,12 +66,13 @@ namespace Northwind.Web.Areas.Spa.Api
         // ReSharper disable once CSharpWarnings::CS1998
         public override async Task<HttpResponseMessage> Get([FromODataUri] int key)
         {
+            //TODO: Test
             //This DOES work with OData $expand
             //Use GetSingleResult with the Microsoft.AspNet.WebApi.OData RTM from ASP.NET WebStack Nightly Builds at http://www.myget.org/F/aspnetwebstacknightly/
-            //var query = _db.Repository<Product>().Query().Filter(x => x.ProductID == key).GetSingleResult();
+            var query = _db.Repository<Product>().Query().Filter(x => x.ProductID == key).GetSingleResult();
 
             //Does NOT work with OData $expand
-            var query = _db.Repository<Product>().Query().Filter(x => x.ProductID == key).Get();
+            //var query = _db.Repository<Product>().Query().Filter(x => x.ProductID == key).Get();
 
             // Create an HttpResponseMessage and add singleResult
             return Request.CreateResponse(HttpStatusCode.OK, query);
