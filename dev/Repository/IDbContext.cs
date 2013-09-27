@@ -53,7 +53,6 @@ namespace Repository
         // an entity graph. For example you may want to edit a Customer entity, edit a PhoneNumber entity,  
         // add a PhoneNumber entity, edit an Order entity, add and remove OrderDetail all in one entity graph starting
         // with the Customer as the root entity. The State property will allows the developer to have
-        // fine granular control of the entity graph. This pattern is actually from Julie Lerman EF MVP.
         void ApplyStateChanges();
     }
 }
