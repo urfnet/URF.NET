@@ -9,7 +9,6 @@ namespace Repository
     {
         Guid InstanceId { get; }
 
-        //TODO: Discuss. Renamed to Find. FindById implies that there is one ID, but the method takes params object[] keyValues to enable composite keys.
         TEntity Find(params object[] keyValues);
         
         Task<TEntity> FindAsync(params object[] keyValues);
