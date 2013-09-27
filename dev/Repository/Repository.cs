@@ -73,6 +73,7 @@ namespace Repository
         public virtual void Update(TEntity entity)
         {
             DbSet.Attach(entity);
+            ((IObjectState)entity).State = ObjectState.Modified;
 
             //TODO: Discuss - This would eliminate the need for IObjectState, ObjectState and ApplyStateChanges()
             // Added DbEntityEntry Entry(object o) to IDbContext
@@ -87,26 +88,25 @@ namespace Repository
         public virtual void Delete(object id)
         {
             var entity = DbSet.Find(id);
-
-            ((IObjectState) entity).State = ObjectState.Deleted;
             Delete(entity);
         }
 
         public virtual void Delete(TEntity entity)
         {
             DbSet.Attach(entity);
+            ((IObjectState)entity).State = ObjectState.Deleted;
             DbSet.Remove(entity);
         }
 
         public virtual void Insert(TEntity entity)
         {
             DbSet.Attach(entity);
+            ((IObjectState)entity).State = ObjectState.Added;
         }
 
         public virtual IRepositoryQuery<TEntity> Query()
         {
             var repositoryGetFluentHelper = new RepositoryQuery<TEntity>(this);
-
             return repositoryGetFluentHelper;
         }
 
