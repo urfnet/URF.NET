@@ -31,7 +31,7 @@ namespace Northwind.Repository
         public static void AddCustomerWithAddressValidation(
             this IRepository<Customer> customerRepository, Customer customer)
         {
-            // ficticious example of accessing other Repositories
+            // fictitious example of accessing other Repositories
             var unitOfWork = ServiceLocator.Current.GetInstance<IUnitOfWork>();
 
             var invoices = unitOfWork
