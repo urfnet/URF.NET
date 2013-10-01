@@ -21,6 +21,9 @@ namespace Repository
             _instanceId = Guid.NewGuid();
         }
 
+        // This is for testing the lifecycle of the Repository when using with DI & IoC, e.g. ensuring the lifecycle of the 
+        // Repository is bound to the lifecycle of an HttpRequesst when using this Framework in a ASP.NET Web Forms/MVC 
+        // application, you can check that the InstanceId is unique for every HttpRequest. 
         public Guid InstanceId
         {
             get { return _instanceId; }

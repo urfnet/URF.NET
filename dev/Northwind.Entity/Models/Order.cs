@@ -12,7 +12,7 @@ namespace Northwind.Entity.Models
     {
         public Order()
         {
-            Order_Details = new List<OrderDetail>();
+            OrderDetails = new List<OrderDetail>();
         }
 
         public int OrderID { get; set; }
@@ -31,7 +31,7 @@ namespace Northwind.Entity.Models
         public string ShipCountry { get; set; }
         public virtual Customer Customer { get; set; }
         public virtual Employee Employee { get; set; }
-        public virtual ICollection<OrderDetail> Order_Details { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
         public virtual Shipper Shipper { get; set; }
     }
 }

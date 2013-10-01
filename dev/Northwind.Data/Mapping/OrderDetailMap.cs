@@ -32,7 +32,7 @@ namespace Northwind.Data.Mapping
 
             // Relationships
             HasRequired(t => t.Order)
-                .WithMany(t => t.Order_Details)
+                .WithMany(t => t.OrderDetails)
                 .HasForeignKey(d => d.OrderID);
             HasRequired(t => t.Product)
                 .WithMany(t => t.Order_Details)

@@ -10,6 +10,10 @@ namespace Northwind.Service.Services
 {
     public class ProductService
     {
+        public ProductService()
+        {
+        }
+
         public string GetShippingRate(string AccessKey, string Username, string Password, string FromZip, string ToZip, string weight)
         {
           string rate = "";

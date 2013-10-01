@@ -24,9 +24,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{C35657
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Service", "Northwind.Service\Northwind.Service.csproj", "{678DB4A2-A20D-4F71-8A98-D8BBE879DEDD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Repository", "Northwind.Repository\Northwind.Repository.csproj", "{0FB607EA-4BB3-404B-9461-2232B5423885}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 7
+		SccNumberOfProjects = 8
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs26
 		SccLocalPath0 = .
@@ -50,6 +52,9 @@ Global
 		SccProjectUniqueName6 = Northwind.Service\\Northwind.Service.csproj
 		SccProjectName6 = Northwind.Service
 		SccLocalPath6 = Northwind.Service
+		SccProjectUniqueName7 = Northwind.Repository\\Northwind.Repository.csproj
+		SccProjectName7 = Northwind.Repository
+		SccLocalPath7 = Northwind.Repository
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -104,6 +109,12 @@ Global
 		{678DB4A2-A20D-4F71-8A98-D8BBE879DEDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{678DB4A2-A20D-4F71-8A98-D8BBE879DEDD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{678DB4A2-A20D-4F71-8A98-D8BBE879DEDD}.Release|x86.ActiveCfg = Release|Any CPU
+		{0FB607EA-4BB3-404B-9461-2232B5423885}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FB607EA-4BB3-404B-9461-2232B5423885}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FB607EA-4BB3-404B-9461-2232B5423885}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0FB607EA-4BB3-404B-9461-2232B5423885}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FB607EA-4BB3-404B-9461-2232B5423885}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FB607EA-4BB3-404B-9461-2232B5423885}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
