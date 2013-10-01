@@ -18,5 +18,3 @@ namespace Northwind.Web.App_Start
 		}
 	}
 }
-
-C:\Tfs\lelong37.codeplex.com\GenericUnitofWorkAndRepositories\dev\Northwind.Web\Areas\Spa\Extensions\
