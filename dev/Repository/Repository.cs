@@ -21,9 +21,6 @@ namespace Repository
             _instanceId = Guid.NewGuid();
         }
 
-        // This is for testing the lifecycle of the Repository when using with DI & IoC, e.g. ensuring the lifecycle of the 
-        // Repository is bound to the lifecycle of an HttpRequesst when using this Framework in a ASP.NET Web Forms/MVC 
-        // application, you can check that the InstanceId is unique for every HttpRequest. 
         public Guid InstanceId
         {
             get { return _instanceId; }
@@ -118,7 +115,6 @@ namespace Repository
             return query;
         }
 
-        //TODO: Check db traffic for IEnumerable<TEntity>
         internal async Task<IEnumerable<TEntity>> GetAsync(
                     Expression<Func<TEntity, bool>> filter = null,
                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
@@ -126,28 +122,7 @@ namespace Repository
                     int? page = null,
                     int? pageSize = null)
         {
-            IQueryable<TEntity> query = _dbSet;
-
-            if (includeProperties != null)
-            {
-                includeProperties.ForEach(i => query = query.Include(i));
-            }
-            if (filter != null)
-            {
-                query = query.Where(filter);
-            }
-            if (orderBy != null)
-            {
-                query = orderBy(query);
-            }
-            if (page != null && pageSize != null)
-            {
-                query = query
-                    .Skip((page.Value - 1) * pageSize.Value)
-                    .Take(pageSize.Value);
-            }
-            return (IEnumerable<TEntity>)query;
+            return Get(filter, orderBy, includeProperties, page, pageSize).AsEnumerable();
         }
-
     }
 }
