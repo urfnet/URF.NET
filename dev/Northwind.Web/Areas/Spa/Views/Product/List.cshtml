@@ -91,7 +91,7 @@
                 }
             },
             error: function (e) {
-                debugger;
+                //debugger;
                 var message = e.xhr.responseJSON["odata.error"].message.value;
                 var innerMessage = e.xhr.responseJSON["odata.error"].innererror.message;
                 alert(message + "\n\n" + innerMessage);
