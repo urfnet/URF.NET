@@ -1,5 +1,6 @@
 ﻿using System.Web.Http;
 using System.Web.Http.Cors;
+using Newtonsoft.Json;
 
 // ReSharper disable once CheckNamespace
 namespace Northwind.Web
@@ -30,6 +31,11 @@ namespace Northwind.Web
 
             //Uncomment when upgraded to Microsoft.AspNet.WebApi.Core 5.0.0 RTM
             //config.EnsureInitialized();
+
+
+            GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
+            GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
+            GlobalConfiguration.Configuration.Formatters.Remove(config.Formatters.XmlFormatter);
         }
     }
 }

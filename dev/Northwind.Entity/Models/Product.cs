@@ -3,12 +3,16 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
 using Repository;
 
 #endregion
 
 namespace Northwind.Entity.Models
 {
+    [KnownType(typeof(Category))]
+    [KnownType(typeof(OrderDetail))]
+    [KnownType(typeof(Supplier))]
     public partial class Product : EntityBase
     {
         public Product()
