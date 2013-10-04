@@ -11,12 +11,10 @@ namespace Repository
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         private readonly Guid _instanceId;
-        private readonly IDbContext _context;
         private readonly DbSet<TEntity> _dbSet;
 
         public Repository(IDbContext context)
         {
-            _context = context;
             _dbSet = context.Set<TEntity>();
             _instanceId = Guid.NewGuid();
         }

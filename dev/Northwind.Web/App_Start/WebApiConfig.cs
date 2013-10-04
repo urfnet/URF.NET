@@ -2,7 +2,6 @@
 using System.Web.Http.Cors;
 using Newtonsoft.Json;
 
-// ReSharper disable once CheckNamespace
 namespace Northwind.Web
 {
     public static class WebApiConfig

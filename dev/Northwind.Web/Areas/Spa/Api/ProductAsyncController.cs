@@ -18,44 +18,33 @@ namespace Northwind.Web.Areas.Spa.Api
     public class ProductAsyncController : AsyncEntitySetController<Product, int>
     {
         #region Private Fields
-        private readonly IUnitOfWork _db;
+        private readonly IUnitOfWork _unitOfWork;
         #endregion Private Fields
 
         #region Constractor / Dispose
-        public ProductAsyncController(IUnitOfWork db)
+        public ProductAsyncController(IUnitOfWork unitOfWork)
         {
-            _db = db;
+            _unitOfWork = unitOfWork;
         }
 
         protected override void Dispose(bool disposing)
         {
-            _db.Dispose();
+            _unitOfWork.Dispose();
             base.Dispose(disposing);
         }
         #endregion Constractor / Dispose
 
-        /// <summary>
-        /// Get the entity key of the specified entity.
-        /// </summary>
-        /// <param name="entity">The entity.</param>
-        /// <returns>The entity key value.</returns>
         protected override int GetKey(Product entity)
         {
             return entity.ProductID;
         }
 
-        // GET <controller>
-        /// <summary>
-        /// Handle GET requests that attempt to retrieve entities from the entity set.
-        /// </summary>
-        /// <returns>The matching entities from the entity set.</returns>
         [Queryable]
         public override async Task<IEnumerable<Product>> Get()
         {
-            return await _db.Repository<Product>().Query().GetAsync();
+            return await _unitOfWork.Repository<Product>().Query().GetAsync();
         }
 
-        // GET <controller>(key)
         /// <summary>
         /// Handles GET requests that attempt to retrieve an individual entity by key from the entity set.
         /// </summary>
@@ -65,15 +54,7 @@ namespace Northwind.Web.Areas.Spa.Api
         // ReSharper disable once CSharpWarnings::CS1998
         public override async Task<HttpResponseMessage> Get([FromODataUri] int key)
         {
-            //TODO: Test Again
-            //This DOES work with OData $expand
-            //Use GetSingleResult with the Microsoft.AspNet.WebApi.OData RTM from ASP.NET WebStack Nightly Builds at http://www.myget.org/F/aspnetwebstacknightly/
-            //var query = _db.Repository<Product>().Query().Filter(x => x.ProductID == key).GetSingleResult();
-
-            //Does NOT work with OData $expand
-            var query = _db.Repository<Product>().Query().Filter(x => x.ProductID == key).Get();
-
-            // Create an HttpResponseMessage and add singleResult
+            var query = _unitOfWork.Repository<Product>().Query().Filter(x => x.ProductID == key).Get();
             return Request.CreateResponse(HttpStatusCode.OK, query);
         }
 
@@ -102,8 +83,8 @@ namespace Northwind.Web.Areas.Spa.Api
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
-            _db.Repository<Product>().Insert(entity);
-            await _db.SaveAsync();
+            _unitOfWork.Repository<Product>().Insert(entity);
+            await _unitOfWork.SaveAsync();
             return entity;
         }
 
@@ -135,8 +116,8 @@ namespace Northwind.Web.Areas.Spa.Api
 
             try
             {
-                _db.Repository<Product>().Update(update);
-                await _db.SaveAsync();
+                _unitOfWork.Repository<Product>().Update(update);
+                await _unitOfWork.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -166,7 +147,7 @@ namespace Northwind.Web.Areas.Spa.Api
                 throw Request.EntityNotFound();
             }
 
-            var entity = await _db.Repository<Product>().FindAsync(key);
+            var entity = await _unitOfWork.Repository<Product>().FindAsync(key);
 
             if (entity == null)
             {
@@ -176,7 +157,7 @@ namespace Northwind.Web.Areas.Spa.Api
             try
             {
                 patch.Patch(entity);
-                await _db.SaveAsync();
+                await _unitOfWork.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -195,7 +176,7 @@ namespace Northwind.Web.Areas.Spa.Api
         /// <returns>A Task that completes when the entity has been successfully deleted.</returns>
         public override async Task Delete([FromODataUri] int key)
         {
-            var entity = await _db.Repository<Product>().FindAsync(key);
+            var entity = await _unitOfWork.Repository<Product>().FindAsync(key);
 
             if (entity == null)
             {
@@ -204,8 +185,8 @@ namespace Northwind.Web.Areas.Spa.Api
 
             //Delete children if any
 
-            _db.Repository<Product>().Delete(entity);
-            await _db.SaveAsync();
+            _unitOfWork.Repository<Product>().Delete(entity);
+            await _unitOfWork.SaveAsync();
         }
 
         #region Links
@@ -222,7 +203,7 @@ namespace Northwind.Web.Areas.Spa.Api
         [AcceptVerbs("POST", "PUT")]
         public override async Task CreateLink([FromODataUri] int key, string navigationProperty, [FromBody] Uri link)
         {
-            var entity = await _db.Repository<Product>().FindAsync(key);
+            var entity = await _unitOfWork.Repository<Product>().FindAsync(key);
 
             if (entity == null)
             {
@@ -232,7 +213,7 @@ namespace Northwind.Web.Areas.Spa.Api
             {
                 case "Category":
                     var categoryKey = Request.GetKeyValue<int>(link);
-                    var category = await _db.Repository<Category>().FindAsync(categoryKey);
+                    var category = await _unitOfWork.Repository<Category>().FindAsync(categoryKey);
 
                     if (category == null)
                     {
@@ -243,7 +224,7 @@ namespace Northwind.Web.Areas.Spa.Api
 
                 case "Supplier":
                     var supplierKey = Request.GetKeyValue<int>(link);
-                    var supplier = await _db.Repository<Supplier>().FindAsync(supplierKey);
+                    var supplier = await _unitOfWork.Repository<Supplier>().FindAsync(supplierKey);
 
                     if (supplier == null)
                     {
@@ -256,7 +237,7 @@ namespace Northwind.Web.Areas.Spa.Api
                     await base.CreateLink(key, navigationProperty, link);
                     break;
             }
-            await _db.SaveAsync();
+            await _unitOfWork.SaveAsync();
         }
 
         // Remove a relation, by deleting a $link entity
@@ -271,7 +252,7 @@ namespace Northwind.Web.Areas.Spa.Api
         /// <returns>Task.</returns>
         public override async Task DeleteLink([FromODataUri] int key, string relatedKey, string navigationProperty)
         {
-            var entity = await _db.Repository<Product>().FindAsync(key);
+            var entity = await _unitOfWork.Repository<Product>().FindAsync(key);
 
             if (entity == null)
             {
@@ -292,7 +273,7 @@ namespace Northwind.Web.Areas.Spa.Api
                     await base.DeleteLink(key, relatedKey, navigationProperty);
                     break;
             }
-            await _db.SaveAsync();
+            await _unitOfWork.SaveAsync();
         }
 
         // Remove a relation, by deleting a $link entity
@@ -307,7 +288,7 @@ namespace Northwind.Web.Areas.Spa.Api
         /// <returns>Task.</returns>
         public override async Task DeleteLink([FromODataUri] int key, string navigationProperty, [FromBody] Uri link)
         {
-            var entity = await _db.Repository<Product>().FindAsync(key);
+            var entity = await _unitOfWork.Repository<Product>().FindAsync(key);
 
             if (entity == null)
             {
@@ -328,7 +309,7 @@ namespace Northwind.Web.Areas.Spa.Api
                     await base.DeleteLink(key, navigationProperty, link);
                     break;
             }
-            await _db.SaveAsync();
+            await _unitOfWork.SaveAsync();
         }
         #endregion Links
 
@@ -353,7 +334,7 @@ namespace Northwind.Web.Areas.Spa.Api
         /// <returns>A Task that contains the retrieved entity when it completes, or null if an entity with the specified entity key cannot be found in the entity set.</returns>
         public async Task<Category> GetCategory(int key)
         {
-            var entity = await _db.Repository<Product>().FindAsync(key);
+            var entity = await _unitOfWork.Repository<Product>().FindAsync(key);
 
             if (entity == null)
             {
@@ -369,7 +350,7 @@ namespace Northwind.Web.Areas.Spa.Api
         /// <returns>A Task that contains the retrieved entity when it completes, or null if an entity with the specified entity key cannot be found in the entity set.</returns>
         public async Task<Supplier> GetSupplier(int key)
         {
-            var entity = await _db.Repository<Product>().FindAsync(key);
+            var entity = await _unitOfWork.Repository<Product>().FindAsync(key);
 
             if (entity == null)
             {
