@@ -17,7 +17,7 @@ namespace Repository
         private readonly IDbContext _context;
         private Hashtable _repositories;
         private bool _disposed;
-        private readonly Guid _instanceId; //TODO: Whhy do we need this?
+        private readonly Guid _instanceId;
         #endregion Private Fields
 
         #region Constuctor/Dispose
