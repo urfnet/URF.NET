@@ -439,8 +439,6 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="img\glyphicons-halflings-white.png" />
-    <Content Include="img\glyphicons-halflings.png" />
     <Content Include="Areas\Spa\Views\Web.Config" />
     <Content Include="Areas\Spa\Views\Product\Index.cshtml" />
     <Content Include="Areas\Spa\Views\Shared\_Layout.cshtml" />
@@ -451,6 +449,8 @@
     <None Include="Properties\PublishProfiles\longle - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\longle - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
+    <Content Include="img\glyphicons-halflings-white.png" />
+    <Content Include="img\glyphicons-halflings.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
