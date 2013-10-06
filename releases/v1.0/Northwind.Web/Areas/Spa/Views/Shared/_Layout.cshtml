@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - http://blog.longle.net</title>
+
+    @*<link href="/Content/kendo/2013.2.716/kendo.common.min.css" rel="stylesheet" />
+    <link href="/Content/kendo/2013.2.716/kendo.bootstrap.min.css" rel="stylesheet" />
+    *@
+    @Styles.Render("~/Content/kendo/2013.2.716/css")
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="http://blog.longle.net" class="brand">CBRE SSRS</a>
+                @*@Html.ActionLink("", "Index", "Home", null, new { @class = "brand" })*@
+                <div class="nav-collapse collapse">
+                    <ul class="nav">
+                        <li>@Html.ActionLink("Up", "Index", "Home", new { Area = "" }, new { })</li>
+                        <li><a href="#/">Home</a></li>
+                        <li><a href="#/list">Products</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")    
+    @Scripts.Render("~/bundles/kendo")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
