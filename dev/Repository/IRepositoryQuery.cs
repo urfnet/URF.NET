@@ -16,6 +16,5 @@ namespace Repository
         IQueryable<TEntity> Get();
         Task<IEnumerable<TEntity>> GetAsync();
         IQueryable<TEntity> SqlQuery(string query, params object[] parameters);
-        SingleResult<TEntity> GetSingleResult();
     }
 }

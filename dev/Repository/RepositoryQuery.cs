@@ -67,10 +67,5 @@ namespace Repository
         {
             return _repository.SqlQuery(query, parameters).AsQueryable();
         }
-
-        public SingleResult<TEntity> GetSingleResult()
-        {
-            return SingleResult.Create(Get());
-        }
     }
 }
