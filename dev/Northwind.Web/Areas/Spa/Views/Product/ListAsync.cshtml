@@ -34,14 +34,14 @@
     <h3>Use Firefox for these OData queries to see the JSON results</h3>
     <ul>
         <li><a href="/odata/$metadata">/odata/$metadata</a></li>
-        <li><a href="/odata/ProductAsync">/odata/ProductAsync</a></li>
-        <li><a href="/odata/ProductAsync/?$select=ProductID,ProductName">/odata/ProductAsync/?$select=ProductID,ProductName</a></li>
-        <li><a href="/odata/ProductAsync/?$orderby=ProductName&$skip=1&$top=2">/odata/ProductAsync/?$orderby=ProductName&$skip=1&$top=2</a></li>
-        <li><a href="/odata/ProductAsync/?$orderby=ProductName&$skip=1&$top=2">/odata/ProductAsync/?$orderby=ProductName&$skip=1&$top=2</a></li>
-        <li><a href="/odata/ProductAsync/?$inlinecount=allpages&$filter=UnitPrice ge 20">/odata/ProductAsync/?$inlinecount=allpages&$filter=UnitPrice ge 20</a></li>
-        <li><a href="/odata/ProductAsync/?$expand=Category">/odata/ProductAsync/?$expand=Category</a></li>
-        <li><a href="/odata/ProductAsync/?$expand=Category&$select=ProductID,ProductName,Category/CategoryID,Category/CategoryName">/odata/ProductAsync/?$expand=Category&$select=ProductID,ProductName,Category/CategoryID,Category/CategoryName</a></li>
-        <li><a href="/odata/ProductAsync/?$inlinecount=allpages&$orderby=ProductName&$skip=1&$top=2&$expand=Category&$select=ProductID,ProductName,Category/CategoryID,Category/CategoryName">/odata/ProductAsync/?$inlinecount=allpages&$orderby=ProductName&$skip=1&$top=2&$expand=Category&$select=ProductID,ProductName,Category/CategoryID,Category/CategoryName</a></li>
+        <li><a href="/odata/Product">/odata/Product</a></li>
+        <li><a href="/odata/Product/?$select=ProductID,ProductName">/odata/Product/?$select=ProductID,ProductName</a></li>
+        <li><a href="/odata/Product/?$orderby=ProductName&$skip=1&$top=2">/odata/Product/?$orderby=ProductName&$skip=1&$top=2</a></li>
+        <li><a href="/odata/Product/?$orderby=ProductName&$skip=1&$top=2">/odata/Product/?$orderby=ProductName&$skip=1&$top=2</a></li>
+        <li><a href="/odata/Product/?$inlinecount=allpages&$filter=UnitPrice ge 20">/odata/Product/?$inlinecount=allpages&$filter=UnitPrice ge 20</a></li>
+        <li><a href="/odata/Product/?$expand=Category">/odata/Product/?$expand=Category</a></li>
+        <li><a href="/odata/Product/?$expand=Category&$select=ProductID,ProductName,Category/CategoryID,Category/CategoryName">/odata/Product/?$expand=Category&$select=ProductID,ProductName,Category/CategoryID,Category/CategoryName</a></li>
+        <li><a href="/odata/Product/?$inlinecount=allpages&$orderby=ProductName&$skip=1&$top=2&$expand=Category&$select=ProductID,ProductName,Category/CategoryID,Category/CategoryName">/odata/Product/?$inlinecount=allpages&$orderby=ProductName&$skip=1&$top=2&$expand=Category&$select=ProductID,ProductName,Category/CategoryID,Category/CategoryName</a></li>
     </ul>
 </div>
 
@@ -56,7 +56,7 @@
 
     var lastSelectedProductId;
 
-    var crudServiceBaseUrl = "/odata/ProductAsync";
+    var crudServiceBaseUrl = "/odata/Product";
     var productsModel = kendo.observable({
         dataSource: dataSource = new kendo.data.DataSource({
             type: "odata",

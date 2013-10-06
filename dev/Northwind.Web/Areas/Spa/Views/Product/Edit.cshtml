@@ -188,6 +188,8 @@
                         dataType: "json"
                     },
                     parameterMap: function (data, operation) {
+                        
+
                         if (operation == "update") {
                             delete data.guid;
                             delete data["odata.metadata"];
@@ -203,8 +205,9 @@
                 schema: {
                     type: "json",
                     data: function (data) {
+                        
                         delete data["odata.metadata"];
-                        return data;
+                        return data.value;
                     },
                     total: function (data) {
                         return 1;
@@ -214,6 +217,7 @@
             });
             dataSource.fetch(function () {
                 if (dataSource.view().length > 0) {
+                    
                     kendo.bind($("#product-edit-form"), dataSource.at(0));
                 }
             });

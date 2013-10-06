@@ -63,7 +63,7 @@ namespace Northwind.Web
             // So for example if you made a request for http://server/vroot/$metadata, the request would actually get dispatched to a separate special controller that returns the metadata document for the OData service.
             // The controller name also matches the entity set name (AlbumController).
 
-            var entitySetConfiguration = modelBuilder.EntitySet<Product>("ProductAsync"); //<ControllerName>Controller
+            var entitySetConfiguration = modelBuilder.EntitySet<Product>("Product"); //<ControllerName>Controller
 
             //entitySetConfiguration.EntityType.Ignore(t => t.Category);
             //entitySetConfiguration.EntityType.Ignore(t => t.Supplier);

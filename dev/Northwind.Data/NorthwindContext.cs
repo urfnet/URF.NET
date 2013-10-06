@@ -8,7 +8,7 @@ using Repository;
 
 namespace Northwind.Data
 {
-    public partial class NorthwindContext : DbContextBase, IDbContext
+    public partial class NorthwindContext : DbContextBase
     {
         public NorthwindContext() :
             base("NorthwindContext")

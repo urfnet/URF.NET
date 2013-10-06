@@ -16,14 +16,14 @@
     <div class="k-content" style="width: 100%">
         <div id="productsForm">
             <div id="productGrid"
-                data-role="grid"
-                data-sortable="true"
-                data-pageable="true"
-                data-filterable="true"
-                data-bind="source: dataSource, events: { dataBound: dataBound, change: onChange }"
-                data-editable="inline"
-                data-selectable="true"
-                data-columns='[
+                 data-role="grid"
+                 data-sortable="true"
+                 data-pageable="true"
+                 data-filterable="true"
+                 data-bind="source: dataSource, events: { dataBound: dataBound, change: onChange }"
+                 data-editable="inline"
+                 data-selectable="true"
+                 data-columns='[
                     { field: "ProductID", title: "Id", width: "50px" }, 
                     { field: "ProductName", title: "Name", width: "300px" }, 
                     { field: "UnitPrice", title: "Price", format: "{0:c}", width: "100px" },                    
@@ -31,6 +31,19 @@
                     { command : [ "edit", "destroy", { text: "Edit Details", click: editProduct } ], title: "Action",  } ]'>
             </div>
         </div>
+        <h3>Use Chrome or Firefox and click on OData (queries) Urls below for example results.</h3>
+        <ul>
+            <li><a href="/odata/$metadata">/odata/$metadata</a></li>
+            <li><a href="/odata/Product">/odata/Product</a></li>
+            <li><a href="/odata/Product/?$select=ProductID,ProductName">/odata/Product/?$select=ProductID,ProductName</a></li>
+            <li><a href="/odata/Product/?$orderby=ProductName&$skip=1&$top=2">/odata/Product/?$orderby=ProductName&$skip=1&$top=2</a></li>
+            <li><a href="/odata/Product/?$orderby=ProductName&$skip=1&$top=2">/odata/Product/?$orderby=ProductName&$skip=1&$top=2</a></li>
+            <li><a href="/odata/Product/?$inlinecount=allpages&$filter=UnitPrice ge 20">/odata/Product/?$inlinecount=allpages&$filter=UnitPrice ge 20</a></li>
+            <li><a href="/odata/Product/?$expand=Category">/odata/Product/?$expand=Category</a></li>
+            <li><a href="/odata/Product/?$expand=Category&$select=ProductID,ProductName,Category/CategoryID,Category/CategoryName">/odata/Product/?$expand=Category&$select=ProductID,ProductName,Category/CategoryID,Category/CategoryName</a></li>
+            <li><a href="/odata/Product/?$inlinecount=allpages&$orderby=ProductName&$skip=1&$top=2&$expand=Category&$select=ProductID,ProductName,Category/CategoryID,Category/CategoryName">/odata/Product/?$inlinecount=allpages&$orderby=ProductName&$skip=1&$top=2&$expand=Category&$select=ProductID,ProductName,Category/CategoryID,Category/CategoryName</a></li>
+        </ul>
+
     </div>
 
 <script>

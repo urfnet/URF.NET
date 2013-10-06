@@ -4,6 +4,8 @@ using System;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Threading;
+using System.Threading.Tasks;
 
 #endregion
 
@@ -45,6 +47,18 @@ namespace Repository
         {
             ApplyStateChanges();
             return base.SaveChanges();
+        }
+
+        public override Task<int> SaveChangesAsync()
+        {
+            ApplyStateChanges();
+            return base.SaveChangesAsync();
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken)
+        {
+            ApplyStateChanges();
+            return base.SaveChangesAsync(cancellationToken);
         }
 
         protected override void OnModelCreating(DbModelBuilder builder)

@@ -261,7 +261,6 @@
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="App_Start\UnityWebApiActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Areas\Spa\Api\ProductAsyncController.cs" />
     <Compile Include="Areas\Spa\Api\ProductController.cs" />
     <Compile Include="Areas\Spa\Controllers\ProductController.cs" />
     <Compile Include="Areas\Spa\Extensions\CompositeKeyRoutingConvention.cs" />
@@ -442,8 +441,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="img\glyphicons-halflings-white.png" />
     <Content Include="img\glyphicons-halflings.png" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\Spa\Views\Web.Config" />
     <Content Include="Areas\Spa\Views\Product\Index.cshtml" />
     <Content Include="Areas\Spa\Views\Shared\_Layout.cshtml" />
@@ -451,10 +448,11 @@
     <Content Include="Areas\Spa\Views\Product\Edit.cshtml" />
     <Content Include="Areas\Spa\Views\Product\Home.cshtml" />
     <Content Include="Areas\Spa\Views\Product\List.cshtml" />
-    <Content Include="Areas\Spa\Views\Product\ListAsync.cshtml" />
     <None Include="Properties\PublishProfiles\longle - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\longle - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />
     <Content Include="Scripts\kendo\2013.2.716\cultures\kendo.culture.af-ZA.min.js" />
