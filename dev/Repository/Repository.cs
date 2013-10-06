@@ -120,7 +120,7 @@ namespace Repository
                     int? page = null,
                     int? pageSize = null)
         {
-            return await Get(filter, orderBy, includeProperties, page, pageSize).ToListAsync();
+            return Get(filter, orderBy, includeProperties, page, pageSize).AsEnumerable();
         }
     }
 }
