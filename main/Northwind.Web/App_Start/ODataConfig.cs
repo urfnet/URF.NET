@@ -1,4 +1,6 @@
-﻿using System.Web.Http;
+﻿#region
+
+using System.Web.Http;
 using System.Web.Http.OData.Builder;
 using System.Web.Http.OData.Query;
 using System.Web.Http.OData.Routing;
@@ -7,17 +9,18 @@ using Microsoft.Data.Edm;
 using Northwind.Entity.Models;
 using Northwind.Web.Areas.Spa.Extensions;
 
-// ReSharper disable once CheckNamespace
+#endregion
+
 namespace Northwind.Web
 {
     public static class ODataConfig
     {
-        public static IEdmModel Model { get; private set; }
-
         static ODataConfig()
         {
             Model = GetModel();
         }
+
+        public static IEdmModel Model { get; private set; }
 
         public static void Register(HttpConfiguration config)
         {
@@ -28,22 +31,10 @@ namespace Northwind.Web
             var conventions = ODataRoutingConventions.CreateDefault();
 
             if (conventions != null)
-            {
-                conventions.Insert(0, new CustomNavigationRoutingConvention());
-
-                //OData
-                //1 - Creating your EDM model. Model is initialized in constructur by GetModel()
-                //2 - Configuring an OData route
-
-                // Enables OData support by adding an OData route and enabling querying support for OData.
-                // Action selector and odata media type formatters will be registered in per-controller configuration only
-                //config.Routes.MapODataRoute("OData", "odata", Model);
-                //config.Routes.MapODataRoute("OData", null, ModelBuilder.GetEdmModel(), new DefaultODataPathHandler(), conventions);
                 config.Routes.MapODataRoute("OData", "odata", Model, new DefaultODataPathHandler(), conventions);
-            }
 
             // Enable queryable support and allow $format query
-            config.EnableQuerySupport(new QueryableAttribute { AllowedQueryOptions = AllowedQueryOptions.Supported | AllowedQueryOptions.Format });
+            config.EnableQuerySupport(new QueryableAttribute {AllowedQueryOptions = AllowedQueryOptions.Supported | AllowedQueryOptions.Format});
 
             // To disable tracing in your application, please comment out or remove the following line of code. For more information, refer to: http://www.asp.net/web-api
             config.EnableSystemDiagnosticsTracing();
@@ -53,8 +44,6 @@ namespace Northwind.Web
 
         private static IEdmModel GetModel()
         {
-            //OData
-            //1 - Creating EDM model
             var modelBuilder = new ODataConventionModelBuilder();
 
             //The action names, and the parameter names all matter.
@@ -64,11 +53,7 @@ namespace Northwind.Web
             // The controller name also matches the entity set name (AlbumController).
 
             var entitySetConfiguration = modelBuilder.EntitySet<Product>("Product"); //<ControllerName>Controller
-
-            //entitySetConfiguration.EntityType.Ignore(t => t.Category);
-            //entitySetConfiguration.EntityType.Ignore(t => t.Supplier);
             entitySetConfiguration.EntityType.Ignore(t => t.Order_Details);
-
             modelBuilder.EntitySet<Category>("Category");
             modelBuilder.EntitySet<Supplier>("Supplier");
 

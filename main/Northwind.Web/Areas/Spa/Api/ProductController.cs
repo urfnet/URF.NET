@@ -187,8 +187,23 @@ namespace Northwind.Web.Areas.Spa.Api
             //Delete children if any
 
             _unitOfWork.Repository<Product>().Delete(entity);
-            await _unitOfWork.SaveAsync();
-        }
+
+            try
+            {
+                var x = await _unitOfWork.SaveAsync();
+            }
+            catch (Exception e)
+            { 
+                throw new HttpResponseException(
+                    new HttpResponseMessage(HttpStatusCode.Conflict)
+                    {
+                        StatusCode = HttpStatusCode.Conflict, 
+                        Content = new StringContent(e.Message), 
+                        ReasonPhrase = e.InnerException.InnerException.Message
+                    });
+            }
+        } 
+
 
         #region Links
         // Create a relation from Product to Category or Supplier, by creating a $link entity.

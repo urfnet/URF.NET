@@ -263,15 +263,10 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Spa\Api\ProductController.cs" />
     <Compile Include="Areas\Spa\Controllers\ProductController.cs" />
-    <Compile Include="Areas\Spa\Extensions\CompositeKeyRoutingConvention.cs" />
-    <Compile Include="Areas\Spa\Extensions\CustomNavigationRoutingConvention.cs" />
     <Compile Include="Areas\Spa\Extensions\FormatQueryMessageHandler.cs" />
     <Compile Include="Areas\Spa\Extensions\ModelValidationFilterAttribute.cs" />
     <Compile Include="Areas\Spa\Extensions\ODataErrors.cs" />
     <Compile Include="Areas\Spa\Extensions\ODataHelper.cs" />
-    <Compile Include="Areas\Spa\Extensions\ODataVersionControllerSelector.cs" />
-    <Compile Include="Areas\Spa\Extensions\ODataVersionRouteConstraint.cs" />
-    <Compile Include="Areas\Spa\Extensions\ODataVersionRouteExtensions.cs" />
     <Compile Include="Areas\Spa\SpaAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />

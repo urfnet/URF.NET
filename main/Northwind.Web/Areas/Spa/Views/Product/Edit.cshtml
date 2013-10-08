@@ -205,7 +205,6 @@
                 schema: {
                     type: "json",
                     data: function (data) {
-                        
                         delete data["odata.metadata"];
                         return data.value;
                     },
