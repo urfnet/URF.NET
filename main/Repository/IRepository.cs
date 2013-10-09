@@ -8,9 +8,7 @@ namespace Repository
     public interface IRepository<TEntity> where TEntity : class
     {
         Guid InstanceId { get; }
-
         TEntity Find(params object[] keyValues);
-        
         Task<TEntity> FindAsync(params object[] keyValues);
         Task<TEntity> FindAsync(CancellationToken cancellationToken, params object[] keyValues);
         IQueryable<TEntity> SqlQuery(string query, params object[] parameters);

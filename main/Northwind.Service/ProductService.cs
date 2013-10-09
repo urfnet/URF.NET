@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
+using Repository;
 
-namespace Northwind.Service.Services
+namespace Northwind.Service
 {
     public class ProductService
     {
-        public ProductService()
+        private readonly IUnitOfWork _unitOfWork;
+
+        public ProductService(IUnitOfWork unitOfWork)
         {
+            _unitOfWork = unitOfWork;
         }
 
         public string GetShippingRate(string AccessKey, string Username, string Password, string FromZip, string ToZip, string weight)

@@ -15,17 +15,13 @@ namespace Repository
     public interface IDbContext
     {
         DbContextConfiguration Configuration { get; }
-        
         Guid InstanceId { get; }
-        
         DbSet<T> Set<T>() where T : class;
-
         int SaveChanges();
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
         Task<int> SaveChangesAsync();
         void Dispose();
         IEnumerable<DbEntityValidationResult> GetValidationErrors();
-
         void ApplyStateChanges();
     }
 }

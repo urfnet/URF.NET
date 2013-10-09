@@ -45,13 +45,7 @@ namespace Northwind.Web.Areas.Spa.Api
             return await _unitOfWork.Repository<Product>().Query().GetAsync();
         }
 
-        /// <summary>
-        /// Handles GET requests that attempt to retrieve an individual entity by key from the entity set.
-        /// </summary>
-        /// <param name="key">The entity key of the entity to retrieve.</param>
-        /// <returns>Task that contains the response message to send back to the client.</returns>
         [Queryable]
-        // ReSharper disable once CSharpWarnings::CS1998
         public override async Task<HttpResponseMessage> Get([FromODataUri] int key)
         {
             var query = _unitOfWork.Repository<Product>().Query().Filter(x => x.ProductID == key).Get();
@@ -71,12 +65,6 @@ namespace Northwind.Web.Areas.Spa.Api
         //}
         #endregion Task<Product> GetEntityByKeyAsync(int key)
 
-        // POST <controller> - Insert
-        /// <summary>
-        /// Create a new entity in the entity set.
-        /// </summary>
-        /// <param name="entity"> The entity to add to the entity set.</param>
-        /// <returns>A Task that contains the created entity when it completes.</returns>
         protected override async Task<Product> CreateEntityAsync(Product entity)
         {
             if (entity == null)
@@ -107,12 +95,10 @@ namespace Northwind.Web.Areas.Spa.Api
                 throw new HttpResponseException(Request.CreateODataErrorResponse(HttpStatusCode.BadRequest, new ODataError { Message = "The supplied key and the Product being updated do not match." }));
             }
 
-            //TODO: Do we need this
-            //if (await _db.Repository<Product>().FindAsync(key) == null)
-            //{
-            //    throw Request.EntityNotFound();
-            //}
-            //update.Id = key; // ignore the key in the entity use the key in the URL.
+            if (await _unitOfWork.Repository<Product>().FindAsync(key) == null)
+            {
+                throw Request.EntityNotFound();
+            }
 
             try
             {
@@ -122,8 +108,6 @@ namespace Northwind.Web.Areas.Spa.Api
             }
             catch (DbUpdateConcurrencyException)
             {
-                //TODO: ???
-                //Handling Concurrency with the Entity Framework - http://www.asp.net/mvc/tutorials/getting-started-with-ef-using-mvc/handling-concurrency-with-the-entity-framework-in-an-asp-net-mvc-application
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
             return update;
@@ -162,19 +146,12 @@ namespace Northwind.Web.Areas.Spa.Api
             }
             catch (DbUpdateConcurrencyException)
             {
-                //TODO: ???
                 //Handling Concurrency with the Entity Framework - http://www.asp.net/mvc/tutorials/getting-started-with-ef-using-mvc/handling-concurrency-with-the-entity-framework-in-an-asp-net-mvc-application
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
             return entity;
         }
 
-        // DELETE <controller>(key)
-        /// <summary>
-        /// Handles DELETE requests for deleting existing entities from the entity set.
-        /// </summary>
-        /// <param name="key">The entity key of the entity to delete.</param>
-        /// <returns>A Task that completes when the entity has been successfully deleted.</returns>
         public override async Task Delete([FromODataUri] int key)
         {
             var entity = await _unitOfWork.Repository<Product>().FindAsync(key);
