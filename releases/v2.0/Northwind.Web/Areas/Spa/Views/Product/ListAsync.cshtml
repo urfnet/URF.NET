@@ -1,0 +1,154 @@
+﻿@{
+    ViewBag.Title = "Products Async";
+    Layout = "";
+}
+<div class="row">
+    <div class="span5">
+        <h2>Technlogy Stack</h2>
+        <h3><a href="http://blog.longle.net">http://blog.longle.net</a></h3>
+        <p>ASP.NET MVC 4, Web API, OData, Entity Framework 6 CTP, EntityFramework CE 6 RC1, Visual Studio 2013 Preview, Sql Server CE, Twitter Bootstrap, Kendo UI Web, Azure Website PaaS (<a href="http://www.windowsazure.com/en-us/develop/net/aspnet/" target="blank">free!</a>)</p>
+        <br />
+        <p><a class="btn" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    </div>
+</div>
+
+<br /><br />
+<div class="k-content" style="width: 100%">
+    <div id="productsForm">
+        <div id="productGrid"
+             data-role="grid"
+             data-sortable="true"
+             data-pageable="true"
+             data-filterable="true"
+             data-bind="source: dataSource, events: { dataBound: dataBound, change: onChange }"
+             data-editable="inline"
+             data-selectable="true"
+             data-columns='[
+                    { field: "ProductID", title: "Id", width: "50px" },
+                    { field: "ProductName", title: "Name", width: "300px" },
+                    { field: "UnitPrice", title: "Price", format: "{0:c}", width: "100px" },
+                    { field: "Discontinued", width: "150px" },
+                    { command : [ "edit", "destroy", { text: "Edit Details", click: editProduct } ], title: "Action",  } ]'>
+        </div>
+    </div>
+    <h3>Use Firefox for these OData queries to see the JSON results</h3>
+    <ul>
+        <li><a href="/odata/$metadata">/odata/$metadata</a></li>
+        <li><a href="/odata/Product">/odata/Product</a></li>
+        <li><a href="/odata/Product/?$select=ProductID,ProductName">/odata/Product/?$select=ProductID,ProductName</a></li>
+        <li><a href="/odata/Product/?$orderby=ProductName&$skip=1&$top=2">/odata/Product/?$orderby=ProductName&$skip=1&$top=2</a></li>
+        <li><a href="/odata/Product/?$orderby=ProductName&$skip=1&$top=2">/odata/Product/?$orderby=ProductName&$skip=1&$top=2</a></li>
+        <li><a href="/odata/Product/?$inlinecount=allpages&$filter=UnitPrice ge 20">/odata/Product/?$inlinecount=allpages&$filter=UnitPrice ge 20</a></li>
+        <li><a href="/odata/Product/?$expand=Category">/odata/Product/?$expand=Category</a></li>
+        <li><a href="/odata/Product/?$expand=Category&$select=ProductID,ProductName,Category/CategoryID,Category/CategoryName">/odata/Product/?$expand=Category&$select=ProductID,ProductName,Category/CategoryID,Category/CategoryName</a></li>
+        <li><a href="/odata/Product/?$inlinecount=allpages&$orderby=ProductName&$skip=1&$top=2&$expand=Category&$select=ProductID,ProductName,Category/CategoryID,Category/CategoryName">/odata/Product/?$inlinecount=allpages&$orderby=ProductName&$skip=1&$top=2&$expand=Category&$select=ProductID,ProductName,Category/CategoryID,Category/CategoryName</a></li>
+    </ul>
+</div>
+
+<script>
+    function editProduct(e)
+    {
+        e.preventDefault();
+        var tr = $(e.currentTarget).closest("tr");
+        var dataItem = $("#productGrid").data("kendoGrid").dataItem(tr);
+        window.location.href = '#/edit/' + dataItem.ProductID;
+    }
+
+    var lastSelectedProductId;
+
+    var crudServiceBaseUrl = "/odata/Product";
+    var productsModel = kendo.observable({
+        dataSource: dataSource = new kendo.data.DataSource({
+            type: "odata",
+            transport: {
+                read: {
+                    url: crudServiceBaseUrl,
+                    dataType: "json"
+                },
+                update: {
+                    url: function (data)
+                    {
+                        return crudServiceBaseUrl + "(" + data.ProductID + ")";
+                    },
+                    dataType: "json"
+                },
+                destroy: {
+                    url: function (data)
+                    {
+                        return crudServiceBaseUrl + "(" + data.ProductID + ")";
+                    },
+                    dataType: "json"
+                }
+            },
+            batch: false,
+            serverPaging: true,
+            serverSorting: true,
+            serverFiltering: true,
+            pageSize: 10,
+            schema: {
+                data: function (data)
+                {
+                    return data.value;
+                },
+                total: function (data)
+                {
+                    return data["odata.count"];
+                },
+                errors: function (data)
+                {
+                },
+                model: {
+                    id: "ProductID",
+                    fields: {
+                        ProductID: { type: "number", editable: false, nullable: true },
+                        ProductName: { type: "string", validation: { required: true } },
+                        UnitPrice: { type: "number", validation: { required: true, min: 1 } },
+                        Discontinued: { type: "boolean" },
+                        UnitsInStock: { type: "number", validation: { min: 0, required: true } }
+                    }
+                }
+            },
+            error: function (e)
+            {
+                debugger;
+                var message = e.xhr.responseJSON["odata.error"].message.value;
+                var innerMessage = e.xhr.responseJSON["odata.error"].innererror.message;
+                alert(message + "\n\n" + innerMessage);
+            }
+        }),
+        dataBound: function (arg)
+        {
+            if (lastSelectedProductId == null) return; // check if there was a row that was selected
+            var view = this.dataSource.view(); // get all the rows
+            for (var i = 0; i < view.length; i++)
+            { // iterate through rows
+                if (view[i].ProductID == lastSelectedProductId)
+                { // find row with the lastSelectedProductd
+                    var grid = arg.sender; // get the grid
+                    grid.select(grid.table.find("tr[data-uid='" + view[i].uid + "']")); // set the selected row
+                    break;
+                }
+            }
+        },
+        onChange: function (arg)
+        {
+            var grid = arg.sender;
+            var dataItem = grid.dataItem(grid.select());
+            lastSelectedProductId = dataItem.ProductID;
+        }
+    });
+
+    $(document).bind("viewSwtichedEvent", function (e, args)
+    { // subscribe to the viewSwitchedEvent
+        if (args.name == "listAsync")
+        { // check if this view was switched too
+            if (args.isRemotelyLoaded)
+            { // check if this view was loaded for the first time (remotely from server)
+                kendo.bind($("#productsForm"), productsModel); // bind the view to the model
+            } else
+            {// view already been loaded in cache
+                productsModel.dataSource.fetch(function () { }); // refresh grid
+            }
+        }
+    });
+</script>
