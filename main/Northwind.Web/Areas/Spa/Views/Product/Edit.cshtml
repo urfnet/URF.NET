@@ -129,7 +129,7 @@
         return productId;
     };
 
-    var crudServiceBaseUrl = "/odata/Product";
+    var baseUrl = "/odata/Product";
 
     $(document).bind("viewSwtichedEvent", function (e, args) { // subscribe to viewSwitchedEvent
         if (args.name == "edit") { // check if this view was switched to
@@ -163,7 +163,7 @@
                 transport: {
                     read: {
                         url: function (data) {
-                            return crudServiceBaseUrl + "(" + getProductId() + ")";
+                            return baseUrl + "(" + getProductId() + ")";
                         },
                         dataType: "json"
                     },
@@ -171,19 +171,19 @@
                         url: function (data) {
                             delete data.guid;
                             delete data["odata.metadata"];
-                            return crudServiceBaseUrl + "(" + getProductId() + ")";
+                            return baseUrl + "(" + getProductId() + ")";
                         },
                         contentType: "application/json",
                         type: "PUT",
                         dataType: "json"
                     },
                     create: {
-                        url: crudServiceBaseUrl,
+                        url: baseUrl,
                         dataType: "json"
                     },
                     destroy: {
                         url: function (data) {
-                            return crudServiceBaseUrl + "(" + getProductId() + ")";
+                            return baseUrl + "(" + getProductId() + ")";
                         },
                         dataType: "json"
                     },

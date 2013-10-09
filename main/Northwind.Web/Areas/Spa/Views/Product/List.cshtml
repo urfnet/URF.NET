@@ -5,7 +5,7 @@
 <div class="row">
     <div class="span5">
         <h2>Technlogy Stack</h2>
-        <h3><a href="http://blog.longle.net">http://blog.longle.net</a></h3>
+        <h3><a href="http://blog.longle.net">CBRE Architecture & Design</a></h3>
         <p>ASP.NET MVC 4, Web API, OData, Entity Framework 6 CTP, EntityFramework CE 6 RC1, Visual Studio 2013 Preview, Sql Server CE, Twitter Bootstrap, Kendo UI Web, Azure Website PaaS (<a href="http://www.windowsazure.com/en-us/develop/net/aspnet/" target="blank">free!</a>)</p>
         <br />
         <p><a class="btn" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
@@ -14,7 +14,7 @@
 
 <br /><br />
 <div class="k-content" style="width: 100%">
-    <div id="productsForm">
+    <div id="view">
         <div id="productGrid"
              data-role="grid"
              data-sortable="true"
@@ -23,7 +23,7 @@
              data-bind="source: dataSource, events: { dataBound: dataBound, change: onChange }"
              data-editable="inline"
              data-selectable="true"
-             data-toolbar='[ { template: kendo.template($("#template").html()) } ]'
+             data-toolbar='[ { template: $("#template").html() } ]'
              data-columns='[
                     { field: "ProductID", title: "ID", width: "50px" },
                     { field: "ProductName", title: "Name"},
@@ -45,18 +45,19 @@
         <li><a href="/odata/Product/?$expand=Category&$select=ProductID,ProductName,Category/CategoryID,Category/CategoryName">/odata/Product/?$expand=Category&$select=ProductID,ProductName,Category/CategoryID,Category/CategoryName</a></li>
         <li><a href="/odata/Product/?$inlinecount=allpages&$orderby=ProductName&$skip=1&$top=2&$expand=Category&$select=ProductID,ProductName,Category/CategoryID,Category/CategoryName">/odata/Product/?$inlinecount=allpages&$orderby=ProductName&$skip=1&$top=2&$expand=Category&$select=ProductID,ProductName,Category/CategoryID,Category/CategoryName</a></li>
     </ul>
-
 </div>
+
 <script type="text/x-kendo-template" id="template">
     <div class="toolbar">
         <a class="k-button" onclick="edit(event);"><span class="k-icon k-i-tick"></span>Edit</a>
-        <a class="k-button" onclick="remove(event);"><span class="k-icon k-i-tick"></span>Delete</a>
-        <a class="k-button" onclick="editDetails(event);"><span class="k-icon k-i-tick"></span>Edit Details</a>
+        <a class="k-button" onclick="destroy(event);"><span class="k-icon k-i-tick"></span>Delete</a>
+        <a class="k-button" onclick="details(event);"><span class="k-icon k-i-tick"></span>Edit Details</a>
     </div>
     <div class="toolbar" style="display:none">
         <a class="k-button" onclick="save(event);"><span class="k-icon k-i-tick"></span>Save</a>
         <a class="k-button" onclick="cancel(event);"><span class="k-icon k-i-tick"></span>Cancel</a>
-    </div></script>
+    </div>
+</script>
 
 <script>
     var lastSelectedDataItem;
@@ -75,7 +76,7 @@
         });
     };
 
-    var editDetails = function (event) {
+    var details = function (event) {
         getSelectedRowDoAction(event, function (grid, row, dataItem) {
             window.location.href = '#/edit/' + dataItem.ProductID;
         });
@@ -88,8 +89,8 @@
         });
     };
 
-    var remove = function (event) {
-        getSelectedRowDoAction(event, function(grid, row, dataItem) {
+    var destroy = function (event) {
+        getSelectedRowDoAction(event, function (grid, row, dataItem) {
             grid.dataSource.remove(dataItem);
             grid.dataSource.sync();
         });
@@ -99,13 +100,12 @@
         event.preventDefault();
         var grid = $("#productGrid").data("kendoGrid");
         var selectedRow = grid.select();
-        var selectedDataItem = grid.dataItem(selectedRow);
+        var dataItem = grid.dataItem(selectedRow);
         if (selectedRow.length > 0)
-            action(grid, selectedRow, selectedDataItem);
+            action(grid, selectedRow, dataItem);
         else
             alert("Please select a row.");
     };
-    
 
     var Product = kendo.data.Model.define({
         id: "ProductID",
@@ -119,24 +119,24 @@
         }
     });
 
-    var crudServiceBaseUrl = "/odata/Product";
+    var baseUrl = "/odata/Product";
 
-    var productDataSource = dataSource = new kendo.data.DataSource({
+    var dataSource = new kendo.data.DataSource({
         type: "odata",
         transport: {
             read: {
-                url: crudServiceBaseUrl,
+                url: baseUrl,
                 dataType: "json"
             },
             update: {
                 url: function (data) {
-                    return crudServiceBaseUrl + "(" + data.ProductID + ")";
+                    return baseUrl + "(" + data.ProductID + ")";
                 },
                 dataType: "json"
             },
             destroy: {
                 url: function (data) {
-                    return crudServiceBaseUrl + "(" + data.ProductID + ")";
+                    return baseUrl + "(" + data.ProductID + ")";
                 },
                 dataType: "json"
             }
@@ -159,7 +159,6 @@
             model: Product
         },
         error: function (e) {
-            debugger;
             var responseJson = e.xhr.responseJSON;
             if (responseJson != undefined) {
                 if (responseJson["odata.error"] != undefined) {
@@ -174,8 +173,8 @@
         }
     });
 
-    var productsModel = kendo.observable({
-        dataSource: productDataSource,
+    var viewModel = kendo.observable({
+        dataSource: dataSource,
         dataBound: function (arg) {
             if (lastSelectedDataItem == null) return; // check if there was a row that was selected
             var view = this.dataSource.view(); // get all the rows
@@ -196,9 +195,9 @@
     $(document).bind("viewSwtichedEvent", function (e, args) { // subscribe to the viewSwitchedEvent
         if (args.name == "list") { // check if this view was switched too
             if (args.isRemotelyLoaded) { // check if this view was loaded for the first time (remotely from server)
-                kendo.bind($("#productsForm"), productsModel); // bind the view to the model
+                kendo.bind($("#view"), viewModel); // bind the view to the model
             } else {// view already been loaded in cache
-                productsModel.dataSource.fetch(function () { }); // refresh grid
+                viewModel.dataSource.read(); // refresh grid
             }
         }
     });
