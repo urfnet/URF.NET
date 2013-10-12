@@ -62,7 +62,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Models\AlphabeticalListOfProduct.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\CategorySalesFor1997.cs" />
