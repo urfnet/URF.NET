@@ -11,10 +11,12 @@ namespace Repository
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         private readonly Guid _instanceId;
+        private readonly IDbContext _context;
         private readonly DbSet<TEntity> _dbSet;
 
         public Repository(IDbContext context)
         {
+            _context = context;
             _dbSet = context.Set<TEntity>();
             _instanceId = Guid.NewGuid();
         }
@@ -47,11 +49,12 @@ namespace Repository
         public virtual void Insert(TEntity entity)
         {
             _dbSet.Attach(entity);
-            ((IObjectState)entity).State = ObjectState.Added;
+            ((IObjectState)entity).EntityObjectState = ObjectState.Added;
         }
 
         public virtual void InsertRange(IEnumerable<TEntity> entities)
         {
+
             foreach (var entity in entities)
             {
                 Insert(entity);
@@ -60,18 +63,20 @@ namespace Repository
 
         public virtual void InsertGraph(TEntity entity)
         {
+            _context.SelfTracking = true;
             _dbSet.Add(entity);
         }
 
         public virtual void InsertGraphRange(IEnumerable<TEntity> entities)
         {
+            _context.SelfTracking = true;
             _dbSet.AddRange(entities);
         }
 
         public virtual void Update(TEntity entity)
         {
             _dbSet.Attach(entity);
-            ((IObjectState)entity).State = ObjectState.Modified;
+            ((IObjectState)entity).EntityObjectState = ObjectState.Modified;
         }
 
         public virtual void Delete(object id)
@@ -83,7 +88,7 @@ namespace Repository
         public virtual void Delete(TEntity entity)
         {
             _dbSet.Attach(entity);
-            ((IObjectState)entity).State = ObjectState.Deleted;
+            ((IObjectState)entity).EntityObjectState = ObjectState.Deleted;
             _dbSet.Remove(entity);
         }
 
