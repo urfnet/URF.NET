@@ -102,7 +102,7 @@ namespace Northwind.Web.Areas.Spa.Api
 
             try
             {
-                update.State = ObjectState.Modified;
+                update.EntityObjectState = ObjectState.Modified;
                 _unitOfWork.Repository<Product>().Update(update);
                 var x = await _unitOfWork.SaveAsync();
             }
