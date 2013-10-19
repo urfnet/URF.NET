@@ -44,11 +44,6 @@ namespace Repository
             return _dbSet.SqlQuery(query, parameters).AsQueryable();
         }
 
-        public virtual void InsertGraph(TEntity entity)
-        {
-            _dbSet.Add(entity);
-        }
-
         public virtual void Insert(TEntity entity)
         {
             _dbSet.Attach(entity);
@@ -61,6 +56,16 @@ namespace Repository
             {
                 Insert(entity);
             }
+        }
+
+        public virtual void InsertGraph(TEntity entity)
+        {
+            _dbSet.Add(entity);
+        }
+
+        public virtual void InsertGraphRange(IEnumerable<TEntity> entities)
+        {
+            _dbSet.AddRange(entities);
         }
 
         public virtual void Update(TEntity entity)
@@ -115,12 +120,13 @@ namespace Repository
             if (page != null && pageSize != null)
             {
                 query = query
-                    .Skip((page.Value - 1)*pageSize.Value)
+                    .Skip((page.Value - 1) * pageSize.Value)
                     .Take(pageSize.Value);
             }
             return query;
         }
 
+        // ReSharper disable once CSharpWarnings::CS1998
         internal async Task<IEnumerable<TEntity>> GetAsync(
                     Expression<Func<TEntity, bool>> filter = null,
                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
