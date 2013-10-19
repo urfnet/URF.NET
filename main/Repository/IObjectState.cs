@@ -6,6 +6,6 @@ namespace Repository
     public interface IObjectState
     {
         [NotMapped]
-        ObjectState State { get; set; }
+        ObjectState EntityObjectState { get; set; }
     }
 }
