@@ -49,6 +49,20 @@ namespace Repository
             _dbSet.Add(entity);
         }
 
+        public virtual void Insert(TEntity entity)
+        {
+            _dbSet.Attach(entity);
+            ((IObjectState)entity).State = ObjectState.Added;
+        }
+
+        public virtual void InsertRange(IEnumerable<TEntity> entities)
+        {
+            foreach (var entity in entities)
+            {
+                Insert(entity);
+            }
+        }
+
         public virtual void Update(TEntity entity)
         {
             _dbSet.Attach(entity);
@@ -66,12 +80,6 @@ namespace Repository
             _dbSet.Attach(entity);
             ((IObjectState)entity).State = ObjectState.Deleted;
             _dbSet.Remove(entity);
-        }
-
-        public virtual void Insert(TEntity entity)
-        {
-            _dbSet.Attach(entity);
-            ((IObjectState)entity).State = ObjectState.Added;
         }
 
         public virtual IRepositoryQuery<TEntity> Query()
