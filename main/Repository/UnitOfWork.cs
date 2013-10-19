@@ -1,13 +1,9 @@
-﻿#region
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Threading;
 using System.Threading.Tasks;
-
-#endregion
 
 namespace Repository
 {
@@ -33,7 +29,7 @@ namespace Repository
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-        
+
         public virtual void Dispose(bool disposing)
         {
             if (!_disposed && disposing)
