@@ -16,8 +16,7 @@ namespace Repository
     {
         DbContextConfiguration Configuration { get; }
         Guid InstanceId { get; }
-        bool SelfTracking { get; set; }
-
+        DbEntityEntry Entry(object entity);
         DbSet<T> Set<T>() where T : class;
         int SaveChanges();
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);

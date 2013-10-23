@@ -48,13 +48,20 @@ namespace Repository
 
         public virtual void Insert(TEntity entity)
         {
-            _dbSet.Attach(entity);
-            ((IObjectState)entity).EntityObjectState = ObjectState.Added;
+            try
+            {
+                _dbSet.Attach(entity);
+                ((IObjectState)entity).EntityObjectState = ObjectState.Added;
+                _context.Entry(entity).State = StateHelper.ConvertState(((IObjectState)entity).EntityObjectState);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         public virtual void InsertRange(IEnumerable<TEntity> entities)
         {
-
             foreach (var entity in entities)
             {
                 Insert(entity);
@@ -63,13 +70,11 @@ namespace Repository
 
         public virtual void InsertGraph(TEntity entity)
         {
-            _context.SelfTracking = true;
             _dbSet.Add(entity);
         }
 
         public virtual void InsertGraphRange(IEnumerable<TEntity> entities)
         {
-            _context.SelfTracking = true;
             _dbSet.AddRange(entities);
         }
 
@@ -77,6 +82,7 @@ namespace Repository
         {
             _dbSet.Attach(entity);
             ((IObjectState)entity).EntityObjectState = ObjectState.Modified;
+            _context.Entry(entity).State = StateHelper.ConvertState(((IObjectState)entity).EntityObjectState);
         }
 
         public virtual void Delete(object id)

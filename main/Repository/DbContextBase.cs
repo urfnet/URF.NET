@@ -15,9 +15,9 @@ namespace Repository
     {
         private readonly Guid _instanceId;
 
-        public DbContextBase(string nameOrConnectionString) : base(nameOrConnectionString)
+        public DbContextBase(string nameOrConnectionString)
+            : base(nameOrConnectionString)
         {
-            SelfTracking = false;
             _instanceId = Guid.NewGuid();
         }
 
@@ -26,14 +26,12 @@ namespace Repository
             get { return _instanceId; }
         }
 
-        public bool SelfTracking { get; set; }
-
         public void ApplyStateChanges()
         {
             foreach (DbEntityEntry dbEntityEntry in ChangeTracker.Entries())
             {
                 var entityState = dbEntityEntry.Entity as IObjectState;
-                
+
                 if (entityState == null)
                 {
                     throw new InvalidCastException("All entites must implement the IObjectState interface, " +
@@ -50,28 +48,19 @@ namespace Repository
 
         public override int SaveChanges()
         {
-            if (!SelfTracking)
-            {
-                ApplyStateChanges();
-            }
+            ApplyStateChanges();
             return base.SaveChanges();
         }
 
         public override Task<int> SaveChangesAsync()
         {
-            if (!SelfTracking)
-            {
-                ApplyStateChanges();
-            }
+            ApplyStateChanges();
             return base.SaveChangesAsync();
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken)
         {
-            if (!SelfTracking)
-            {
-                ApplyStateChanges();
-            }
+            ApplyStateChanges();
             return base.SaveChangesAsync(cancellationToken);
         }
 
