@@ -68,6 +68,9 @@
   <ItemGroup>
     <Compile Include="Providers\EntityFramework\DbContextBase.cs" />
     <Compile Include="EntityBase.cs" />
+    <Compile Include="Providers\EntityFramework\Fakes\AsyncEnumerableQuery.cs" />
+    <Compile Include="Providers\EntityFramework\Fakes\AsyncEnumeratorWrapper.cs" />
+    <Compile Include="Providers\EntityFramework\Fakes\AsyncQueryProviderWrapper.cs" />
     <Compile Include="Providers\EntityFramework\Fakes\FakeDbContext.cs" />
     <Compile Include="Providers\EntityFramework\Fakes\FakeDbSet.cs" />
     <Compile Include="Providers\EntityFramework\IDbContext.cs" />

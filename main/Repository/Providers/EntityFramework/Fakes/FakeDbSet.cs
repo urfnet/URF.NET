@@ -7,12 +7,14 @@ using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
+using System.Threading.Tasks;
 
 #endregion
 
 namespace Repository.Providers.EntityFramework.Fakes
 {
-    public abstract class FakeDbSet<TEntity> : IDbSet<TEntity> where TEntity : EntityBase, new()
+    public abstract class FakeDbSet<TEntity> : DbSet<TEntity>, IDbSet<TEntity> where TEntity : EntityBase, new()
     {
         private readonly ObservableCollection<TEntity> _items;
         private readonly IQueryable _query;
@@ -23,12 +25,11 @@ namespace Repository.Providers.EntityFramework.Fakes
             _query = _items.AsQueryable();
         }
 
-        public IEnumerator<TEntity> GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return _items.GetEnumerator();
         }
-
-        IEnumerator IEnumerable.GetEnumerator()
+        public IEnumerator<TEntity> GetEnumerator()
         {
             return _items.GetEnumerator();
         }
@@ -48,21 +49,19 @@ namespace Repository.Providers.EntityFramework.Fakes
             get { return _query.Provider; }
         }
 
-        public abstract TEntity Find(params object[] keyValues);
-
-        public TEntity Add(TEntity entity)
+        public override TEntity Add(TEntity entity)
         {
             _items.Add(entity);
             return entity;
         }
 
-        public TEntity Remove(TEntity entity)
+        public override TEntity Remove(TEntity entity)
         {
             _items.Remove(entity);
             return entity;
         }
 
-        public TEntity Attach(TEntity entity)
+        public override TEntity Attach(TEntity entity)
         {
             switch (entity.ObjectState)
             {
@@ -83,19 +82,20 @@ namespace Repository.Providers.EntityFramework.Fakes
             return entity;
         }
 
-        public TEntity Create()
+        public override TEntity Create()
         {
             return new TEntity();
         }
 
-        public TDerivedEntity Create<TDerivedEntity>() where TDerivedEntity : class, TEntity
+        public override TDerivedEntity Create<TDerivedEntity>()
         {
             return Activator.CreateInstance<TDerivedEntity>();
         }
 
-        public ObservableCollection<TEntity> Local
+        public override ObservableCollection<TEntity> Local
         {
             get { return _items; }
         }
+
     }
 }

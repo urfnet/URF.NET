@@ -12,7 +12,7 @@ namespace Repository.Providers.EntityFramework
     public interface IDbContext : IDisposable
     {
         Guid InstanceId { get; }
-        IDbSet<T> Set<T>() where T : class;
+        DbSet<T> Set<T>() where T : class;
         int SaveChanges();
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
         Task<int> SaveChangesAsync();

@@ -22,7 +22,7 @@ namespace Repository
         public Repository(IDbContext context)
         {
             _context = context;
-            _dbSet = (DbSet<TEntity>)context.Set<TEntity>();
+            _dbSet = context.Set<TEntity>();
             _instanceId = Guid.NewGuid();
         }
 

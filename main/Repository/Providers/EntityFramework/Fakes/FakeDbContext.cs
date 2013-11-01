@@ -21,9 +21,9 @@ namespace Repository.Providers.EntityFramework.Fakes
 
         public Guid InstanceId { get; private set; }
 
-        public IDbSet<T> Set<T>() where T : class
+        public DbSet<T> Set<T>() where T : class
         {
-            return (IDbSet<T>) _fakeDbSets[typeof (T)];
+            return (DbSet<T>) _fakeDbSets[typeof (T)];
         }
 
         public int SaveChanges()
@@ -38,7 +38,7 @@ namespace Repository.Providers.EntityFramework.Fakes
 
         public Task<int> SaveChangesAsync()
         {
-            throw new NotImplementedException();
+            return new Task<int>(() => default(int));
         }
 
         public void Dispose()
