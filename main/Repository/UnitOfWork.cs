@@ -1,26 +1,31 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Data.Entity.Validation;
 using System.Threading;
 using System.Threading.Tasks;
+using Repository.Providers.EntityFramework;
+
+#endregion
 
 namespace Repository
 {
-    public class UnitOfWork : IDisposable, IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         #region Private Fields
+
         private readonly IDbContext _context;
-        private Hashtable _repositories;
-        private bool _disposed;
         private readonly Guid _instanceId;
+        private bool _disposed;
+        private Hashtable _repositories;
+
         #endregion Private Fields
 
         #region Constuctor/Dispose
+
         public UnitOfWork(IDbContext context)
         {
             _context = context;
-            _context.Configuration.LazyLoadingEnabled = false;
             _instanceId = Guid.NewGuid();
         }
 
@@ -38,9 +43,13 @@ namespace Repository
             }
             _disposed = true;
         }
+
         #endregion Constuctor/Dispose
 
-        public Guid InstanceId { get { return _instanceId; } }
+        public Guid InstanceId
+        {
+            get { return _instanceId; }
+        }
 
         public void Save()
         {
@@ -57,29 +66,24 @@ namespace Repository
             return _context.SaveChangesAsync(cancellationToken);
         }
 
-        public IRepository<TEntity> Repository<TEntity>() where TEntity : class, new()
+        public IRepository<TEntity> Repository<TEntity>() where TEntity : EntityBase
         {
             if (_repositories == null)
             {
                 _repositories = new Hashtable();
             }
 
-            string type = typeof(TEntity).Name;
+            var type = typeof (TEntity).Name;
 
             if (_repositories.ContainsKey(type))
             {
-                return (IRepository<TEntity>)_repositories[type];
+                return (IRepository<TEntity>) _repositories[type];
             }
 
-            var repositoryType = typeof(Repository<>);
-            _repositories.Add(type, Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)), _context));
+            var repositoryType = typeof (Repository<>);
+            _repositories.Add(type, Activator.CreateInstance(repositoryType.MakeGenericType(typeof (TEntity)), _context));
 
-            return (IRepository<TEntity>)_repositories[type];
-        }
-
-        public IEnumerable<DbEntityValidationResult> GetValidationErrors()
-        {
-            return _context.GetValidationErrors();
+            return (IRepository<TEntity>) _repositories[type];
         }
     }
 }

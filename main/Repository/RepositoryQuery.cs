@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-    public sealed class RepositoryQuery<TEntity> : IRepositoryQuery<TEntity> where TEntity : class
+    public sealed class RepositoryQuery<TEntity> : IRepositoryQuery<TEntity> where TEntity : EntityBase
     {
         private readonly List<Expression<Func<TEntity, object>>> _includeProperties;
         private readonly Repository<TEntity> _repository;

@@ -66,9 +66,11 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DbContextBase.cs" />
+    <Compile Include="Providers\EntityFramework\DbContextBase.cs" />
     <Compile Include="EntityBase.cs" />
-    <Compile Include="IDbContext.cs" />
+    <Compile Include="Providers\EntityFramework\Fakes\FakeDbContext.cs" />
+    <Compile Include="Providers\EntityFramework\Fakes\FakeDbSet.cs" />
+    <Compile Include="Providers\EntityFramework\IDbContext.cs" />
     <Compile Include="IObjectState.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="IRepositoryQuery.cs" />
@@ -84,6 +86,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Providers\NHibernate\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

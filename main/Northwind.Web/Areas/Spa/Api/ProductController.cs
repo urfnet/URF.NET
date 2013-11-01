@@ -17,11 +17,8 @@ namespace Northwind.Web.Areas.Spa.Api
     [ODataNullValue]
     public class ProductController : AsyncEntitySetController<Product, int>
     {
-        #region Private Fields
         private readonly IUnitOfWork _unitOfWork;
-        #endregion Private Fields
 
-        #region Constractor / Dispose
         public ProductController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -32,18 +29,17 @@ namespace Northwind.Web.Areas.Spa.Api
             _unitOfWork.Dispose();
             base.Dispose(disposing);
         }
-        #endregion Constractor / Dispose
 
         protected override int GetKey(Product entity)
         {
             return entity.ProductID;
         }
 
-        [Queryable]
-        public override async Task<IEnumerable<Product>> Get()
-        {
-            return await _unitOfWork.Repository<Product>().Query().GetAsync();
-        }
+[Queryable]
+public override async Task<IEnumerable<Product>> Get()
+{
+    return await _unitOfWork.Repository<Product>().Query().GetAsync();
+}
 
         [Queryable]
         public override async Task<HttpResponseMessage> Get([FromODataUri] int key)
@@ -52,57 +48,38 @@ namespace Northwind.Web.Areas.Spa.Api
             return Request.CreateResponse(HttpStatusCode.OK, query);
         }
 
-        #region Task<Product> GetEntityByKeyAsync(int key)
         ///// <summary>
         ///// Retrieve an entity by key from the entity set.
         ///// </summary>
         ///// <param name="key">The entity key of the entity to retrieve.</param>
         ///// <returns>A Task that contains the retrieved entity when it completes, or null if an entity with the specified entity key cannot be found in the entity set.</returns>
-        //[Queryable]
-        //protected override async Task<Product> GetEntityByKeyAsync(int key)
-        //{
-        //    return await _db.Repository<Product>().FindAsync(key);
-        //}
-        #endregion Task<Product> GetEntityByKeyAsync(int key)
+        [Queryable]
+        protected override async Task<Product> GetEntityByKeyAsync(int key)
+        {
+            return await _unitOfWork.Repository<Product>().FindAsync(key);
+        }
 
         protected override async Task<Product> CreateEntityAsync(Product entity)
         {
             if (entity == null)
-            {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
-            }
+            
             _unitOfWork.Repository<Product>().Insert(entity);
             await _unitOfWork.SaveAsync();
             return entity;
         }
 
-        // PUT <controller>(key) - Update
-        /// <summary>
-        /// Update an existing entity in the entity set.
-        /// </summary>
-        /// <param name="key">The entity key of the entity to update.</param>
-        /// <param name="update">The updated entity.</param>
-        /// <returns>A Task that contains the updated entity when it completes.</returns>
         protected override async Task<Product> UpdateEntityAsync(int key, Product update)
         {
             if (update == null)
-            {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
-            }
-
+            
             if (key != update.ProductID)
-            {
                 throw new HttpResponseException(Request.CreateODataErrorResponse(HttpStatusCode.BadRequest, new ODataError { Message = "The supplied key and the Product being updated do not match." }));
-            }
-
-            if (await _unitOfWork.Repository<Product>().FindAsync(key) == null)
-            {
-                throw Request.EntityNotFound();
-            }
 
             try
             {
-                update.EntityObjectState = ObjectState.Modified;
+                update.ObjectState = ObjectState.Modified;
                 _unitOfWork.Repository<Product>().Update(update);
                 var x = await _unitOfWork.SaveAsync();
             }
@@ -123,21 +100,15 @@ namespace Northwind.Web.Areas.Spa.Api
         protected override async Task<Product> PatchEntityAsync(int key, Delta<Product> patch)
         {
             if (patch == null)
-            {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
-            }
 
             if (key != patch.GetEntity().ProductID)
-            {
                 throw Request.EntityNotFound();
-            }
 
             var entity = await _unitOfWork.Repository<Product>().FindAsync(key);
 
             if (entity == null)
-            {
                 throw Request.EntityNotFound();
-            }
 
             try
             {
@@ -146,8 +117,7 @@ namespace Northwind.Web.Areas.Spa.Api
             }
             catch (DbUpdateConcurrencyException)
             {
-                //Handling Concurrency with the Entity Framework - http://www.asp.net/mvc/tutorials/getting-started-with-ef-using-mvc/handling-concurrency-with-the-entity-framework-in-an-asp-net-mvc-application
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                throw new HttpResponseException(HttpStatusCode.Conflict);
             }
             return entity;
         }
@@ -157,17 +127,13 @@ namespace Northwind.Web.Areas.Spa.Api
             var entity = await _unitOfWork.Repository<Product>().FindAsync(key);
 
             if (entity == null)
-            {
                 throw Request.EntityNotFound();
-            }
-
-            //Delete children if any
 
             _unitOfWork.Repository<Product>().Delete(entity);
 
             try
             {
-                var x = await _unitOfWork.SaveAsync();
+                await _unitOfWork.SaveAsync();
             }
             catch (Exception e)
             { 
@@ -179,8 +145,7 @@ namespace Northwind.Web.Areas.Spa.Api
                         ReasonPhrase = e.InnerException.InnerException.Message
                     });
             }
-        } 
-
+        }
 
         #region Links
         // Create a relation from Product to Category or Supplier, by creating a $link entity.
@@ -199,9 +164,8 @@ namespace Northwind.Web.Areas.Spa.Api
             var entity = await _unitOfWork.Repository<Product>().FindAsync(key);
 
             if (entity == null)
-            {
                 throw Request.EntityNotFound();
-            }
+            
             switch (navigationProperty)
             {
                 case "Category":
@@ -209,10 +173,9 @@ namespace Northwind.Web.Areas.Spa.Api
                     var category = await _unitOfWork.Repository<Category>().FindAsync(categoryKey);
 
                     if (category == null)
-                    {
                         throw Request.EntityNotFound();
-                    }
-                    entity.Category = category;
+                    
+                        entity.Category = category;
                     break;
 
                 case "Supplier":
@@ -220,10 +183,9 @@ namespace Northwind.Web.Areas.Spa.Api
                     var supplier = await _unitOfWork.Repository<Supplier>().FindAsync(supplierKey);
 
                     if (supplier == null)
-                    {
                         throw Request.EntityNotFound();
-                    }
-                    entity.Supplier = supplier;
+                    
+                        entity.Supplier = supplier;
                     break;
 
                 default:
@@ -248,9 +210,7 @@ namespace Northwind.Web.Areas.Spa.Api
             var entity = await _unitOfWork.Repository<Product>().FindAsync(key);
 
             if (entity == null)
-            {
                 throw Request.EntityNotFound();
-            }
 
             switch (navigationProperty)
             {
@@ -266,6 +226,7 @@ namespace Northwind.Web.Areas.Spa.Api
                     await base.DeleteLink(key, relatedKey, navigationProperty);
                     break;
             }
+
             await _unitOfWork.SaveAsync();
         }
 
@@ -284,9 +245,7 @@ namespace Northwind.Web.Areas.Spa.Api
             var entity = await _unitOfWork.Repository<Product>().FindAsync(key);
 
             if (entity == null)
-            {
                 throw Request.EntityNotFound();
-            }
 
             switch (navigationProperty)
             {
@@ -297,58 +256,40 @@ namespace Northwind.Web.Areas.Spa.Api
                 case "Supplier":
                     entity.Supplier = null;
                     break;
-
+                     
                 default:
                     await base.DeleteLink(key, navigationProperty, link);
                     break;
             }
+
             await _unitOfWork.SaveAsync();
         }
         #endregion Links
 
-        /// <summary>
-        /// Handle all unmapped OData requests.
-        /// </summary>
-        /// <param name="odataPath">The OData path of the request.</param>
-        /// <returns>A Task that contains the response message to send back to the client when it completes.</returns>
-        // ReSharper disable once CSharpWarnings::CS1998
         public override async Task<HttpResponseMessage> HandleUnmappedRequest(ODataPath odataPath)
         {
-            // Create an HttpResponseMessage and add an HTTP header field
             //TODO: add logic and proper return values
             return Request.CreateResponse(HttpStatusCode.NoContent, odataPath);
         }
 
         #region Navigation Properties
-        /// <summary>
-        /// Get Category Navigation Property
-        /// </summary>
-        /// <param name="key">The entity key of the entity to retrieve.</param>
-        /// <returns>A Task that contains the retrieved entity when it completes, or null if an entity with the specified entity key cannot be found in the entity set.</returns>
         public async Task<Category> GetCategory(int key)
         {
             var entity = await _unitOfWork.Repository<Product>().FindAsync(key);
 
             if (entity == null)
-            {
                 throw Request.EntityNotFound();
-            }
+            
             return entity.Category;
         }
 
-        /// <summary>
-        /// Get Supplier Navigation Property
-        /// </summary>
-        /// <param name="key">The entity key of the entity to retrieve.</param>
-        /// <returns>A Task that contains the retrieved entity when it completes, or null if an entity with the specified entity key cannot be found in the entity set.</returns>
         public async Task<Supplier> GetSupplier(int key)
         {
             var entity = await _unitOfWork.Repository<Product>().FindAsync(key);
 
             if (entity == null)
-            {
                 throw Request.EntityNotFound();
-            }
+            
             return entity.Supplier;
         }
         #endregion Navigation Properties

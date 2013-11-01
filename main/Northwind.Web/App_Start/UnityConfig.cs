@@ -1,3 +1,5 @@
+using Repository.Providers.EntityFramework;
+
 #region
 
 using System;

@@ -1,23 +1,28 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Repository.Providers.EntityFramework;
+
+#endregion
 
 namespace Repository
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : EntityBase
     {
-        private readonly Guid _instanceId;
         private readonly IDbContext _context;
         private readonly DbSet<TEntity> _dbSet;
+        private readonly Guid _instanceId;
 
         public Repository(IDbContext context)
         {
             _context = context;
-            _dbSet = context.Set<TEntity>();
+            _dbSet = (DbSet<TEntity>)context.Set<TEntity>();
             _instanceId = Guid.NewGuid();
         }
 
@@ -48,24 +53,15 @@ namespace Repository
 
         public virtual void Insert(TEntity entity)
         {
-            try
-            {
-                _dbSet.Attach(entity);
-                ((IObjectState)entity).EntityObjectState = ObjectState.Added;
-                _context.Entry(entity).State = StateHelper.ConvertState(((IObjectState)entity).EntityObjectState);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            ((IObjectState)entity).ObjectState = ObjectState.Added;
+            _dbSet.Attach(entity);
+            _context.SyncObjectState(entity);
         }
 
         public virtual void InsertRange(IEnumerable<TEntity> entities)
         {
             foreach (var entity in entities)
-            {
                 Insert(entity);
-            }
         }
 
         public virtual void InsertGraph(TEntity entity)
@@ -80,9 +76,9 @@ namespace Repository
 
         public virtual void Update(TEntity entity)
         {
+            ((IObjectState)entity).ObjectState = ObjectState.Modified;
             _dbSet.Attach(entity);
-            ((IObjectState)entity).EntityObjectState = ObjectState.Modified;
-            _context.Entry(entity).State = StateHelper.ConvertState(((IObjectState)entity).EntityObjectState);
+            _context.SyncObjectState(entity);
         }
 
         public virtual void Delete(object id)
@@ -93,9 +89,9 @@ namespace Repository
 
         public virtual void Delete(TEntity entity)
         {
+            ((IObjectState)entity).ObjectState = ObjectState.Deleted;
             _dbSet.Attach(entity);
-            ((IObjectState)entity).EntityObjectState = ObjectState.Deleted;
-            _dbSet.Remove(entity);
+            _context.SyncObjectState(entity);
         }
 
         public virtual IRepositoryQuery<TEntity> Query()
@@ -114,36 +110,28 @@ namespace Repository
             IQueryable<TEntity> query = _dbSet;
 
             if (includeProperties != null)
-            {
                 includeProperties.ForEach(i => query = query.Include(i));
-            }
 
             if (filter != null)
-            {
                 query = query.Where(filter);
-            }
 
             if (orderBy != null)
-            {
                 query = orderBy(query);
-            }
 
             if (page != null && pageSize != null)
-            {
                 query = query
                     .Skip((page.Value - 1) * pageSize.Value)
                     .Take(pageSize.Value);
-            }
+
             return query;
         }
 
-        // ReSharper disable once CSharpWarnings::CS1998
         internal async Task<IEnumerable<TEntity>> GetAsync(
-                    Expression<Func<TEntity, bool>> filter = null,
-                    Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-                    List<Expression<Func<TEntity, object>>> includeProperties = null,
-                    int? page = null,
-                    int? pageSize = null)
+            Expression<Func<TEntity, bool>> filter = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            List<Expression<Func<TEntity, object>>> includeProperties = null,
+            int? page = null,
+            int? pageSize = null)
         {
             return Get(filter, orderBy, includeProperties, page, pageSize).AsEnumerable();
         }

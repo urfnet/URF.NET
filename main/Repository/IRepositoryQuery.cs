@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-    public interface IRepositoryQuery<TEntity> where TEntity : class
+    public interface IRepositoryQuery<TEntity> where TEntity : EntityBase
     {
         RepositoryQuery<TEntity> Filter(Expression<Func<TEntity, bool>> filter);
         RepositoryQuery<TEntity> OrderBy(Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy);

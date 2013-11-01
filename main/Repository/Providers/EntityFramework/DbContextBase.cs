@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 #endregion
 
-namespace Repository
+namespace Repository.Providers.EntityFramework
 {
     public class DbContextBase : DbContext, IDbContext
     {
@@ -37,7 +37,7 @@ namespace Repository
                     throw new InvalidCastException("All entites must implement the IObjectState interface, " +
                                                    "this interface must be implemented so each entites state can explicitely determined when updating graphs.");
                 }
-                dbEntityEntry.State = StateHelper.ConvertState(entityState.EntityObjectState);
+                dbEntityEntry.State = StateHelper.ConvertState(entityState.ObjectState);
             }
         }
 
@@ -66,8 +66,12 @@ namespace Repository
 
         protected override void OnModelCreating(DbModelBuilder builder)
         {
-            builder.Conventions.Remove<PluralizingTableNameConvention>();
+            Configuration.LazyLoadingEnabled = false;
             base.OnModelCreating(builder);
+        }
+        public void SyncObjectState(object entity)
+        {
+            Entry(entity).State = StateHelper.ConvertState(((IObjectState)entity).ObjectState);
         }
     }
 }
