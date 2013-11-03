@@ -15,6 +15,21 @@ namespace Northwind.Test.Repository
     [TestClass]
     public class ProductRepositoryTest
     {
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            //todo: setup actual NorthwindFake.mdf
+            // copy ProductRepositoryTests.cs and run all tests against actual NorthwindContct instead of NorthwindFakeContext.cs
+            // run all testes with actual NorthwindTest.mdf (LocalDb) NOT the NorthwindFakeContext.cs
+        }
+
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            // todo: delete NorthwindTest.mfd (LocalDb)
+            // cleanup all the infrastructure that was needed for our tests.
+        }
+
         [TestMethod]
         public void DeleteProductById()
         {

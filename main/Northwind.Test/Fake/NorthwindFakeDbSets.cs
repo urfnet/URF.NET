@@ -20,7 +20,6 @@ namespace Northwind.Test.Fake
         {
             return new Task<Category>(() => Find(keyValues));
         }
-
     }
 
     public class CustomerDbSet : FakeDbSet<Customer>
@@ -51,7 +50,6 @@ namespace Northwind.Test.Fake
         {
            return new Task<Employee>(() => this.SingleOrDefault(t => t.EmployeeID == (int) keyValues.FirstOrDefault()));
         }
-
     }
 
     public class OrderDbSet : FakeDbSet<Order>
@@ -76,7 +74,6 @@ namespace Northwind.Test.Fake
         {
             return new Task<OrderDetail>(() => this.SingleOrDefault(t => t.OrderID == (int)keyValues[0] && t.ProductID == (int)keyValues[1]));
         }
-
     }
 
     public class ProductDbSet : FakeDbSet<Product>
