@@ -175,5 +175,21 @@ namespace Northwind.Test.Repository
                 Assert.AreEqual(product.Discontinued, false, "Assert that our changes were saved.");
             }
         }
+ 
+        [TestMethod]
+        public async void FindProductKeyAsync()
+        {
+            using (IDbContext northwindFakeContext = new NorthwindFakeContext())
+            using (IUnitOfWork unitOfWork = new UnitOfWork(northwindFakeContext))
+            {
+                unitOfWork.Repository<Product>().Insert(new Product { ProductID = 2, Discontinued = true });
+
+                unitOfWork.Save();
+
+                var product = await unitOfWork.Repository<Product>().FindAsync(2);
+
+                Assert.AreEqual(product.ProductID, 2);
+            }
+        }
     }
 }
