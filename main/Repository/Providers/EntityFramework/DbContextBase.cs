@@ -19,23 +19,12 @@ namespace Repository.Providers.EntityFramework
             : base(nameOrConnectionString)
         {
             _instanceId = Guid.NewGuid();
+            Configuration.LazyLoadingEnabled = false;
         }
 
         public Guid InstanceId
         {
             get { return _instanceId; }
-        }
-
-        private void SyncObjectsStatePreCommit()
-        {
-            foreach (var dbEntityEntry in ChangeTracker.Entries())
-                dbEntityEntry.State = StateHelper.ConvertState(((IObjectState)dbEntityEntry.Entity).ObjectState);
-        }
-
-        private void SyncObjectsStatePostCommit()
-        {
-            foreach (var dbEntityEntry in ChangeTracker.Entries())
-                ((IObjectState)dbEntityEntry.Entity).ObjectState = StateHelper.ConvertState(dbEntityEntry.State);
         }
 
         public new DbSet<T> Set<T>() where T : class
@@ -67,14 +56,20 @@ namespace Repository.Providers.EntityFramework
             return changesAsync;
         }
 
-        protected override void OnModelCreating(DbModelBuilder builder)
-        {
-            Configuration.LazyLoadingEnabled = false;
-            base.OnModelCreating(builder);
-        }
         public void SyncObjectState(object entity)
         {
             Entry(entity).State = StateHelper.ConvertState(((IObjectState)entity).ObjectState);
+        }
+        private void SyncObjectsStatePreCommit()
+        {
+            foreach (var dbEntityEntry in ChangeTracker.Entries())
+                dbEntityEntry.State = StateHelper.ConvertState(((IObjectState)dbEntityEntry.Entity).ObjectState);
+        }
+
+        private void SyncObjectsStatePostCommit()
+        {
+            foreach (var dbEntityEntry in ChangeTracker.Entries())
+                ((IObjectState)dbEntityEntry.Entity).ObjectState = StateHelper.ConvertState(dbEntityEntry.State);
         }
     }
 }
