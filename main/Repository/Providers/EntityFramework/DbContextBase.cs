@@ -26,19 +26,16 @@ namespace Repository.Providers.EntityFramework
             get { return _instanceId; }
         }
 
-        public void ApplyStateChanges()
+        private void SyncObjectsStatePreCommit()
         {
-            foreach (DbEntityEntry dbEntityEntry in ChangeTracker.Entries())
-            {
-                var entityState = dbEntityEntry.Entity as IObjectState;
+            foreach (var dbEntityEntry in ChangeTracker.Entries())
+                dbEntityEntry.State = StateHelper.ConvertState(((IObjectState)dbEntityEntry.Entity).ObjectState);
+        }
 
-                if (entityState == null)
-                {
-                    throw new InvalidCastException("All entites must implement the IObjectState interface, " +
-                                                   "this interface must be implemented so each entites state can explicitely determined when updating graphs.");
-                }
-                dbEntityEntry.State = StateHelper.ConvertState(entityState.ObjectState);
-            }
+        private void SyncObjectsStatePostCommit()
+        {
+            foreach (var dbEntityEntry in ChangeTracker.Entries())
+                ((IObjectState)dbEntityEntry.Entity).ObjectState = StateHelper.ConvertState(dbEntityEntry.State);
         }
 
         public new DbSet<T> Set<T>() where T : class
@@ -48,20 +45,26 @@ namespace Repository.Providers.EntityFramework
 
         public override int SaveChanges()
         {
-            ApplyStateChanges();
-            return base.SaveChanges();
+            SyncObjectsStatePreCommit();
+            var changes = base.SaveChanges();
+            SyncObjectsStatePostCommit();
+            return changes;
         }
 
         public override Task<int> SaveChangesAsync()
         {
-            ApplyStateChanges();
-            return base.SaveChangesAsync();
+            SyncObjectsStatePreCommit();
+            var changesAsync = base.SaveChangesAsync();
+            SyncObjectsStatePostCommit();
+            return changesAsync;
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken)
         {
-            ApplyStateChanges();
-            return base.SaveChangesAsync(cancellationToken);
+            SyncObjectsStatePreCommit();
+            var changesAsync = base.SaveChangesAsync(cancellationToken);
+            SyncObjectsStatePostCommit();
+            return changesAsync;
         }
 
         protected override void OnModelCreating(DbModelBuilder builder)

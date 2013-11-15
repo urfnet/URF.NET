@@ -16,8 +16,6 @@ namespace Repository.Providers.EntityFramework
         int SaveChanges();
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
         Task<int> SaveChangesAsync();
-        void Dispose();
-        void ApplyStateChanges();
         void SyncObjectState(object entity);
     }
 }

@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using System.Data.Entity;
 
 #endregion
@@ -20,6 +21,25 @@ namespace Repository
                     return EntityState.Deleted;
                 default:
                     return EntityState.Unchanged;
+            }
+        }
+
+        public static ObjectState ConvertState(EntityState state)
+        {
+            switch (state)
+            {
+                case EntityState.Detached:
+                    return ObjectState.Unchanged;
+                case EntityState.Unchanged:
+                    return ObjectState.Unchanged;
+                case EntityState.Added:
+                    return ObjectState.Added;
+                case EntityState.Deleted:
+                    return ObjectState.Deleted;
+                case EntityState.Modified:
+                    return ObjectState.Modified;
+                default:
+                    throw new ArgumentOutOfRangeException("state");
             }
         }
     }
