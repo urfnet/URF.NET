@@ -45,10 +45,6 @@ namespace Repository.Providers.EntityFramework.Fakes
         {
         }
 
-        public void ApplyStateChanges()
-        {
-        }
-
         public void AddFakeDbSet<TEntity, TFakeDbSet>()
             where TEntity : EntityBase, IObjectState, new()
             where TFakeDbSet : FakeDbSet<TEntity>, IDbSet<TEntity>, new()
