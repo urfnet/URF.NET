@@ -9,7 +9,7 @@ using Repository.Providers.EntityFramework;
 
 namespace Northwind.Data
 {
-    public partial class NorthwindContext : DbContextBase
+    public partial class NorthwindContext : DataContext
     {
         public NorthwindContext() :
             base("NorthwindContext")

@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace Repository.Providers.EntityFramework
 {
-    public class DbContextBase : DbContext, IDbContext
+    public class DataContext : DbContext, IDbContext
     {
         private readonly Guid _instanceId;
 
-        public DbContextBase(string nameOrConnectionString)
+        public DataContext(string nameOrConnectionString)
             : base(nameOrConnectionString)
         {
             _instanceId = Guid.NewGuid();
