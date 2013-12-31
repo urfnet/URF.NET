@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Repository.Providers.EntityFramework
 {
-    public class DataContext : DbContext, IDbContext
+    public class DataContext : DbContext, IDataContext
     {
         private readonly Guid _instanceId;
 

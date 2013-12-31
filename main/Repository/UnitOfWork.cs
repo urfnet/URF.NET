@@ -14,7 +14,7 @@ namespace Repository
     {
         #region Private Fields
 
-        private readonly IDbContext _context;
+        private readonly IDataContext _context;
         private readonly Guid _instanceId;
         private bool _disposed;
         private Hashtable _repositories;
@@ -23,7 +23,7 @@ namespace Repository
 
         #region Constuctor/Dispose
 
-        public UnitOfWork(IDbContext context)
+        public UnitOfWork(IDataContext context)
         {
             _context = context;
             _instanceId = Guid.NewGuid();

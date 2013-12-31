@@ -47,7 +47,7 @@ namespace Northwind.Web
             // container.LoadConfiguration();
 
             unityContainer
-                .RegisterType<IDbContext, NorthwindContext>(new PerRequestLifetimeManager())
+                .RegisterType<IDataContext, NorthwindContext>(new PerRequestLifetimeManager())
                 .RegisterType<IUnitOfWork, UnitOfWork>(new PerRequestLifetimeManager());
         }
     }

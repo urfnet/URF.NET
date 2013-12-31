@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Repository.Providers.EntityFramework
 {
-    public interface IDbContext : IDisposable
+    public interface IDataContext : IDisposable
     {
         Guid InstanceId { get; }
         DbSet<T> Set<T>() where T : class;

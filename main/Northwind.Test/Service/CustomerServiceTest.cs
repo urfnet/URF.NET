@@ -17,7 +17,7 @@ namespace Northwind.Test.Service
         [TestMethod]
         public void AddNewCustomer()
         {
-            using (IDbContext context = new NorthwindFakeContext())
+            using (IDataContext context = new NorthwindFakeContext())
             using (IUnitOfWork unitOfWork = new UnitOfWork(context))
             using (ICustomerService customerService = new CustomerService(unitOfWork))
             {

@@ -83,7 +83,7 @@
     <Compile Include="Providers\EntityFramework\Fakes\AsyncQueryProviderWrapper.cs" />
     <Compile Include="Providers\EntityFramework\Fakes\FakeDbContext.cs" />
     <Compile Include="Providers\EntityFramework\Fakes\FakeDbSet.cs" />
-    <Compile Include="Providers\EntityFramework\IDbContext.cs" />
+    <Compile Include="Providers\EntityFramework\IDataContext.cs" />
     <Compile Include="IObjectState.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="IRepositoryQuery.cs" />

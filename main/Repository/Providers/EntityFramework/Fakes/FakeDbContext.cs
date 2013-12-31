@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Repository.Providers.EntityFramework.Fakes
 {
-    public abstract class FakeDbContext : IDbContext
+    public abstract class FakeDbContext : IDataContext
     {
         private readonly Dictionary<Type, object> _fakeDbSets;
 

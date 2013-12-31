@@ -15,11 +15,11 @@ namespace Repository
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : EntityBase
     {
-        private readonly IDbContext _context;
+        private readonly IDataContext _context;
         private readonly DbSet<TEntity> _dbSet;
         private readonly Guid _instanceId;
 
-        public Repository(IDbContext context)
+        public Repository(IDataContext context)
         {
             _context = context;
             _dbSet = context.Set<TEntity>();
