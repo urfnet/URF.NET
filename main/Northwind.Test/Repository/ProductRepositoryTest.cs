@@ -51,6 +51,23 @@ namespace Northwind.Test.Repository
         }
 
         [TestMethod]
+        public void DeepLoadProductWithSupplier()
+        {
+            using (IDataContext northwindFakeContext = new NorthwindFakeContext())
+            using (IUnitOfWork unitOfWork = new UnitOfWork(northwindFakeContext))
+            {
+                unitOfWork.Repository<Supplier>().Insert(new Supplier{ SupplierID = 1, CompanyName = "Nokia", City = "Tampere", Country = "Finland", ContactName = "Stephen Elop", ContactTitle = "CEO" });
+                unitOfWork.Repository<Product>().Insert(new Product { ProductID = 2, Discontinued = true, ProductName = "Nokia Lumia 1520", SupplierID = 1, ObjectState = ObjectState.Added });
+
+                unitOfWork.Save();
+
+                var product = unitOfWork.Repository<Product>().Find(2);
+
+                Assert.IsNotNull(product);
+            }
+        }
+
+        [TestMethod]
         public void DeleteProductByProduct()
         {
             using (IDataContext northwindFakeContext = new NorthwindFakeContext())
@@ -120,11 +137,6 @@ namespace Northwind.Test.Repository
 
                 Assert.AreEqual(2, discontinuedProducts.Count());
             }
-        }
-
-        [TestInitialize]
-        public void Initialize()
-        {
         }
 
         [TestMethod]

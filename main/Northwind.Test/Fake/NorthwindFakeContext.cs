@@ -16,6 +16,7 @@ namespace Northwind.Test.Fake
             AddFakeDbSet<Employee, EmployeeDbSet>();
             AddFakeDbSet<Order, OrderDbSet>();
             AddFakeDbSet<OrderDetail, OrderDetailDbSet>();
+            AddFakeDbSet<Supplier, SupplierDbSet>();
             AddFakeDbSet<Product, ProductDbSet>();
             AddFakeDbSet<Region, RegionDbSet>();
             AddFakeDbSet<Shipper, ShippperDbSet>();

@@ -75,6 +75,17 @@ namespace Northwind.Test.Fake
             return new Task<OrderDetail>(() => this.SingleOrDefault(t => t.OrderID == (int)keyValues[0] && t.ProductID == (int)keyValues[1]));
         }
     }
+    public class SupplierDbSet : FakeDbSet<Supplier>
+    {
+        public override Supplier Find(params object[] keyValues)
+        {
+            return this.SingleOrDefault(t => t.SupplierID == (int)keyValues.FirstOrDefault());
+        }
+        public override Task<Supplier> FindAsync(CancellationToken cancellationToken, params object[] keyValues)
+        {
+            return new Task<Supplier>(() => this.SingleOrDefault(t => t.SupplierID == (int)keyValues.FirstOrDefault()));
+        }
+    }
 
     public class ProductDbSet : FakeDbSet<Product>
     {
