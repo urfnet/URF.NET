@@ -43,6 +43,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\AlphabeticalListOfProduct.cs" />
+    <Compile Include="Models\Alphabetical_list_of_product.cs" />
+    <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\CurrentProductList.cs" />
+    <Compile Include="Models\Current_Product_List.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\CustomerAndSuppliersByCity.cs" />
+    <Compile Include="Models\CustomerDemographic.cs" />
+    <Compile Include="Models\Customer_and_Suppliers_by_City.cs" />
+    <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\NorthwindContext.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderDetail.cs" />
+    <Compile Include="Models\OrderDetailsExtended.cs" />
+    <Compile Include="Models\OrdersQry.cs" />
+    <Compile Include="Models\OrderSubtotal.cs" />
+    <Compile Include="Models\Orders_Qry.cs" />
+    <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\ProductsAboveAveragePrice.cs" />
+    <Compile Include="Models\ProductSalesFor1997.cs" />
+    <Compile Include="Models\ProductsByCategory.cs" />
+    <Compile Include="Models\Products_Above_Average_Price.cs" />
+    <Compile Include="Models\Products_by_Category.cs" />
+    <Compile Include="Models\Region.cs" />
+    <Compile Include="Models\SalesTotalsByAmount.cs" />
+    <Compile Include="Models\Shipper.cs" />
+    <Compile Include="Models\SummaryOfSalesByQuarter.cs" />
+    <Compile Include="Models\SummaryOfSalesByYear.cs" />
+    <Compile Include="Models\Supplier.cs" />
+    <Compile Include="Models\sysdiagram.cs" />
+    <Compile Include="Models\Territory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
