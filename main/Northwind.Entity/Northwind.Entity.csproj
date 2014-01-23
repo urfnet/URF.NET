@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C100E51A-2C9D-4621-A82C-5FA473CA71C9}</ProjectGuid>
+    <ProjectGuid>{97515F06-0783-420C-AC3A-45357015B699}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Northwind.Entity</RootNamespace>
     <AssemblyName>Northwind.Entity</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -33,27 +33,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <OutputPath>bin\x86\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -62,39 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\AlphabeticalListOfProduct.cs" />
-    <Compile Include="Models\Category.cs" />
-    <Compile Include="Models\CategorySalesFor1997.cs" />
-    <Compile Include="Models\CurrentProductList.cs" />
-    <Compile Include="Models\Customer.cs" />
-    <Compile Include="Models\CustomerAndSuppliersByCity.cs" />
-    <Compile Include="Models\CustomerDemographic.cs" />
-    <Compile Include="Models\Employee.cs" />
-    <Compile Include="Models\Invoice.cs" />
-    <Compile Include="Models\Order.cs" />
-    <Compile Include="Models\OrderDetail.cs" />
-    <Compile Include="Models\OrderDetailsExtended.cs" />
-    <Compile Include="Models\OrdersQry.cs" />
-    <Compile Include="Models\OrderSubtotal.cs" />
-    <Compile Include="Models\Product.cs" />
-    <Compile Include="Models\ProductsAboveAveragePrice.cs" />
-    <Compile Include="Models\ProductSalesFor1997.cs" />
-    <Compile Include="Models\ProductsByCategory.cs" />
-    <Compile Include="Models\Region.cs" />
-    <Compile Include="Models\SalesByCategory.cs" />
-    <Compile Include="Models\SalesTotalsByAmount.cs" />
-    <Compile Include="Models\Shipper.cs" />
-    <Compile Include="Models\SummaryOfSalesByQuarter.cs" />
-    <Compile Include="Models\SummaryOfSalesByYear.cs" />
-    <Compile Include="Models\Supplier.cs" />
-    <Compile Include="Models\Territory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Repository\Repository.csproj">
-      <Project>{6E682A14-C872-4813-B620-76E108DEA683}</Project>
-      <Name>Repository</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

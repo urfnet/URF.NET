@@ -72,10 +72,6 @@
     <Compile Include="Service\CustomerServiceTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Northwind.Entity\Northwind.Entity.csproj">
-      <Project>{C100E51A-2C9D-4621-A82C-5FA473CA71C9}</Project>
-      <Name>Northwind.Entity</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Northwind.Service\Northwind.Service.csproj">
       <Project>{678DB4A2-A20D-4F71-8A98-D8BBE879DEDD}</Project>
       <Name>Northwind.Service</Name>

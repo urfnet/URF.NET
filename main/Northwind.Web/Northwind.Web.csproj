@@ -877,14 +877,6 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Northwind.Data\Northwind.Data.csproj">
-      <Project>{8672834B-B47A-4E6A-9BB6-26489726FD18}</Project>
-      <Name>Northwind.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Northwind.Entity\Northwind.Entity.csproj">
-      <Project>{C100E51A-2C9D-4621-A82C-5FA473CA71C9}</Project>
-      <Name>Northwind.Entity</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Repository\Repository.csproj">
       <Project>{6E682A14-C872-4813-B620-76E108DEA683}</Project>
       <Name>Repository</Name>

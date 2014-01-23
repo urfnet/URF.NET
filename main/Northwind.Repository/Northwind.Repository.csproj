@@ -52,10 +52,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Northwind.Entity\Northwind.Entity.csproj">
-      <Project>{c100e51a-2c9d-4621-a82c-5fa473ca71c9}</Project>
-      <Name>Northwind.Entity</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Repository\Repository.csproj">
       <Project>{6e682a14-c872-4813-b620-76e108dea683}</Project>
       <Name>Repository</Name>

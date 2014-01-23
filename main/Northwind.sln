@@ -3,11 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Data", "Northwind.Data\Northwind.Data.csproj", "{8672834B-B47A-4E6A-9BB6-26489726FD18}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Web", "Northwind.Web\Northwind.Web.csproj", "{5104D35B-733D-4FDE-99DB-4AF146A15953}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Entity", "Northwind.Entity\Northwind.Entity.csproj", "{C100E51A-2C9D-4621-A82C-5FA473CA71C9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frameworks", "Frameworks", "{D90F4E72-AD7E-4255-9631-AB84CBA6ABD0}"
 EndProject
@@ -26,34 +22,38 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Repository", "Nor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Test", "Northwind.Test\Northwind.Test.csproj", "{F358A9F4-BDC6-4100-ACD9-4DBF157CE513}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Data", "Northwind.Data\Northwind.Data.csproj", "{2600D145-1713-4C15-9010-D0DBDACBE431}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Entity", "Northwind.Entity\Northwind.Entity.csproj", "{97515F06-0783-420C-AC3A-45357015B699}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 8
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs26
 		SccLocalPath0 = .
-		SccProjectUniqueName1 = Northwind.Data\\Northwind.Data.csproj
-		SccProjectName1 = Northwind.Data
-		SccLocalPath1 = Northwind.Data
-		SccProjectUniqueName2 = Northwind.Web\\Northwind.Web.csproj
-		SccProjectName2 = Northwind.Web
-		SccLocalPath2 = Northwind.Web
-		SccProjectUniqueName3 = Northwind.Entity\\Northwind.Entity.csproj
-		SccProjectName3 = Northwind.Entity
-		SccLocalPath3 = Northwind.Entity
-		SccProjectUniqueName4 = Repository\\Repository.csproj
-		SccProjectTopLevelParentUniqueName4 = Northwind.sln
-		SccProjectName4 = Repository
-		SccLocalPath4 = Repository
-		SccProjectUniqueName5 = Northwind.Service\\Northwind.Service.csproj
-		SccProjectName5 = Northwind.Service
-		SccLocalPath5 = Northwind.Service
-		SccProjectUniqueName6 = Northwind.Repository\\Northwind.Repository.csproj
-		SccProjectName6 = Northwind.Repository
-		SccLocalPath6 = Northwind.Repository
-		SccProjectUniqueName7 = Northwind.Test\\Northwind.Test.csproj
-		SccProjectName7 = Northwind.Test
-		SccLocalPath7 = Northwind.Test
+		SccProjectUniqueName1 = Northwind.Web\\Northwind.Web.csproj
+		SccProjectName1 = Northwind.Web
+		SccLocalPath1 = Northwind.Web
+		SccProjectUniqueName2 = Repository\\Repository.csproj
+		SccProjectTopLevelParentUniqueName2 = Northwind.sln
+		SccProjectName2 = Repository
+		SccLocalPath2 = Repository
+		SccProjectUniqueName3 = Northwind.Service\\Northwind.Service.csproj
+		SccProjectName3 = Northwind.Service
+		SccLocalPath3 = Northwind.Service
+		SccProjectUniqueName4 = Northwind.Repository\\Northwind.Repository.csproj
+		SccProjectName4 = Northwind.Repository
+		SccLocalPath4 = Northwind.Repository
+		SccProjectUniqueName5 = Northwind.Test\\Northwind.Test.csproj
+		SccProjectName5 = Northwind.Test
+		SccLocalPath5 = Northwind.Test
+		SccProjectUniqueName6 = Northwind.Data\\Northwind.Data.csproj
+		SccProjectName6 = Northwind.Data
+		SccLocalPath6 = Northwind.Data
+		SccProjectUniqueName7 = Northwind.Entity\\Northwind.Entity.csproj
+		SccProjectName7 = Northwind.Entity
+		SccLocalPath7 = Northwind.Entity
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,18 +64,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8672834B-B47A-4E6A-9BB6-26489726FD18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8672834B-B47A-4E6A-9BB6-26489726FD18}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8672834B-B47A-4E6A-9BB6-26489726FD18}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{8672834B-B47A-4E6A-9BB6-26489726FD18}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{8672834B-B47A-4E6A-9BB6-26489726FD18}.Debug|x86.ActiveCfg = Debug|x86
-		{8672834B-B47A-4E6A-9BB6-26489726FD18}.Debug|x86.Build.0 = Debug|x86
-		{8672834B-B47A-4E6A-9BB6-26489726FD18}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8672834B-B47A-4E6A-9BB6-26489726FD18}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8672834B-B47A-4E6A-9BB6-26489726FD18}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{8672834B-B47A-4E6A-9BB6-26489726FD18}.Release|Mixed Platforms.Build.0 = Release|x86
-		{8672834B-B47A-4E6A-9BB6-26489726FD18}.Release|x86.ActiveCfg = Release|x86
-		{8672834B-B47A-4E6A-9BB6-26489726FD18}.Release|x86.Build.0 = Release|x86
 		{5104D35B-733D-4FDE-99DB-4AF146A15953}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5104D35B-733D-4FDE-99DB-4AF146A15953}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5104D35B-733D-4FDE-99DB-4AF146A15953}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -88,18 +76,6 @@ Global
 		{5104D35B-733D-4FDE-99DB-4AF146A15953}.Release|Mixed Platforms.Build.0 = Release|x86
 		{5104D35B-733D-4FDE-99DB-4AF146A15953}.Release|x86.ActiveCfg = Release|x86
 		{5104D35B-733D-4FDE-99DB-4AF146A15953}.Release|x86.Build.0 = Release|x86
-		{C100E51A-2C9D-4621-A82C-5FA473CA71C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C100E51A-2C9D-4621-A82C-5FA473CA71C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C100E51A-2C9D-4621-A82C-5FA473CA71C9}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{C100E51A-2C9D-4621-A82C-5FA473CA71C9}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{C100E51A-2C9D-4621-A82C-5FA473CA71C9}.Debug|x86.ActiveCfg = Debug|x86
-		{C100E51A-2C9D-4621-A82C-5FA473CA71C9}.Debug|x86.Build.0 = Debug|x86
-		{C100E51A-2C9D-4621-A82C-5FA473CA71C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C100E51A-2C9D-4621-A82C-5FA473CA71C9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C100E51A-2C9D-4621-A82C-5FA473CA71C9}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{C100E51A-2C9D-4621-A82C-5FA473CA71C9}.Release|Mixed Platforms.Build.0 = Release|x86
-		{C100E51A-2C9D-4621-A82C-5FA473CA71C9}.Release|x86.ActiveCfg = Release|x86
-		{C100E51A-2C9D-4621-A82C-5FA473CA71C9}.Release|x86.Build.0 = Release|x86
 		{6E682A14-C872-4813-B620-76E108DEA683}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6E682A14-C872-4813-B620-76E108DEA683}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E682A14-C872-4813-B620-76E108DEA683}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -142,6 +118,26 @@ Global
 		{F358A9F4-BDC6-4100-ACD9-4DBF157CE513}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{F358A9F4-BDC6-4100-ACD9-4DBF157CE513}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{F358A9F4-BDC6-4100-ACD9-4DBF157CE513}.Release|x86.ActiveCfg = Release|Any CPU
+		{2600D145-1713-4C15-9010-D0DBDACBE431}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2600D145-1713-4C15-9010-D0DBDACBE431}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2600D145-1713-4C15-9010-D0DBDACBE431}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{2600D145-1713-4C15-9010-D0DBDACBE431}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{2600D145-1713-4C15-9010-D0DBDACBE431}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2600D145-1713-4C15-9010-D0DBDACBE431}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2600D145-1713-4C15-9010-D0DBDACBE431}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2600D145-1713-4C15-9010-D0DBDACBE431}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{2600D145-1713-4C15-9010-D0DBDACBE431}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{2600D145-1713-4C15-9010-D0DBDACBE431}.Release|x86.ActiveCfg = Release|Any CPU
+		{97515F06-0783-420C-AC3A-45357015B699}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97515F06-0783-420C-AC3A-45357015B699}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97515F06-0783-420C-AC3A-45357015B699}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{97515F06-0783-420C-AC3A-45357015B699}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{97515F06-0783-420C-AC3A-45357015B699}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{97515F06-0783-420C-AC3A-45357015B699}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97515F06-0783-420C-AC3A-45357015B699}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97515F06-0783-420C-AC3A-45357015B699}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{97515F06-0783-420C-AC3A-45357015B699}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{97515F06-0783-420C-AC3A-45357015B699}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
