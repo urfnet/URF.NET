@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Northwind.Entity.Models;
+using Northwind.Data.Models;
 using Northwind.Test.Fake;
 using Repository;
 using Repository.Providers.EntityFramework;
@@ -56,8 +56,8 @@ namespace Northwind.Test.Repository
             using (IDataContext northwindFakeContext = new NorthwindFakeContext())
             using (IUnitOfWork unitOfWork = new UnitOfWork(northwindFakeContext))
             {
-                unitOfWork.Repository<Supplier>().Insert(new Supplier{ SupplierID = 1, CompanyName = "Nokia", City = "Tampere", Country = "Finland", ContactName = "Stephen Elop", ContactTitle = "CEO" });
-                unitOfWork.Repository<Product>().Insert(new Product { ProductID = 2, Discontinued = true, ProductName = "Nokia Lumia 1520", SupplierID = 1, ObjectState = ObjectState.Added });
+                unitOfWork.Repository<Supplier>().Insert(new Supplier {SupplierID = 1, CompanyName = "Nokia", City = "Tampere", Country = "Finland", ContactName = "Stephen Elop", ContactTitle = "CEO"});
+                unitOfWork.Repository<Product>().Insert(new Product {ProductID = 2, Discontinued = true, ProductName = "Nokia Lumia 1520", SupplierID = 1, ObjectState = ObjectState.Added});
 
                 unitOfWork.Save();
 
@@ -202,14 +202,14 @@ namespace Northwind.Test.Repository
                 Assert.AreEqual(product.Discontinued, false, "Assert that our changes were saved.");
             }
         }
- 
+
         [TestMethod]
         public async void FindProductKeyAsync()
         {
             using (IDataContext northwindFakeContext = new NorthwindFakeContext())
             using (IUnitOfWork unitOfWork = new UnitOfWork(northwindFakeContext))
             {
-                unitOfWork.Repository<Product>().Insert(new Product { ProductID = 2, Discontinued = true });
+                unitOfWork.Repository<Product>().Insert(new Product {ProductID = 2, Discontinued = true});
 
                 unitOfWork.Save();
 

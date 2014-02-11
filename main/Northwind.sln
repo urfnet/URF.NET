@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Web", "Northwind.Web\Northwind.Web.csproj", "{5104D35B-733D-4FDE-99DB-4AF146A15953}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frameworks", "Frameworks", "{D90F4E72-AD7E-4255-9631-AB84CBA6ABD0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{6E682A14-C872-4813-B620-76E108DEA683}"
@@ -26,34 +24,36 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Data", "Northwind
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Entity", "Northwind.Entity\Northwind.Entity.csproj", "{97515F06-0783-420C-AC3A-45357015B699}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Web", "Northwind.Web\Northwind.Web.csproj", "{04DC8D7D-4512-4D1C-87B2-B8360F497D0B}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 8
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs26
 		SccLocalPath0 = .
-		SccProjectUniqueName1 = Northwind.Web\\Northwind.Web.csproj
-		SccProjectName1 = Northwind.Web
-		SccLocalPath1 = Northwind.Web
-		SccProjectUniqueName2 = Repository\\Repository.csproj
-		SccProjectTopLevelParentUniqueName2 = Northwind.sln
-		SccProjectName2 = Repository
-		SccLocalPath2 = Repository
-		SccProjectUniqueName3 = Northwind.Service\\Northwind.Service.csproj
-		SccProjectName3 = Northwind.Service
-		SccLocalPath3 = Northwind.Service
-		SccProjectUniqueName4 = Northwind.Repository\\Northwind.Repository.csproj
-		SccProjectName4 = Northwind.Repository
-		SccLocalPath4 = Northwind.Repository
-		SccProjectUniqueName5 = Northwind.Test\\Northwind.Test.csproj
-		SccProjectName5 = Northwind.Test
-		SccLocalPath5 = Northwind.Test
-		SccProjectUniqueName6 = Northwind.Data\\Northwind.Data.csproj
-		SccProjectName6 = Northwind.Data
-		SccLocalPath6 = Northwind.Data
-		SccProjectUniqueName7 = Northwind.Entity\\Northwind.Entity.csproj
-		SccProjectName7 = Northwind.Entity
-		SccLocalPath7 = Northwind.Entity
+		SccProjectUniqueName1 = Repository\\Repository.csproj
+		SccProjectTopLevelParentUniqueName1 = Northwind.sln
+		SccProjectName1 = Repository
+		SccLocalPath1 = Repository
+		SccProjectUniqueName2 = Northwind.Service\\Northwind.Service.csproj
+		SccProjectName2 = Northwind.Service
+		SccLocalPath2 = Northwind.Service
+		SccProjectUniqueName3 = Northwind.Repository\\Northwind.Repository.csproj
+		SccProjectName3 = Northwind.Repository
+		SccLocalPath3 = Northwind.Repository
+		SccProjectUniqueName4 = Northwind.Test\\Northwind.Test.csproj
+		SccProjectName4 = Northwind.Test
+		SccLocalPath4 = Northwind.Test
+		SccProjectUniqueName5 = Northwind.Data\\Northwind.Data.csproj
+		SccProjectName5 = Northwind.Data
+		SccLocalPath5 = Northwind.Data
+		SccProjectUniqueName6 = Northwind.Entity\\Northwind.Entity.csproj
+		SccProjectName6 = Northwind.Entity
+		SccLocalPath6 = Northwind.Entity
+		SccProjectUniqueName7 = Northwind.Web\\Northwind.Web.csproj
+		SccProjectName7 = Northwind.Web
+		SccLocalPath7 = Northwind.Web
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,18 +64,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5104D35B-733D-4FDE-99DB-4AF146A15953}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5104D35B-733D-4FDE-99DB-4AF146A15953}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5104D35B-733D-4FDE-99DB-4AF146A15953}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{5104D35B-733D-4FDE-99DB-4AF146A15953}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{5104D35B-733D-4FDE-99DB-4AF146A15953}.Debug|x86.ActiveCfg = Debug|x86
-		{5104D35B-733D-4FDE-99DB-4AF146A15953}.Debug|x86.Build.0 = Debug|x86
-		{5104D35B-733D-4FDE-99DB-4AF146A15953}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5104D35B-733D-4FDE-99DB-4AF146A15953}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5104D35B-733D-4FDE-99DB-4AF146A15953}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{5104D35B-733D-4FDE-99DB-4AF146A15953}.Release|Mixed Platforms.Build.0 = Release|x86
-		{5104D35B-733D-4FDE-99DB-4AF146A15953}.Release|x86.ActiveCfg = Release|x86
-		{5104D35B-733D-4FDE-99DB-4AF146A15953}.Release|x86.Build.0 = Release|x86
 		{6E682A14-C872-4813-B620-76E108DEA683}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6E682A14-C872-4813-B620-76E108DEA683}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E682A14-C872-4813-B620-76E108DEA683}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -138,6 +126,16 @@ Global
 		{97515F06-0783-420C-AC3A-45357015B699}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{97515F06-0783-420C-AC3A-45357015B699}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{97515F06-0783-420C-AC3A-45357015B699}.Release|x86.ActiveCfg = Release|Any CPU
+		{04DC8D7D-4512-4D1C-87B2-B8360F497D0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04DC8D7D-4512-4D1C-87B2-B8360F497D0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04DC8D7D-4512-4D1C-87B2-B8360F497D0B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{04DC8D7D-4512-4D1C-87B2-B8360F497D0B}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{04DC8D7D-4512-4D1C-87B2-B8360F497D0B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{04DC8D7D-4512-4D1C-87B2-B8360F497D0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04DC8D7D-4512-4D1C-87B2-B8360F497D0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04DC8D7D-4512-4D1C-87B2-B8360F497D0B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{04DC8D7D-4512-4D1C-87B2-B8360F497D0B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{04DC8D7D-4512-4D1C-87B2-B8360F497D0B}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
