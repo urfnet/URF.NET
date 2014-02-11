@@ -6,7 +6,7 @@ using System.Web.Http.OData.Query;
 using System.Web.Http.OData.Routing;
 using System.Web.Http.OData.Routing.Conventions;
 using Microsoft.Data.Edm;
-using Northwind.Entity.Models;
+using Northwind.Data.Models;
 using Northwind.Web.Areas.Spa.Extensions;
 
 #endregion
@@ -53,7 +53,7 @@ namespace Northwind.Web
             // The controller name also matches the entity set name (AlbumController).
 
             var entitySetConfiguration = modelBuilder.EntitySet<Product>("Product"); //<ControllerName>Controller
-            entitySetConfiguration.EntityType.Ignore(t => t.Order_Details);
+            entitySetConfiguration.EntityType.Ignore(t => t.OrderDetails);
             modelBuilder.EntitySet<Category>("Category");
             modelBuilder.EntitySet<Supplier>("Supplier");
 

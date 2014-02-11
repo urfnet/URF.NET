@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Repository;
 
 namespace Northwind.Data.Models
 {
-    public partial class Employee
+    public partial class Employee : EntityBase
     {
         public Employee()
         {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ using System.Web.Http;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Routing;
 using Microsoft.Data.OData;
-using Northwind.Entity.Models;
+using Northwind.Data.Models;
 using Northwind.Web.Areas.Spa.Extensions;
 using Repository;
 
@@ -35,16 +36,16 @@ namespace Northwind.Web.Areas.Spa.Api
             return entity.ProductID;
         }
 
-[Queryable]
-public override async Task<IEnumerable<Product>> Get()
-{
-    return await _unitOfWork.Repository<Product>().Query().GetAsync();
-}
+        [Queryable]
+        public override async Task<IEnumerable<Product>> Get()
+        {
+            return await _unitOfWork.Repository<Product>().Query().GetAsync();
+        }
 
         [Queryable]
         public override async Task<HttpResponseMessage> Get([FromODataUri] int key)
         {
-            var query = _unitOfWork.Repository<Product>().Query().Filter(x => x.ProductID == key).Get();
+            IQueryable<Product> query = _unitOfWork.Repository<Product>().Query().Filter(x => x.ProductID == key).Get();
             return Request.CreateResponse(HttpStatusCode.OK, query);
         }
 
@@ -63,7 +64,7 @@ public override async Task<IEnumerable<Product>> Get()
         {
             if (entity == null)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
-            
+
             _unitOfWork.Repository<Product>().Insert(entity);
             await _unitOfWork.SaveAsync();
             return entity;
@@ -73,15 +74,15 @@ public override async Task<IEnumerable<Product>> Get()
         {
             if (update == null)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
-            
+
             if (key != update.ProductID)
-                throw new HttpResponseException(Request.CreateODataErrorResponse(HttpStatusCode.BadRequest, new ODataError { Message = "The supplied key and the Product being updated do not match." }));
+                throw new HttpResponseException(Request.CreateODataErrorResponse(HttpStatusCode.BadRequest, new ODataError {Message = "The supplied key and the Product being updated do not match."}));
 
             try
             {
                 update.ObjectState = ObjectState.Modified;
                 _unitOfWork.Repository<Product>().Update(update);
-                var x = await _unitOfWork.SaveAsync();
+                int x = await _unitOfWork.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -92,7 +93,7 @@ public override async Task<IEnumerable<Product>> Get()
 
         // PATCH <controller>(key)
         /// <summary>
-        /// Apply a partial update to an existing entity in the entity set.
+        ///     Apply a partial update to an existing entity in the entity set.
         /// </summary>
         /// <param name="key">The entity key of the entity to update.</param>
         /// <param name="patch">The patch representing the partial update.</param>
@@ -105,7 +106,7 @@ public override async Task<IEnumerable<Product>> Get()
             if (key != patch.GetEntity().ProductID)
                 throw Request.EntityNotFound();
 
-            var entity = await _unitOfWork.Repository<Product>().FindAsync(key);
+            Product entity = await _unitOfWork.Repository<Product>().FindAsync(key);
 
             if (entity == null)
                 throw Request.EntityNotFound();
@@ -124,7 +125,7 @@ public override async Task<IEnumerable<Product>> Get()
 
         public override async Task Delete([FromODataUri] int key)
         {
-            var entity = await _unitOfWork.Repository<Product>().FindAsync(key);
+            Product entity = await _unitOfWork.Repository<Product>().FindAsync(key);
 
             if (entity == null)
                 throw Request.EntityNotFound();
@@ -136,23 +137,54 @@ public override async Task<IEnumerable<Product>> Get()
                 await _unitOfWork.SaveAsync();
             }
             catch (Exception e)
-            { 
+            {
                 throw new HttpResponseException(
                     new HttpResponseMessage(HttpStatusCode.Conflict)
                     {
-                        StatusCode = HttpStatusCode.Conflict, 
-                        Content = new StringContent(e.Message), 
+                        StatusCode = HttpStatusCode.Conflict,
+                        Content = new StringContent(e.Message),
                         ReasonPhrase = e.InnerException.InnerException.Message
                     });
             }
         }
 
+        public override async Task<HttpResponseMessage> HandleUnmappedRequest(ODataPath odataPath)
+        {
+            //TODO: add logic and proper return values
+            return Request.CreateResponse(HttpStatusCode.NoContent, odataPath);
+        }
+
+        #region Navigation Properties
+
+        public async Task<Category> GetCategory(int key)
+        {
+            Product entity = await _unitOfWork.Repository<Product>().FindAsync(key);
+
+            if (entity == null)
+                throw Request.EntityNotFound();
+
+            return entity.Category;
+        }
+
+        public async Task<Supplier> GetSupplier(int key)
+        {
+            Product entity = await _unitOfWork.Repository<Product>().FindAsync(key);
+
+            if (entity == null)
+                throw Request.EntityNotFound();
+
+            return entity.Supplier;
+        }
+
+        #endregion Navigation Properties
+
         #region Links
+
         // Create a relation from Product to Category or Supplier, by creating a $link entity.
         // POST <controller>(key)/$links/Category
         // POST <controller>(key)/$links/Supplier
         /// <summary>
-        /// Handle POST and PUT requests that attempt to create a link between two entities.
+        ///     Handle POST and PUT requests that attempt to create a link between two entities.
         /// </summary>
         /// <param name="key">The key of the entity with the navigation property.</param>
         /// <param name="navigationProperty">The name of the navigation property.</param>
@@ -161,31 +193,31 @@ public override async Task<IEnumerable<Product>> Get()
         [AcceptVerbs("POST", "PUT")]
         public override async Task CreateLink([FromODataUri] int key, string navigationProperty, [FromBody] Uri link)
         {
-            var entity = await _unitOfWork.Repository<Product>().FindAsync(key);
+            Product entity = await _unitOfWork.Repository<Product>().FindAsync(key);
 
             if (entity == null)
                 throw Request.EntityNotFound();
-            
+
             switch (navigationProperty)
             {
                 case "Category":
                     var categoryKey = Request.GetKeyValue<int>(link);
-                    var category = await _unitOfWork.Repository<Category>().FindAsync(categoryKey);
+                    Category category = await _unitOfWork.Repository<Category>().FindAsync(categoryKey);
 
                     if (category == null)
                         throw Request.EntityNotFound();
-                    
-                        entity.Category = category;
+
+                    entity.Category = category;
                     break;
 
                 case "Supplier":
                     var supplierKey = Request.GetKeyValue<int>(link);
-                    var supplier = await _unitOfWork.Repository<Supplier>().FindAsync(supplierKey);
+                    Supplier supplier = await _unitOfWork.Repository<Supplier>().FindAsync(supplierKey);
 
                     if (supplier == null)
                         throw Request.EntityNotFound();
-                    
-                        entity.Supplier = supplier;
+
+                    entity.Supplier = supplier;
                     break;
 
                 default:
@@ -199,7 +231,7 @@ public override async Task<IEnumerable<Product>> Get()
         // DELETE <controller>(key)/$links/Category
         // DELETE <controller>(key)/$links/Supplier
         /// <summary>
-        /// Handle DELETE requests that attempt to break a relationship between two entities.
+        ///     Handle DELETE requests that attempt to break a relationship between two entities.
         /// </summary>
         /// <param name="key">The key of the entity with the navigation property.</param>
         /// <param name="relatedKey">The key of the related entity.</param>
@@ -207,7 +239,7 @@ public override async Task<IEnumerable<Product>> Get()
         /// <returns>Task.</returns>
         public override async Task DeleteLink([FromODataUri] int key, string relatedKey, string navigationProperty)
         {
-            var entity = await _unitOfWork.Repository<Product>().FindAsync(key);
+            Product entity = await _unitOfWork.Repository<Product>().FindAsync(key);
 
             if (entity == null)
                 throw Request.EntityNotFound();
@@ -234,7 +266,7 @@ public override async Task<IEnumerable<Product>> Get()
         // DELETE <controller>(key)/$links/Category
         // DELETE <controller>(key)/$links/Supplier
         /// <summary>
-        /// Handle DELETE requests that attempt to break a relationship between two entities.
+        ///     Handle DELETE requests that attempt to break a relationship between two entities.
         /// </summary>
         /// <param name="key">The key of the entity with the navigation property.</param>
         /// <param name="navigationProperty">The name of the navigation property.</param>
@@ -242,7 +274,7 @@ public override async Task<IEnumerable<Product>> Get()
         /// <returns>Task.</returns>
         public override async Task DeleteLink([FromODataUri] int key, string navigationProperty, [FromBody] Uri link)
         {
-            var entity = await _unitOfWork.Repository<Product>().FindAsync(key);
+            Product entity = await _unitOfWork.Repository<Product>().FindAsync(key);
 
             if (entity == null)
                 throw Request.EntityNotFound();
@@ -256,7 +288,7 @@ public override async Task<IEnumerable<Product>> Get()
                 case "Supplier":
                     entity.Supplier = null;
                     break;
-                     
+
                 default:
                     await base.DeleteLink(key, navigationProperty, link);
                     break;
@@ -264,34 +296,7 @@ public override async Task<IEnumerable<Product>> Get()
 
             await _unitOfWork.SaveAsync();
         }
+
         #endregion Links
-
-        public override async Task<HttpResponseMessage> HandleUnmappedRequest(ODataPath odataPath)
-        {
-            //TODO: add logic and proper return values
-            return Request.CreateResponse(HttpStatusCode.NoContent, odataPath);
-        }
-
-        #region Navigation Properties
-        public async Task<Category> GetCategory(int key)
-        {
-            var entity = await _unitOfWork.Repository<Product>().FindAsync(key);
-
-            if (entity == null)
-                throw Request.EntityNotFound();
-            
-            return entity.Category;
-        }
-
-        public async Task<Supplier> GetSupplier(int key)
-        {
-            var entity = await _unitOfWork.Repository<Product>().FindAsync(key);
-
-            if (entity == null)
-                throw Request.EntityNotFound();
-            
-            return entity.Supplier;
-        }
-        #endregion Navigation Properties
     }
 }

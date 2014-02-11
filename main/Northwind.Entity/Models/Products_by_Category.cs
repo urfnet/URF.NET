@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Repository;
 
 namespace Northwind.Data.Models
 {
-    public partial class Products_by_Category
+    public partial class Products_by_Category : EntityBase
     {
         public string CategoryName { get; set; }
         public string ProductName { get; set; }

@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Northwind.Entity.Models;
+using Northwind.Data.Models;
 using Repository;
 
 #endregion

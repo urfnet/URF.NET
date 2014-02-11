@@ -20,6 +20,7 @@ namespace Repository.Providers.EntityFramework
         {
             _instanceId = Guid.NewGuid();
             Configuration.LazyLoadingEnabled = false;
+            Configuration.ProxyCreationEnabled = false;
         }
 
         public Guid InstanceId

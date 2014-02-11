@@ -1,6 +1,10 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
-using Northwind.Entity.Models;
+using Northwind.Data.Models;
+
+#endregion
 
 namespace Northwind.Service
 {

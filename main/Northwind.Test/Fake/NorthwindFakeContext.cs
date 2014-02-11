@@ -1,6 +1,6 @@
 ﻿#region
 
-using Northwind.Entity.Models;
+using Northwind.Data.Models;
 using Repository.Providers.EntityFramework.Fakes;
 
 #endregion

@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using Northwind.Data.Models;
+using Repository;
 
 namespace Northwind.Data.Models
 {
-    public partial class Shipper
+    public partial class Shipper : EntityBase
     {
         public Shipper()
         {

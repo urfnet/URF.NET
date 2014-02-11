@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Repository;
 
 namespace Northwind.Data.Models
 {
-    public partial class OrdersQry
+    public partial class OrdersQry : EntityBase
     {
         public int OrderID { get; set; }
         public string CustomerID { get; set; }

@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Repository;
 
 namespace Northwind.Data.Models
 {
-    public partial class Territory
+    public partial class Territory : EntityBase
     {
         public Territory()
         {

@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Repository;
 
 namespace Northwind.Data.Models
 {
-    public partial class CustomerDemographic
+    public partial class CustomerDemographic : EntityBase
     {
         public CustomerDemographic()
         {

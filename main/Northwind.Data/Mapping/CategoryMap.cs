@@ -1,5 +1,8 @@
-using System.ComponentModel.DataAnnotations.Schema;
+#region
+
 using System.Data.Entity.ModelConfiguration;
+
+#endregion
 
 namespace Northwind.Data.Models.Mapping
 {
@@ -8,19 +11,19 @@ namespace Northwind.Data.Models.Mapping
         public CategoryMap()
         {
             // Primary Key
-            this.HasKey(t => t.CategoryID);
+            HasKey(t => t.CategoryID);
 
             // Properties
-            this.Property(t => t.CategoryName)
+            Property(t => t.CategoryName)
                 .IsRequired()
                 .HasMaxLength(15);
 
             // Table & Column Mappings
-            this.ToTable("Categories");
-            this.Property(t => t.CategoryID).HasColumnName("CategoryID");
-            this.Property(t => t.CategoryName).HasColumnName("CategoryName");
-            this.Property(t => t.Description).HasColumnName("Description");
-            this.Property(t => t.Picture).HasColumnName("Picture");
+            ToTable("Categories");
+            Property(t => t.CategoryID).HasColumnName("CategoryID");
+            Property(t => t.CategoryName).HasColumnName("CategoryName");
+            Property(t => t.Description).HasColumnName("Description");
+            Property(t => t.Picture).HasColumnName("Picture");
         }
     }
 }

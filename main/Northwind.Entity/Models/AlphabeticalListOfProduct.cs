@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Repository;
 
 namespace Northwind.Data.Models
 {
-    public partial class AlphabeticalListOfProduct
+    public partial class AlphabeticalListOfProduct : EntityBase
     {
         public int ProductID { get; set; }
         public string ProductName { get; set; }

@@ -1,3 +1,4 @@
+using Northwind.Data.Models;
 using Repository.Providers.EntityFramework;
 
 #region

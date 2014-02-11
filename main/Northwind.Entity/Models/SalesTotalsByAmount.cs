@@ -1,13 +1,17 @@
+#region
+
 using System;
-using System.Collections.Generic;
+using Repository;
+
+#endregion
 
 namespace Northwind.Data.Models
 {
-    public partial class SalesTotalsByAmount
+    public class SalesTotalsByAmount : EntityBase
     {
-        public Nullable<decimal> SaleAmount { get; set; }
-        public int OrderID { get; set; }
         public string CompanyName { get; set; }
-        public Nullable<System.DateTime> ShippedDate { get; set; }
+        public int OrderID { get; set; }
+        public decimal? SaleAmount { get; set; }
+        public DateTime? ShippedDate { get; set; }
     }
 }

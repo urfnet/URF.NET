@@ -15,6 +15,7 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -53,7 +54,6 @@
     <Compile Include="Models\CustomerDemographic.cs" />
     <Compile Include="Models\Customer_and_Suppliers_by_City.cs" />
     <Compile Include="Models\Employee.cs" />
-    <Compile Include="Models\NorthwindContext.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderDetail.cs" />
     <Compile Include="Models\OrderDetailsExtended.cs" />
@@ -72,9 +72,14 @@
     <Compile Include="Models\SummaryOfSalesByQuarter.cs" />
     <Compile Include="Models\SummaryOfSalesByYear.cs" />
     <Compile Include="Models\Supplier.cs" />
-    <Compile Include="Models\sysdiagram.cs" />
     <Compile Include="Models\Territory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Repository\Repository.csproj">
+      <Project>{6e682a14-c872-4813-b620-76e108dea683}</Project>
+      <Name>Repository</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
