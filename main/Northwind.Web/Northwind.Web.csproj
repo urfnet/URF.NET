@@ -179,10 +179,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\instnwnd.sql" />
-    <Content Include="App_Data\Northwind.mdf" />
-    <Content Include="App_Data\Northwind_log.ldf">
-      <DependentUpon>Northwind.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\kendo\2013.3.1119\Black\editor.png" />
@@ -357,6 +353,8 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="App_Data\Northwind.bak" />
     <None Include="Properties\PublishProfiles\easyspa.pubxml" />
+    <None Include="Properties\PublishProfiles\longle - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\longle - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
