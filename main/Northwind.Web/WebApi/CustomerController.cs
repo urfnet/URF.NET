@@ -9,6 +9,7 @@ using System.Web.Http.OData;
 using Northwind.Entities.Models;
 using Repository.Pattern.Repository;
 using Repository.Pattern.UnitOfWork;
+using TrackableEntities;
 using TrackableEntities.Common;
 
 #endregion
@@ -57,16 +58,17 @@ namespace Northwind.Web.WebApi
         // PUT odata/Customer(5)
         public async Task<IHttpActionResult> Put(string key, Customer customer)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(ModelState);
-            //}
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
             if (key != customer.CustomerID)
             {
                 return BadRequest();
             }
 
+            customer.TrackingState = TrackingState.Modified;
             _unitOfWorkAsync.ApplyChanges(customer);
 
             try

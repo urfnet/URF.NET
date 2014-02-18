@@ -20,15 +20,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Test", "Northwind
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Web", "Northwind.Web\Northwind.Web.csproj", "{04DC8D7D-4512-4D1C-87B2-B8360F497D0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository.Pattern", "Repository.Pattern\Repository.Pattern.csproj", "{061A69C6-BD6C-4DD0-8F23-CD996DF1AA51}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositoryPattern.Ef6", "RepositoryPattern.Ef6\RepositoryPattern.Ef6.csproj", "{DE5256A9-874F-4BD2-BA49-E2D50C3B9D34}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Entities", "Northwind.Entities\Northwind.Entities.csproj", "{8556C7C8-72A6-4857-BAFD-489E42A2A453}"
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 8
+		SccNumberOfProjects = 6
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs26
 		SccLocalPath0 = .
@@ -44,17 +40,9 @@ Global
 		SccProjectUniqueName4 = Northwind.Web\\Northwind.Web.csproj
 		SccProjectName4 = Northwind.Web
 		SccLocalPath4 = Northwind.Web
-		SccProjectUniqueName5 = Repository.Pattern\\Repository.Pattern.csproj
-		SccProjectTopLevelParentUniqueName5 = Northwind.sln
-		SccProjectName5 = Repository.Pattern
-		SccLocalPath5 = Repository.Pattern
-		SccProjectUniqueName6 = RepositoryPattern.Ef6\\RepositoryPattern.Ef6.csproj
-		SccProjectTopLevelParentUniqueName6 = Northwind.sln
-		SccProjectName6 = RepositoryPattern.Ef6
-		SccLocalPath6 = RepositoryPattern.Ef6
-		SccProjectUniqueName7 = Northwind.Entities\\Northwind.Entities.csproj
-		SccProjectName7 = Northwind.Entities
-		SccLocalPath7 = Northwind.Entities
+		SccProjectUniqueName5 = Northwind.Entities\\Northwind.Entities.csproj
+		SccProjectName5 = Northwind.Entities
+		SccLocalPath5 = Northwind.Entities
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,26 +93,6 @@ Global
 		{04DC8D7D-4512-4D1C-87B2-B8360F497D0B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{04DC8D7D-4512-4D1C-87B2-B8360F497D0B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{04DC8D7D-4512-4D1C-87B2-B8360F497D0B}.Release|x86.ActiveCfg = Release|Any CPU
-		{061A69C6-BD6C-4DD0-8F23-CD996DF1AA51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{061A69C6-BD6C-4DD0-8F23-CD996DF1AA51}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{061A69C6-BD6C-4DD0-8F23-CD996DF1AA51}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{061A69C6-BD6C-4DD0-8F23-CD996DF1AA51}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{061A69C6-BD6C-4DD0-8F23-CD996DF1AA51}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{061A69C6-BD6C-4DD0-8F23-CD996DF1AA51}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{061A69C6-BD6C-4DD0-8F23-CD996DF1AA51}.Release|Any CPU.Build.0 = Release|Any CPU
-		{061A69C6-BD6C-4DD0-8F23-CD996DF1AA51}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{061A69C6-BD6C-4DD0-8F23-CD996DF1AA51}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{061A69C6-BD6C-4DD0-8F23-CD996DF1AA51}.Release|x86.ActiveCfg = Release|Any CPU
-		{DE5256A9-874F-4BD2-BA49-E2D50C3B9D34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DE5256A9-874F-4BD2-BA49-E2D50C3B9D34}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DE5256A9-874F-4BD2-BA49-E2D50C3B9D34}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{DE5256A9-874F-4BD2-BA49-E2D50C3B9D34}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{DE5256A9-874F-4BD2-BA49-E2D50C3B9D34}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{DE5256A9-874F-4BD2-BA49-E2D50C3B9D34}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DE5256A9-874F-4BD2-BA49-E2D50C3B9D34}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DE5256A9-874F-4BD2-BA49-E2D50C3B9D34}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{DE5256A9-874F-4BD2-BA49-E2D50C3B9D34}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{DE5256A9-874F-4BD2-BA49-E2D50C3B9D34}.Release|x86.ActiveCfg = Release|Any CPU
 		{8556C7C8-72A6-4857-BAFD-489E42A2A453}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8556C7C8-72A6-4857-BAFD-489E42A2A453}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8556C7C8-72A6-4857-BAFD-489E42A2A453}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -138,10 +106,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{061A69C6-BD6C-4DD0-8F23-CD996DF1AA51} = {D90F4E72-AD7E-4255-9631-AB84CBA6ABD0}
-		{DE5256A9-874F-4BD2-BA49-E2D50C3B9D34} = {D90F4E72-AD7E-4255-9631-AB84CBA6ABD0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45;packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.6.0.1304.0\lib\NET45

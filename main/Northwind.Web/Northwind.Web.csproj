@@ -1239,14 +1239,6 @@
       <Project>{0fb607ea-4bb3-404b-9461-2232b5423885}</Project>
       <Name>Northwind.Repository</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Repository.Pattern\Repository.Pattern.csproj">
-      <Project>{061A69C6-BD6C-4DD0-8F23-CD996DF1AA51}</Project>
-      <Name>Repository.Pattern</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RepositoryPattern.Ef6\RepositoryPattern.Ef6.csproj">
-      <Project>{de5256a9-874f-4bd2-ba49-e2d50c3b9d34}</Project>
-      <Name>RepositoryPattern.Ef6</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

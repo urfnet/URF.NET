@@ -86,10 +86,6 @@
       <Project>{8556c7c8-72a6-4857-bafd-489e42a2a453}</Project>
       <Name>Northwind.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Repository.Pattern\Repository.Pattern.csproj">
-      <Project>{061a69c6-bd6c-4dd0-8f23-cd996df1aa51}</Project>
-      <Name>Repository.Pattern</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
