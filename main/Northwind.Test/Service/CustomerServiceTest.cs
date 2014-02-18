@@ -5,6 +5,8 @@ using Northwind.Data.Models;
 using Northwind.Service;
 using Northwind.Test.Fake;
 using Repository;
+using Repository.Pattern.DataContext;
+using Repository.Pattern.UnitOfWork;
 using Repository.Providers.EntityFramework;
 
 #endregion

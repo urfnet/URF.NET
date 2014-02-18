@@ -1,7 +1,9 @@
 ﻿#region
 
 using Northwind.Data.Models;
+using Northwind.Entities.Models;
 using Repository.Providers.EntityFramework.Fakes;
+using RepositoryPattern.Ef6.DataContext;
 
 #endregion
 
@@ -11,16 +13,7 @@ namespace Northwind.Test.Fake
     {
         public NorthwindFakeContext()
         {
-            AddFakeDbSet<Category, CategoryDbSet>();
-            AddFakeDbSet<Customer, CustomerDbSet>();
-            AddFakeDbSet<Employee, EmployeeDbSet>();
-            AddFakeDbSet<Order, OrderDbSet>();
-            AddFakeDbSet<OrderDetail, OrderDetailDbSet>();
-            AddFakeDbSet<Supplier, SupplierDbSet>();
-            AddFakeDbSet<Product, ProductDbSet>();
-            AddFakeDbSet<Region, RegionDbSet>();
-            AddFakeDbSet<Shipper, ShippperDbSet>();
-            AddFakeDbSet<Territory, TerritoryDbSet>();
+            //AddFakeDbSet<Category, CategoryDbSet>();
         }
     }
 }
