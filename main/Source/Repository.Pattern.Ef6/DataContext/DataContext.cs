@@ -4,13 +4,13 @@ using System;
 using System.Data.Entity;
 using Repository.Pattern.DataContext;
 using Repository.Pattern.Repository;
-using RepositoryPattern.Ef6.Repository;
+using Repository.Pattern.Ef6.Repository;
 using TrackableEntities;
 using TrackableEntities.EF6;
 
 #endregion
 
-namespace RepositoryPattern.Ef6.DataContext
+namespace Repository.Pattern.Ef6.DataContext
 {
     public class DataContext : DbContext, IDataContext
     {

@@ -7,7 +7,7 @@ using Repository.Pattern.UnitOfWork;
 
 #endregion
 
-namespace RepositoryPattern.Ef6.UnitOfWork
+namespace Repository.Pattern.Ef6.UnitOfWork
 {
     public class UnitOfWorkAsync : UnitOfWork, IUnitOfWorkAsync
     {

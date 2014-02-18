@@ -7,7 +7,7 @@ using TrackableEntities;
 
 #endregion
 
-namespace RepositoryPattern.Ef6.UnitOfWork
+namespace Repository.Pattern.Ef6.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {

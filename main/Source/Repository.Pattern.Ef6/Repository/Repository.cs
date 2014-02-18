@@ -7,7 +7,7 @@ using Repository.Pattern.Repository;
 
 #endregion
 
-namespace RepositoryPattern.Ef6.Repository
+namespace Repository.Pattern.Ef6.Repository
 {
     public class Repository<TEntity> :
         IRepository<TEntity> where TEntity : class

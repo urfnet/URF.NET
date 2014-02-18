@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 #endregion
 
-namespace RepositoryPattern.Ef6.DataContext
+namespace Repository.Pattern.Ef6.DataContext
 {
     public abstract class FakeDbSet<TEntity> : DbSet<TEntity>, IDbSet<TEntity> where TEntity : class, new()
     {

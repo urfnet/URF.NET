@@ -1,6 +1,6 @@
 ﻿using Repository.Pattern.DataContext;
 
-namespace RepositoryPattern.Ef6.DataContext
+namespace Repository.Pattern.Ef6.DataContext
 {
     public class DataContextAsync : DataContext, IDataContextAsync
     {

@@ -11,7 +11,7 @@ using TrackableEntities;
 
 #endregion
 
-namespace RepositoryPattern.Ef6.DataContext
+namespace Repository.Pattern.Ef6.DataContext
 {
     public abstract class FakeDbContext : IDataContext
     {
