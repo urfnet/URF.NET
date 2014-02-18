@@ -46,11 +46,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.6.0.1\lib\net45\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\packages\EntityFramework.6.0.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Data.Edm, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -71,6 +73,10 @@
     </Reference>
     <Reference Include="Microsoft.Practices.Unity.WebApi">
       <HintPath>..\packages\Unity.AspNet.WebApi.3.0.1304.0\lib\Net45\Microsoft.Practices.Unity.WebApi.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -129,11 +135,15 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <Private>True</Private>
-      <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="TrackableEntities.Common, Version=1.0.3.0, Culture=neutral, PublicKeyToken=b10b51e7b9be6a2e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\TrackableEntities.Common.1.0.3.0\lib\portable-net40+sl5+win8+windowsphone8\TrackableEntities.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="TrackableEntities.EF.6, Version=1.0.3.0, Culture=neutral, PublicKeyToken=b10b51e7b9be6a2e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\TrackableEntities.EF.6.1.0.3.0\lib\net45\TrackableEntities.EF.6.dll</HintPath>
+    </Reference>
     <Reference Include="WebActivatorEx">
       <HintPath>..\packages\WebActivatorEx.2.0.4\lib\net40\WebActivatorEx.dll</HintPath>
     </Reference>
@@ -161,7 +171,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Api\CustomerController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\ODataConfig.cs" />
@@ -172,10 +181,12 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebApi\CustomerController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\instnwnd.sql" />
@@ -777,7 +788,9 @@
     <Content Include="Scripts\text.js" />
     <Content Include="Scripts\util.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -1218,17 +1231,21 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Northwind.Data\Northwind.Data.csproj">
-      <Project>{33F5D861-F2E0-47FD-9F9D-E04FB83A06BD}</Project>
-      <Name>Northwind.Data</Name>
+    <ProjectReference Include="..\Northwind.Entities\Northwind.Entities.csproj">
+      <Project>{8556C7C8-72A6-4857-BAFD-489E42A2A453}</Project>
+      <Name>Northwind.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Northwind.Entity\Northwind.Entity.csproj">
-      <Project>{8C571C0E-8B5B-4410-89AB-FC0EE9F63495}</Project>
-      <Name>Northwind.Entity</Name>
+    <ProjectReference Include="..\Northwind.Repository\Northwind.Repository.csproj">
+      <Project>{0fb607ea-4bb3-404b-9461-2232b5423885}</Project>
+      <Name>Northwind.Repository</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Repository\Repository.csproj">
-      <Project>{6E682A14-C872-4813-B620-76E108DEA683}</Project>
-      <Name>Repository</Name>
+    <ProjectReference Include="..\Repository.Pattern\Repository.Pattern.csproj">
+      <Project>{061A69C6-BD6C-4DD0-8F23-CD996DF1AA51}</Project>
+      <Name>Repository.Pattern</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RepositoryPattern.Ef6\RepositoryPattern.Ef6.csproj">
+      <Project>{de5256a9-874f-4bd2-ba49-e2d50c3b9d34}</Project>
+      <Name>RepositoryPattern.Ef6</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

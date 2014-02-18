@@ -82,10 +82,6 @@
       <Project>{678DB4A2-A20D-4F71-8A98-D8BBE879DEDD}</Project>
       <Name>Northwind.Service</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Repository\Repository.csproj">
-      <Project>{6E682A14-C872-4813-B620-76E108DEA683}</Project>
-      <Name>Repository</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

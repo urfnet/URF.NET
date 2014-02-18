@@ -2,38 +2,27 @@
 
 using System.Web.Http;
 using System.Web.Http.OData.Builder;
-using System.Web.Http.OData.Query;
-using System.Web.Http.OData.Routing;
-using System.Web.Http.OData.Routing.Conventions;
-using Microsoft.Data.Edm;
-using Northwind.Data.Models;
+using Northwind.Entities.Models;
 
 #endregion
 
-namespace Northwind.Web
+namespace Northwind.Web.App_Start
 {
     public static class ODataConfig
     {
         public static void Register(HttpConfiguration config)
         {
-            // Add $format support
-            //config.MessageHandlers.Add(new FormatQueryMessageHandler());
+            ODataModelBuilder modelBuilder = new ODataConventionModelBuilder();
 
-            // Add NavigationRoutingConvention2 to support POST, PUT, PATCH and DELETE on navigation property
-            var conventions = ODataRoutingConventions.CreateDefault();
+            modelBuilder.EntitySet<Customer>(typeof (Customer).Name);
+            modelBuilder.EntitySet<Order>(typeof (Order).Name);
+            modelBuilder.EntitySet<OrderDetail>(typeof (OrderDetail).Name);
+            modelBuilder.EntitySet<CustomerDemographic>(typeof(CustomerDemographic).Name);
 
-            var modelBuilder = new ODataConventionModelBuilder();
+            var model = modelBuilder.GetEdmModel();
+            config.Routes.MapODataRoute("ODataRoute", "odata", model);
 
-            var entitySetConfiguration = modelBuilder.EntitySet<Product>("Product");
-            entitySetConfiguration.EntityType.Ignore(t => t.OrderDetails);
-            modelBuilder.EntitySet<Category>("Category");
-            modelBuilder.EntitySet<Supplier>("Supplier");
-
-            if (conventions != null)
-                config.Routes.MapODataRoute("OData", "odata", modelBuilder.GetEdmModel(), new DefaultODataPathHandler(), conventions);
-
-            // Enable queryable support and allow $format query
-            config.EnableQuerySupport(new QueryableAttribute {AllowedQueryOptions = AllowedQueryOptions.Supported | AllowedQueryOptions.Format});
+            config.EnableQuerySupport();
         }
     }
 }

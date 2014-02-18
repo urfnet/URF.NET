@@ -29,7 +29,7 @@
             serverFiltering: true,
             pageSize: 10,
             schema: {
-                data: function(data) {
+                data: function (data) {
                     return data.value;
                 },
                 total: function(data) {
