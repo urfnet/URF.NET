@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TrackableEntities.Patterns</name>
+    </assembly>
+    <members>
+        <member name="T:TrackableEntities.Patterns.IRepositoryAsync`1">
+            <summary>
+            Generic repository interface with basic asynchronous operations.
+            </summary>
+            <typeparam name="TEntity">Entity type</typeparam>
+        </member>
+        <member name="M:TrackableEntities.Patterns.IRepositoryAsync`1.FindAsync(System.Object[])">
+            <summary>
+            Finds an entity with the given primary key values. If no entity is found, then null is returned.
+            </summary>
+            <param name="keyValues">The values of the primary key for the entity to be found.</param>
+            <returns>A task that represents the asynchronous find operation. The task result contains the entity found, or null.</returns>
+        </member>
+        <member name="M:TrackableEntities.Patterns.IRepositoryAsync`1.FindAsync(System.Threading.CancellationToken,System.Object[])">
+            <summary>
+            Finds an entity with the given primary key values. If no entity is found, then null is returned.
+            </summary>
+            <param name="cancellationToken">A CancellationToken to observe while waiting for the task to complete.</param>
+            <param name="keyValues">The values of the primary key for the entity to be found.</param>
+            <returns>A task that represents the asynchronous find operation. The task result contains the entity found, or null.</returns>
+        </member>
+        <member name="M:TrackableEntities.Patterns.IRepositoryAsync`1.DeleteAsync(System.Object[])">
+            <summary>
+            Removes an entity from the respository.
+            </summary>
+            <param name="keyValues">The values of the primary key for the entity to be found.</param>
+            <returns>A task that represents the asynchronous delete operation. The task result will be false if the entity does not exist in the repository, or true if successfully removed.</returns>
+        </member>
+        <member name="M:TrackableEntities.Patterns.IRepositoryAsync`1.DeleteAsync(System.Threading.CancellationToken,System.Object[])">
+            <summary>
+            Removes an entity from the respository.
+            </summary>
+            <param name="cancellationToken">A CancellationToken to observe while waiting for the task to complete.</param>
+            <param name="keyValues">The values of the primary key for the entity to be found.</param>
+            <returns>A task that represents the asynchronous delete operation. The task result will be false if the entity does not exist in the repository, or true if successfully removed.</returns>
+        </member>
+        <member name="T:TrackableEntities.Patterns.IRepository`1">
+            <summary>
+            Generic repository interface with basic operations.
+            </summary>
+            <typeparam name="TEntity">Entity type</typeparam>
+        </member>
+        <member name="M:TrackableEntities.Patterns.IRepository`1.Find(System.Object[])">
+            <summary>
+            Finds an entity with the given primary key values. If no entity is found, then null is returned.
+            </summary>
+            <param name="keyValues">The values of the primary key for the entity to be found.</param>
+            <returns>The entity found, or null.</returns>
+        </member>
+        <member name="M:TrackableEntities.Patterns.IRepository`1.Insert(`0)">
+            <summary>
+            Inserts a new entity into the repository.
+            </summary>
+            <param name="entity">Entity to insert.</param>
+        </member>
+        <member name="M:TrackableEntities.Patterns.IRepository`1.Update(`0)">
+            <summary>
+            Updates an existing entity in the repository.
+            </summary>
+            <param name="entity">Entity to update.</param>
+        </member>
+        <member name="M:TrackableEntities.Patterns.IRepository`1.Delete(System.Object[])">
+            <summary>
+            Removes an entity from the respository.
+            </summary>
+            <param name="keyValues">The values of the primary key for the entity to be found.</param>
+            <returns>False if the entity does not exist in the repository, or true if successfully deleted.</returns>
+        </member>
+        <member name="T:TrackableEntities.Patterns.IUnitOfWorkAsync">
+            <summary>
+            Unit of work for committing changes across one or more repositories asynchronously.
+            </summary>
+        </member>
+        <member name="M:TrackableEntities.Patterns.IUnitOfWorkAsync.SaveChangesAsync">
+            <summary>
+            Saves changes made to one or more repositories.
+            </summary>
+            <returns>A task that represents the asynchronous save operation. The task result contains the number of objects saved.</returns>
+        </member>
+        <member name="M:TrackableEntities.Patterns.IUnitOfWorkAsync.SaveChangesAsync(System.Threading.CancellationToken)">
+            <summary>
+            Saves changes made to one or more repositories.
+            </summary>
+            <param name="cancellationToken">A CancellationToken to observe while waiting for the task to complete.</param>
+            <returns>A task that represents the asynchronous save operation. The task result contains the number of objects saved.</returns>
+        </member>
+        <member name="T:TrackableEntities.Patterns.IUnitOfWork">
+            <summary>
+            Unit of work for committing changes across one or more repositories.
+            </summary>
+        </member>
+        <member name="M:TrackableEntities.Patterns.IUnitOfWork.SaveChanges">
+            <summary>
+            Saves changes made to one or more repositories.
+            </summary>
+            <returns>The number of objects saved.</returns>
+        </member>
+    </members>
+</doc>

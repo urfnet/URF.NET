@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>TrackableEntities.EF.6</id>
+    <version>1.0.3.0</version>
+    <title>Trackable Entities for EF6</title>
+    <authors>Tony Sneed</authors>
+    <owners>Tony Sneed</owners>
+    <licenseUrl>http://trackable.codeplex.com/license</licenseUrl>
+    <projectUrl>http://trackable.codeplex.com/</projectUrl>
+    <iconUrl>http://tonysneed.com/images/trackable/tracking-small.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Provides an ApplyChanges extension method for DbContext that sets EntityState on trackable entities, so they can be saved in a single transaction as part of a batch update.</description>
+    <language>en-US</language>
+    <tags>change-tracking entity-framework n-tier wcf web-api</tags>
+    <dependencies>
+      <group targetFramework=".NETFramework4.5">
+        <dependency id="EntityFramework" version="6.0.2" />
+        <dependency id="Newtonsoft.Json" version="5.0.8" />
+        <dependency id="TrackableEntities.Common" version="1.0.3.0" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>

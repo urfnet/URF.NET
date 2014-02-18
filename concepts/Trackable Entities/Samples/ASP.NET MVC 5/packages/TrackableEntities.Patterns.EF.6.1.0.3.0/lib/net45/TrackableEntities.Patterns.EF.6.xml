@@ -1,0 +1,144 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TrackableEntities.Patterns.EF.6</name>
+    </assembly>
+    <members>
+        <member name="T:TrackableEntities.Patterns.EF6.Repository`1">
+            <summary>
+            Generic repository with basic operations.
+            </summary>
+            <typeparam name="TEntity">Entity type for the repository.</typeparam>
+        </member>
+        <member name="M:TrackableEntities.Patterns.EF6.Repository`1.#ctor">
+            <summary>
+            Creates a new Repository.
+            </summary>
+        </member>
+        <member name="M:TrackableEntities.Patterns.EF6.Repository`1.#ctor(System.Data.Entity.DbContext)">
+            <summary>
+            Creates a new Repository.
+            </summary>
+            <param name="context">Entity Framework DbContext-derived class.</param>
+        </member>
+        <member name="M:TrackableEntities.Patterns.EF6.Repository`1.Find(System.Object[])">
+            <summary>
+            Finds an entity with the given primary key values. If no entity is found, then null is returned.
+            </summary>
+            <param name="keyValues">The values of the primary key for the entity to be found.</param>
+            <returns>The entity found, or null.</returns>
+        </member>
+        <member name="M:TrackableEntities.Patterns.EF6.Repository`1.Insert(`0)">
+            <summary>
+            Inserts a new entity into the repository.
+            </summary>
+            <param name="entity">Entity to insert.</param>
+        </member>
+        <member name="M:TrackableEntities.Patterns.EF6.Repository`1.Update(`0)">
+            <summary>
+            Updates an existing entity in the repository.
+            </summary>
+            <param name="entity">Entity to update.</param>
+        </member>
+        <member name="M:TrackableEntities.Patterns.EF6.Repository`1.Delete(System.Object[])">
+            <summary>
+            Removes an entity from the respository.
+            </summary>
+            <param name="keyValues">The values of the primary key for the entity to be found.</param>
+            <returns>False if the entity does not exist in the repository, or true if successfully deleted.</returns>
+        </member>
+        <member name="M:TrackableEntities.Patterns.EF6.Repository`1.FindAsync(System.Object[])">
+            <summary>
+            Finds an entity with the given primary key values. If no entity is found, then null is returned.
+            </summary>
+            <param name="keyValues">The values of the primary key for the entity to be found.</param>
+            <returns>A task that represents the asynchronous find operation. The task result contains the entity found, or null.</returns>
+        </member>
+        <member name="M:TrackableEntities.Patterns.EF6.Repository`1.FindAsync(System.Threading.CancellationToken,System.Object[])">
+            <summary>
+            Finds an entity with the given primary key values. If no entity is found, then null is returned.
+            </summary>
+            <param name="cancellationToken">A CancellationToken to observe while waiting for the task to complete.</param>
+            <param name="keyValues">The values of the primary key for the entity to be found.</param>
+            <returns>A task that represents the asynchronous find operation. The task result contains the entity found, or null.</returns>
+        </member>
+        <member name="M:TrackableEntities.Patterns.EF6.Repository`1.DeleteAsync(System.Object[])">
+            <summary>
+            Removes an entity from the respository.
+            </summary>
+            <param name="keyValues">The values of the primary key for the entity to be found.</param>
+            <returns>A task that represents the asynchronous delete operation. The task result will be false if the entity does not exist in the repository, or true if successfully removed.</returns>
+        </member>
+        <member name="M:TrackableEntities.Patterns.EF6.Repository`1.DeleteAsync(System.Threading.CancellationToken,System.Object[])">
+            <summary>
+            Removes an entity from the respository.
+            </summary>
+            <param name="cancellationToken">A CancellationToken to observe while waiting for the task to complete.</param>
+            <param name="keyValues">The values of the primary key for the entity to be found.</param>
+            <returns>A task that represents the asynchronous delete operation. The task result will be false if the entity does not exist in the repository, or true if successfully removed.</returns>
+        </member>
+        <member name="P:TrackableEntities.Patterns.EF6.Repository`1.Context">
+            <summary>
+            Gets and sets the DbContext for the repository.
+            </summary>
+        </member>
+        <member name="P:TrackableEntities.Patterns.EF6.Repository`1.Set">
+            <summary>
+            Gets the DbSet for the respository
+            </summary>
+        </member>
+        <member name="T:TrackableEntities.Patterns.EF6.UnitOfWork">
+            <summary>
+            General unit of work for committing changes across one or more repositories. 
+            Inherit from this class to supply a specific DbContext. 
+            Add a property for each respository for which unit of work must be done.
+            </summary>
+        </member>
+        <member name="M:TrackableEntities.Patterns.EF6.UnitOfWork.#ctor">
+            <summary>
+            Constructs a new general unit of work.
+            </summary>
+        </member>
+        <member name="M:TrackableEntities.Patterns.EF6.UnitOfWork.#ctor(System.Data.Entity.DbContext)">
+            <summary>
+            Constructs a new general unit of work.
+            </summary>
+            <param name="context">Entity Framework DbContext-derived class.</param>
+        </member>
+        <member name="M:TrackableEntities.Patterns.EF6.UnitOfWork.Dispose">
+            <summary>
+            Disposes the DbContext.
+            </summary>
+        </member>
+        <member name="M:TrackableEntities.Patterns.EF6.UnitOfWork.Dispose(System.Boolean)">
+            <summary>
+            Disposes the DbContext.
+            </summary>
+            <param name="disposing">True to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
+        </member>
+        <member name="M:TrackableEntities.Patterns.EF6.UnitOfWork.SaveChanges">
+            <summary>
+            Saves changes made to one or more repositories.
+            </summary>
+            <returns>The number of objects saved.</returns>
+        </member>
+        <member name="M:TrackableEntities.Patterns.EF6.UnitOfWork.SaveChangesAsync">
+            <summary>
+            Saves changes made to one or more repositories.
+            </summary>
+            <returns>A task that represents the asynchronous save operation. The task result contains the number of objects saved.</returns>
+        </member>
+        <member name="M:TrackableEntities.Patterns.EF6.UnitOfWork.SaveChangesAsync(System.Threading.CancellationToken)">
+            <summary>
+            Saves changes made to one or more repositories.
+            </summary>
+            <param name="cancellationToken">A CancellationToken to observe while waiting for the task to complete.</param>
+            <returns>A task that represents the asynchronous save operation. The task result contains the number of objects saved.</returns>
+        </member>
+        <member name="P:TrackableEntities.Patterns.EF6.UnitOfWork.Context">
+            <summary>
+            Gets the DbContext for the unit of work.
+            </summary>
+        </member>
+    </members>
+</doc>
