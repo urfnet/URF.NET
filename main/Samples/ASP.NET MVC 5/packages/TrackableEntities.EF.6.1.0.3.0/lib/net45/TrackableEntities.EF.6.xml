@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TrackableEntities.EF.6</name>
+    </assembly>
+    <members>
+        <member name="T:TrackableEntities.EF6.DbContextExtensions">
+            <summary>
+            Extension methods for DbContext to persist trackable entities.
+            </summary>
+        </member>
+        <member name="M:TrackableEntities.EF6.DbContextExtensions.ApplyChanges(System.Data.Entity.DbContext,TrackableEntities.ITrackable)">
+            <summary>
+            Recursively set entity state for DbContext entry.
+            </summary>
+            <param name="context">Used to query and save changes to a database</param>
+            <param name="item">Object that implements ITrackable</param>
+        </member>
+    </members>
+</doc>

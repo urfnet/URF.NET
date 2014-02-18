@@ -22,9 +22,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Web", "Northwind.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Entities", "Northwind.Entities\Northwind.Entities.csproj", "{8556C7C8-72A6-4857-BAFD-489E42A2A453}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository.Pattern", "Frameworks\Repository.Pattern\Repository.Pattern.csproj", "{061A69C6-BD6C-4DD0-8F23-CD996DF1AA51}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository.Pattern", "..\..\Source\Repository.Pattern\Repository.Pattern.csproj", "{061A69C6-BD6C-4DD0-8F23-CD996DF1AA51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository.Pattern.Ef6", "Frameworks\RepositoryPattern.Ef6\Repository.Pattern.Ef6.csproj", "{DE5256A9-874F-4BD2-BA49-E2D50C3B9D34}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository.Pattern.Ef6", "..\..\Source\Repository.Pattern.Ef6\Repository.Pattern.Ef6.csproj", "{DE5256A9-874F-4BD2-BA49-E2D50C3B9D34}"
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
@@ -47,14 +47,14 @@ Global
 		SccProjectUniqueName5 = Northwind.Entities\\Northwind.Entities.csproj
 		SccProjectName5 = Northwind.Entities
 		SccLocalPath5 = Northwind.Entities
-		SccProjectUniqueName6 = Frameworks\\Repository.Pattern\\Repository.Pattern.csproj
+		SccProjectUniqueName6 = ..\\..\\Source\\Repository.Pattern\\Repository.Pattern.csproj
 		SccProjectTopLevelParentUniqueName6 = Northwind.sln
-		SccProjectName6 = Frameworks/Repository.Pattern
-		SccLocalPath6 = Frameworks\\Repository.Pattern
-		SccProjectUniqueName7 = Frameworks\\RepositoryPattern.Ef6\\Repository.Pattern.Ef6.csproj
+		SccProjectName6 = ../../Source/Repository.Pattern
+		SccLocalPath6 = ..\\..\\Source\\Repository.Pattern
+		SccProjectUniqueName7 = ..\\..\\Source\\Repository.Pattern.Ef6\\Repository.Pattern.Ef6.csproj
 		SccProjectTopLevelParentUniqueName7 = Northwind.sln
-		SccProjectName7 = Frameworks/RepositoryPattern.Ef6
-		SccLocalPath7 = Frameworks\\RepositoryPattern.Ef6
+		SccProjectName7 = ../../Source/Repository.Pattern.Ef6
+		SccLocalPath7 = ..\\..\\Source\\Repository.Pattern.Ef6
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

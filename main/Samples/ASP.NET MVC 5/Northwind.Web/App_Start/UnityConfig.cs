@@ -4,10 +4,10 @@ using System;
 using Microsoft.Practices.Unity;
 using Northwind.Entities.Models;
 using Repository.Pattern.DataContext;
+using Repository.Pattern.Ef6.Repository;
+using Repository.Pattern.Ef6.UnitOfWork;
 using Repository.Pattern.Repository;
 using Repository.Pattern.UnitOfWork;
-using RepositoryPattern.Ef6.Repository;
-using RepositoryPattern.Ef6.UnitOfWork;
 
 #endregion
 

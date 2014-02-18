@@ -82,6 +82,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Source\Repository.Pattern\Repository.Pattern.csproj">
+      <Project>{061A69C6-BD6C-4DD0-8F23-CD996DF1AA51}</Project>
+      <Name>Repository.Pattern</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Northwind.Entities\Northwind.Entities.csproj">
       <Project>{8556c7c8-72a6-4857-bafd-489e42a2a453}</Project>
       <Name>Northwind.Entities</Name>

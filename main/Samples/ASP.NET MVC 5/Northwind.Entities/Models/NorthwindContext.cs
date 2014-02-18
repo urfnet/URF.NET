@@ -1,7 +1,7 @@
 using System.Data.Entity;
 using Northwind.Entities.Models.Mapping;
 using Repository.Pattern.DataContext;
-using RepositoryPattern.Ef6.DataContext;
+using Repository.Pattern.Ef6.DataContext;
 
 namespace Northwind.Entities.Models
 {

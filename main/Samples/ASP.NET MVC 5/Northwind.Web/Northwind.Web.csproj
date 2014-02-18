@@ -1231,6 +1231,14 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Source\Repository.Pattern.Ef6\Repository.Pattern.Ef6.csproj">
+      <Project>{DE5256A9-874F-4BD2-BA49-E2D50C3B9D34}</Project>
+      <Name>Repository.Pattern.Ef6</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Source\Repository.Pattern\Repository.Pattern.csproj">
+      <Project>{061A69C6-BD6C-4DD0-8F23-CD996DF1AA51}</Project>
+      <Name>Repository.Pattern</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Northwind.Entities\Northwind.Entities.csproj">
       <Project>{8556C7C8-72A6-4857-BAFD-489E42A2A453}</Project>
       <Name>Northwind.Entities</Name>

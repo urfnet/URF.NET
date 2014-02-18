@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TrackableEntities.Common</name>
+    </assembly>
+    <members>
+        <member name="T:TrackableEntities.ITrackable">
+            <summary>
+            Interface implemented by entities that are change-tracked.
+            </summary>
+        </member>
+        <member name="P:TrackableEntities.ITrackable.TrackingState">
+            <summary>
+            Change-tracking state of an entity.
+            </summary>
+        </member>
+        <member name="P:TrackableEntities.ITrackable.ModifiedProperties">
+            <summary>
+            Properties on an entity that have been modified.
+            </summary>
+        </member>
+        <member name="T:TrackableEntities.Common.TrackableExtensions">
+            <summary>
+            Extension methods for entities that implement ITrackable.
+            </summary>
+        </member>
+        <member name="M:TrackableEntities.Common.TrackableExtensions.AcceptChanges(TrackableEntities.ITrackable)">
+            <summary>
+            Set tracking state to Unchanged on an entity and its child collections.
+            </summary>
+            <param name="item">Trackable object</param>
+        </member>
+        <member name="T:TrackableEntities.TrackingState">
+            <summary>
+            Change-tracking state of an entity.
+            </summary>
+        </member>
+        <member name="F:TrackableEntities.TrackingState.Unchanged">
+            <summary>Existing entity that has not been modified.</summary>
+        </member>
+        <member name="F:TrackableEntities.TrackingState.Added">
+            <summary>Newly created entity.</summary>
+        </member>
+        <member name="F:TrackableEntities.TrackingState.Modified">
+            <summary>Existing entity that has been modified.</summary>
+        </member>
+        <member name="F:TrackableEntities.TrackingState.Deleted">
+            <summary>Existing entity that has been marked as deleted.</summary>
+        </member>
+    </members>
+</doc>
