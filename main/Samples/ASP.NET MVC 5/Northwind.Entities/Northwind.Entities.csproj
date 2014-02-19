@@ -54,9 +54,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="TrackableEntities.Common">
-      <HintPath>..\packages\TrackableEntities.Common.1.0.3.0\lib\portable-net40+sl5+win8+windowsphone8\TrackableEntities.Common.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\AlphabeticalListOfProduct.cs" />

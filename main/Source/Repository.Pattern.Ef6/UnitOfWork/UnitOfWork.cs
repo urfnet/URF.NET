@@ -3,7 +3,6 @@
 using System;
 using Repository.Pattern.DataContext;
 using Repository.Pattern.UnitOfWork;
-using TrackableEntities;
 
 #endregion
 
@@ -51,11 +50,6 @@ namespace Repository.Pattern.Ef6.UnitOfWork
             if (_disposed)
                 throw new ObjectDisposedException("UnitOfWork");
             return _dataContextAsync.SaveChanges();
-        }
-
-        public void ApplyChanges(ITrackable trackable)
-        {
-            _dataContextAsync.ApplyChanges(trackable);
         }
     }
 }

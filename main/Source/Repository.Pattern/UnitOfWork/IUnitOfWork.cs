@@ -1,7 +1,6 @@
 ﻿#region
 
 using System;
-using TrackableEntities;
 
 #endregion
 
@@ -17,6 +16,5 @@ namespace Repository.Pattern.UnitOfWork
         /// </summary>
         /// <returns>The number of objects saved.</returns>
         int SaveChanges();
-        void ApplyChanges(ITrackable trackable);
     }
 }

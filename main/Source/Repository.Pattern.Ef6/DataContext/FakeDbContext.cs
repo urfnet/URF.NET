@@ -7,7 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Repository.Pattern.DataContext;
 using Repository.Pattern.Repository;
-using TrackableEntities;
 
 #endregion
 
@@ -34,7 +33,7 @@ namespace Repository.Pattern.Ef6.DataContext
             return default(int);
         }
 
-        public void ApplyChanges(ITrackable trackable)
+        public void ApplyChanges(object trackable)
         {
             throw new NotImplementedException();
         }

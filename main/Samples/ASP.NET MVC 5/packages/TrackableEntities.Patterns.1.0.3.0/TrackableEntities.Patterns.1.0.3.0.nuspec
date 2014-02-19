@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>TrackableEntities.Patterns</id>
+    <version>1.0.3.0</version>
+    <title>Trackable Entities Patterns</title>
+    <authors>Tony Sneed</authors>
+    <owners>Tony Sneed</owners>
+    <licenseUrl>http://trackable.codeplex.com/license</licenseUrl>
+    <projectUrl>http://trackable.codeplex.com/</projectUrl>
+    <iconUrl>http://tonysneed.com/images/trackable/tracking-small.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Assembly containing generic IRepository and IUnitOfWork interfaces.</description>
+    <language>en-US</language>
+    <tags>repository unitofwork patterns</tags>
+  </metadata>
+</package>
