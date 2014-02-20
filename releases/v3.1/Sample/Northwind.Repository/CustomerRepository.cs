@@ -1,8 +1,7 @@
 ﻿#region
 
 using System.Linq;
-using Northwind.Data.Models;
-using Repository;
+using Northwind.Entitiy.Models;
 using Repository.Pattern.Repositories;
 
 #endregion
