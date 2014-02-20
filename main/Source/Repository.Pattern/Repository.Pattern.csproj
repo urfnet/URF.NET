@@ -96,10 +96,10 @@
     <Compile Include="Infrastructure\IObjectState.cs" />
     <Compile Include="Repositories\IRepositoryAsync.cs" />
     <Compile Include="Repositories\Repository.cs" />
-    <Compile Include="Repositories\RepositoryQuery.cs" />
+    <Compile Include="Repositories\QueryFluent.cs" />
     <Compile Include="UnitOfWork\IUnitOfWorkAsync.cs" />
     <Compile Include="Repositories\IRepository.cs" />
-    <Compile Include="Repositories\IRepositoryQuery.cs" />
+    <Compile Include="Repositories\IQueryFluent.cs" />
     <Compile Include="UnitOfWork\IUnitOfWork.cs" />
     <Compile Include="Infrastructure\ObjectState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

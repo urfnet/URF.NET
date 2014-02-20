@@ -51,9 +51,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AsyncEnumerableQuery.cs" />
-    <Compile Include="AsyncEnumeratorWrapper.cs" />
-    <Compile Include="AsyncQueryProviderWrapper.cs" />
     <Compile Include="DataContext.cs" />
     <Compile Include="FakeDbContext.cs" />
     <Compile Include="FakeDbSet.cs" />

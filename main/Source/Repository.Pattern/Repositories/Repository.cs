@@ -82,10 +82,9 @@ namespace Repository.Pattern.Repositories
             _context.SyncObjectState(entity);
         }
 
-        public virtual IRepositoryQuery<TEntity> Query(Expression<Func<TEntity, bool>> clause = null)
+        public virtual IQueryFluent<TEntity> Query(Expression<Func<TEntity, bool>> query = null)
         {
-            var repositoryGetFluentHelper = new RepositoryQuery<TEntity>(this, clause);
-            return repositoryGetFluentHelper;
+            return new QueryFluent<TEntity>(this, query);
         }
 
         public virtual async Task<TEntity> FindAsync(params object[] keyValues)

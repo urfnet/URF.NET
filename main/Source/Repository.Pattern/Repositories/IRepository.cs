@@ -22,7 +22,7 @@ namespace Repository.Pattern.Repositories
         void Update(TEntity entity);
         void Delete(object id);
         void Delete(TEntity entity);
-        IRepositoryQuery<TEntity> Query(Expression<Func<TEntity, bool>> clause = null);
+        IQueryFluent<TEntity> Query(Expression<Func<TEntity, bool>> query = null);
         IQueryable ODataQueryable(ODataQueryOptions<TEntity> oDataQueryOptions);
     }
 }
