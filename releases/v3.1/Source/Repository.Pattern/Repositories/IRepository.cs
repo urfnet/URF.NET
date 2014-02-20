@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Linq.Expressions;
 
 namespace Repository.Pattern.Repositories
 {
@@ -18,13 +17,6 @@ namespace Repository.Pattern.Repositories
         void Update(TEntity entity);
         void Delete(object id);
         void Delete(TEntity entity);
-        IRepositoryQuery<TEntity> Query();
-    }
-
-    public interface IRepositoryAsync<TEntity> : IRepository<TEntity> where TEntity : Infrastructure.EntityBase
-    {
-        Task<TEntity> FindAsync(params object[] keyValues);
-        Task<TEntity> FindAsync(CancellationToken cancellationToken, params object[] keyValues);
-        
+        IRepositoryQuery<TEntity> Query(Expression<Func<TEntity, bool>> clause = null);
     }
 }

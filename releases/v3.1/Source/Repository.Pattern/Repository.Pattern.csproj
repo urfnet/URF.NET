@@ -55,9 +55,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Antlr3.Runtime">
-      <HintPath>..\..\..\..\..\Users\lle\Documents\Visual Studio 2013\Projects\Northwind2\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.dll</HintPath>
@@ -65,10 +62,6 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
-    <Reference Include="Repository.Pattern, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Northwind.Data\bin\Debug\Repository.Pattern.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -79,6 +72,7 @@
     <Compile Include="Infrastructure\EntityBase.cs" />
     <Compile Include="Infrastructure\IDataContext.cs" />
     <Compile Include="Infrastructure\IObjectState.cs" />
+    <Compile Include="Repositories\IRepositoryAsync.cs" />
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Repositories\RepositoryQuery.cs" />
     <Compile Include="UnitOfWork\IUnitOfWorkAsync.cs" />

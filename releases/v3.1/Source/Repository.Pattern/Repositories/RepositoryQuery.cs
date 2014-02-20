@@ -19,8 +19,9 @@ namespace Repository.Pattern.Repositories
         private int? _page;
         private int? _pageSize;
 
-        public RepositoryQuery(Repository<TEntity> repository)
+        public RepositoryQuery(Repository<TEntity> repository, Expression<Func<TEntity, bool>> clause = null)
         {
+            _filter = clause;
             _repository = repository;
             _includeProperties = new List<Expression<Func<TEntity, object>>>();
         }

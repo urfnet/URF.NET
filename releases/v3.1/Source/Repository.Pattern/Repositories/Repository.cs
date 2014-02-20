@@ -90,9 +90,9 @@ namespace Repository.Pattern.Repositories
             _context.SyncObjectState(entity);
         }
 
-        public virtual IRepositoryQuery<TEntity> Query()
+        public virtual IRepositoryQuery<TEntity> Query(Expression<Func<TEntity, bool>> clause = null)
         {
-            var repositoryGetFluentHelper = new RepositoryQuery<TEntity>(this);
+            var repositoryGetFluentHelper = new RepositoryQuery<TEntity>(this, clause);
             return repositoryGetFluentHelper;
         }
 
