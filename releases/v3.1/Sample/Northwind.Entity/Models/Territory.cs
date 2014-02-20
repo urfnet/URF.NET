@@ -1,0 +1,21 @@
+using System;
+using System.Collections.Generic;
+using Repository;
+using Repository.Pattern.Infrastructure;
+
+namespace Northwind.Data.Models
+{
+    public partial class Territory : EntityBase
+    {
+        public Territory()
+        {
+            this.Employees = new List<Employee>();
+        }
+
+        public string TerritoryID { get; set; }
+        public string TerritoryDescription { get; set; }
+        public int RegionID { get; set; }
+        public virtual Region Region { get; set; }
+        public virtual ICollection<Employee> Employees { get; set; }
+    }
+}
