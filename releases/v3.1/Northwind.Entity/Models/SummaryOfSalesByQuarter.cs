@@ -2,6 +2,7 @@
 
 using System;
 using Repository;
+using Repository.Pattern.Infrastructure;
 
 #endregion
 

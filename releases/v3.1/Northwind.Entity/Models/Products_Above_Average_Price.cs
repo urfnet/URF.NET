@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml;
 using Repository;
+using Repository.Pattern.Infrastructure;
 
 namespace Northwind.Data.Models
 {

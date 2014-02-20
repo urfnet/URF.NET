@@ -6,6 +6,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Northwind.Data.Models;
 using Northwind.Test.Fake;
 using Repository;
+using Repository.Pattern;
+using Repository.Pattern.Infrastructure;
+using Repository.Pattern.UnitOfWorks;
 using Repository.Providers.EntityFramework;
 
 #endregion
@@ -34,7 +37,7 @@ namespace Northwind.Test.Repository
         public void DeleteProductById()
         {
             using (IDataContext northwindFakeContext = new NorthwindFakeContext())
-            using (IUnitOfWork unitOfWork = new UnitOfWork(northwindFakeContext))
+            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(northwindFakeContext))
             {
                 unitOfWork.Repository<Product>().Insert(new Product {ProductID = 2, Discontinued = true, ObjectState = ObjectState.Added});
 
@@ -207,13 +210,13 @@ namespace Northwind.Test.Repository
         public async void FindProductKeyAsync()
         {
             using (IDataContext northwindFakeContext = new NorthwindFakeContext())
-            using (IUnitOfWork unitOfWork = new UnitOfWork(northwindFakeContext))
+            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(northwindFakeContext))
             {
                 unitOfWork.Repository<Product>().Insert(new Product {ProductID = 2, Discontinued = true});
 
                 unitOfWork.Save();
 
-                var product = await unitOfWork.Repository<Product>().FindAsync(2);
+                var product = await unitOfWork.RepositoryAsync<Product>().FindAsync(2);
 
                 Assert.AreEqual(product.ProductID, 2);
             }

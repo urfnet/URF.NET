@@ -3,7 +3,7 @@
 using System.Data.Entity;
 using Northwind.Data.Mapping;
 using Northwind.Data.Models.Mapping;
-using Repository.Providers.EntityFramework;
+using Repository.Pattern.Ef6;
 
 #endregion
 

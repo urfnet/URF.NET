@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Northwind.Data.Models;
 using Repository;
+using Repository.Pattern.Infrastructure;
+using Repository.Pattern.UnitOfWorks;
 
 #endregion
 
@@ -11,9 +13,9 @@ namespace Northwind.Service
 {
     public class CustomerService : ICustomerService
     {
-        private readonly IUnitOfWorkForService _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CustomerService(IUnitOfWorkForService unitOfWork)
+        public CustomerService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }

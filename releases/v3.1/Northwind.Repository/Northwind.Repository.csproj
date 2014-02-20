@@ -57,9 +57,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Repository\Repository.csproj">
+    <ProjectReference Include="..\Repository\Repository.Pattern.csproj">
       <Project>{6e682a14-c872-4813-b620-76e108dea683}</Project>
-      <Name>Repository</Name>
+      <Name>Repository.Pattern</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

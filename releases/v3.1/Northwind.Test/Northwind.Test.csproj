@@ -82,9 +82,13 @@
       <Project>{678DB4A2-A20D-4F71-8A98-D8BBE879DEDD}</Project>
       <Name>Northwind.Service</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Repository\Repository.csproj">
+    <ProjectReference Include="..\Repository.Pattern.Ef6\Repository.Pattern.Ef6.csproj">
+      <Project>{F68A1D19-93FB-47C1-A22B-42BEA3E4FD8C}</Project>
+      <Name>Repository.Pattern.Ef6</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Repository\Repository.Pattern.csproj">
       <Project>{6E682A14-C872-4813-B620-76E108DEA683}</Project>
-      <Name>Repository</Name>
+      <Name>Repository.Pattern</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -4,7 +4,8 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion></ProductVersion>
+    <ProductVersion>
+    </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{04DC8D7D-4512-4D1C-87B2-B8360F497D0B}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
@@ -97,8 +98,10 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="System.Net.Http"></Reference>
-    <Reference Include="System.Net.Http.WebRequest"></Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.Helpers.dll</HintPath>
@@ -1223,9 +1226,13 @@
       <Project>{8C571C0E-8B5B-4410-89AB-FC0EE9F63495}</Project>
       <Name>Northwind.Entity</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Repository\Repository.csproj">
+    <ProjectReference Include="..\Repository.Pattern.Ef6\Repository.Pattern.Ef6.csproj">
+      <Project>{F68A1D19-93FB-47C1-A22B-42BEA3E4FD8C}</Project>
+      <Name>Repository.Pattern.Ef6</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Repository\Repository.Pattern.csproj">
       <Project>{6E682A14-C872-4813-B620-76E108DEA683}</Project>
-      <Name>Repository</Name>
+      <Name>Repository.Pattern</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
@@ -1249,7 +1256,8 @@
           <IISUrl>http://localhost:25061/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl></CustomServerUrl>
+          <CustomServerUrl>
+          </CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

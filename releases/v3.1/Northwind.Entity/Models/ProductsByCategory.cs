@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Repository;
+using Repository.Pattern.Infrastructure;
 
-    namespace Northwind.Data.Models
+namespace Northwind.Data.Models
 {
     public partial class ProductsByCategory : EntityBase
     {

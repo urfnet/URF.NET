@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Http.OData;
 using Northwind.Data.Models;
 using Repository;
+using Repository.Pattern.UnitOfWorks;
 
 #endregion
 

@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using Repository;
+using Repository.Pattern.Infrastructure;
 
 #endregion
 

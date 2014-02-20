@@ -4,7 +4,8 @@ using System;
 using Microsoft.Practices.Unity;
 using Northwind.Data.Models;
 using Repository;
-using Repository.Providers.EntityFramework;
+using Repository.Pattern.Infrastructure;
+using Repository.Pattern.UnitOfWorks;
 
 #endregion
 
