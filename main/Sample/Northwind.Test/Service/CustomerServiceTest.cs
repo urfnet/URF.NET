@@ -5,6 +5,7 @@ using Northwind.Entitiy.Models;
 using Northwind.Service;
 using Northwind.Test.Fake;
 using Repository;
+using Repository.Pattern.DataContext;
 using Repository.Pattern.Ef6;
 using Repository.Pattern.Infrastructure;
 using Repository.Pattern.UnitOfWork;

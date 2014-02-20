@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Query;
+using Repository.Pattern.DataContext;
 using Repository.Pattern.Infrastructure;
 
 #endregion

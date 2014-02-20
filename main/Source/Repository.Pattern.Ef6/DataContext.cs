@@ -4,6 +4,7 @@ using System;
 using System.Data.Entity;
 using System.Threading;
 using System.Threading.Tasks;
+using Repository.Pattern.DataContext;
 using Repository.Pattern.Infrastructure;
 
 #endregion

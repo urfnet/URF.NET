@@ -92,7 +92,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Infrastructure\Entity.cs" />
-    <Compile Include="Infrastructure\IDataContext.cs" />
+    <Compile Include="DataContext\IDataContext.cs" />
+    <Compile Include="DataContext\IDataContextAsync.cs" />
     <Compile Include="Infrastructure\IObjectState.cs" />
     <Compile Include="Repositories\IRepositoryAsync.cs" />
     <Compile Include="Repositories\Repository.cs" />

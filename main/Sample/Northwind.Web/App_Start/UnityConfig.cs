@@ -4,6 +4,7 @@ using System;
 using Microsoft.Practices.Unity;
 using Northwind.Entitiy.Models;
 using Repository;
+using Repository.Pattern.DataContext;
 using Repository.Pattern.Ef6;
 using Repository.Pattern.Infrastructure;
 using Repository.Pattern.Repositories;
