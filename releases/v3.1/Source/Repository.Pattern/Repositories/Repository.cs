@@ -5,8 +5,11 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web.Http.OData;
+using System.Web.Http.OData.Query;
 using Repository.Pattern.Infrastructure;
 
 #endregion
@@ -142,6 +145,11 @@ namespace Repository.Pattern.Repositories
             int? pageSize = null)
         {
             return Get(filter, orderBy, includeProperties, page, pageSize).AsEnumerable();
+        }
+
+        public IQueryable GetODataQuerable(ODataQueryOptions<TEntity> oDataQueryOptions)
+        {
+            return oDataQueryOptions.ApplyTo(_dbSet);
         }
     }
 }

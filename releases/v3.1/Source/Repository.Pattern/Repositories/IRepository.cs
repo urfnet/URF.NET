@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net.Http;
+using System.Web.Http.OData;
+using System.Web.Http.OData.Query;
 
 namespace Repository.Pattern.Repositories
 {
@@ -17,5 +20,6 @@ namespace Repository.Pattern.Repositories
         void Delete(object id);
         void Delete(TEntity entity);
         IRepositoryQuery<TEntity> Query(Expression<Func<TEntity, bool>> clause = null);
+        IQueryable GetODataQuerable(ODataQueryOptions<TEntity> oDataQueryOptions);
     }
 }

@@ -45,11 +45,10 @@ namespace Northwind.Service
         public IEnumerable<Customer> GetPagedList(int pageNumber, int pageSize, out int totalRecords)
         {
             var customers = _unitOfWork.Repository<Customer>()
-                .Query()
+                .Query(q => !string.IsNullOrEmpty(q.ContactName))
                 .OrderBy(q => q
                     .OrderBy(c => c.ContactName)
                     .ThenBy(c => c.CompanyName))
-                .Filter(q => !string.IsNullOrEmpty(q.ContactName))
                 .GetPage(pageNumber, pageSize, out totalRecords);
 
             return customers;

@@ -1,12 +1,15 @@
 ﻿#region
 
 using System;
+using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.OData;
+using System.Web.Http.OData.Query;
 using Northwind.Entitiy.Models;
 using Repository.Pattern.Infrastructure;
 using Repository.Pattern.Repositories;
@@ -30,10 +33,14 @@ namespace Northwind.Web.Api
         }
 
         // GET odata/Customer
-        [Queryable]
-        public IQueryable<Customer> GetCustomer()
+        public PageResult<Customer> GetCustomer(ODataQueryOptions<Customer> oDataQueryOptions)
         {
-            return _customerRepositoryAsync.Query().Get();
+            var queryable = _customerRepositoryAsync.GetODataQuerable(oDataQueryOptions);
+
+            return new PageResult<Customer>(
+                queryable as IEnumerable<Customer>, 
+                Request.GetNextPageLink(),
+                Request.GetInlineCount());
         }
 
         // GET odata/Customer(5)

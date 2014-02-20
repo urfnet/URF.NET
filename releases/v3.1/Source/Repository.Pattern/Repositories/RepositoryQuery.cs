@@ -26,12 +26,6 @@ namespace Repository.Pattern.Repositories
             _includeProperties = new List<Expression<Func<TEntity, object>>>();
         }
 
-        public RepositoryQuery<TEntity> Filter(Expression<Func<TEntity, bool>> filter)
-        {
-            _filter = filter;
-            return this;
-        }
-
         public RepositoryQuery<TEntity> OrderBy(Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy)
         {
             _orderByQuerable = orderBy;
@@ -53,7 +47,7 @@ namespace Repository.Pattern.Repositories
             return _repository.Get(_filter, _orderByQuerable, _includeProperties, _page, _pageSize);
         }
 
-        public IQueryable<TEntity> Get()
+        public IEnumerable<TEntity> Get()
         {
             return _repository.Get(_filter, _orderByQuerable, _includeProperties, _page, _pageSize);
         }

@@ -135,7 +135,7 @@ namespace Northwind.Test.Repository
 
                 unitOfWork.Save();
 
-                var discontinuedProducts = unitOfWork.Repository<Product>().Query().Filter(t => t.Discontinued).Get();
+                var discontinuedProducts = unitOfWork.Repository<Product>().Query(t => t.Discontinued).Get();
 
                 Assert.AreEqual(2, discontinuedProducts.Count());
             }
