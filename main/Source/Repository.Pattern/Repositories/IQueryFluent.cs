@@ -11,7 +11,7 @@ using Repository.Pattern.Infrastructure;
 
 namespace Repository.Pattern.Repositories
 {
-    public interface IQueryFluent<TEntity> where TEntity : EntityBase
+    public interface IQueryFluent<TEntity> where TEntity : Entity
     {
         QueryFluent<TEntity> OrderBy(Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy);
         QueryFluent<TEntity> Include(Expression<Func<TEntity, object>> expression);

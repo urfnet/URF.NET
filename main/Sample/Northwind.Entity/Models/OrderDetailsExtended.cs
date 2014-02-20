@@ -4,7 +4,7 @@ using Repository.Pattern.Infrastructure;
 
 namespace Northwind.Entitiy.Models
 {
-    public partial class OrderDetailsExtended : EntityBase
+    public partial class OrderDetailsExtended : Entity
     {
         public int OrderID { get; set; }
         public int ProductID { get; set; }

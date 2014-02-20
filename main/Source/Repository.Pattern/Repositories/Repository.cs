@@ -18,7 +18,7 @@ namespace Repository.Pattern.Repositories
 {
     public class Repository<TEntity> : 
         IRepository<TEntity>, 
-        IRepositoryAsync<TEntity> where TEntity : EntityBase
+        IRepositoryAsync<TEntity> where TEntity : Entity
     {
         private readonly IDataContextAsync _context;
         private readonly DbSet<TEntity> _dbSet;

@@ -4,7 +4,7 @@ using Repository.Pattern.Infrastructure;
 
 namespace Northwind.Entitiy.Models
 {
-    public partial class Order : EntityBase
+    public partial class Order : Entity
     {
         public Order()
         {

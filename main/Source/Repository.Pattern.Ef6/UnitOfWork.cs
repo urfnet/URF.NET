@@ -61,7 +61,7 @@ namespace Repository.Pattern.Ef6
             return _context.SaveChanges();
         }
 
-        public IRepository<TEntity> Repository<TEntity>() where TEntity : EntityBase
+        public IRepository<TEntity> Repository<TEntity>() where TEntity : Entity
         {
             return RepositoryAsync<TEntity>();
         }
@@ -76,7 +76,7 @@ namespace Repository.Pattern.Ef6
             return _context.SaveChangesAsync(cancellationToken);
         }
 
-        public IRepositoryAsync<TEntity> RepositoryAsync<TEntity>() where TEntity : EntityBase
+        public IRepositoryAsync<TEntity> RepositoryAsync<TEntity>() where TEntity : Entity
         {
             if (_repositories == null)
             {

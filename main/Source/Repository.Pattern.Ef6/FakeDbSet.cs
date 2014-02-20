@@ -15,7 +15,7 @@ using Repository.Pattern.Infrastructure;
 
 namespace Repository.Providers.EntityFramework.Fakes
 {
-    public abstract class FakeDbSet<TEntity> : DbSet<TEntity>, IDbSet<TEntity> where TEntity : EntityBase, new()
+    public abstract class FakeDbSet<TEntity> : DbSet<TEntity>, IDbSet<TEntity> where TEntity : Entity, new()
     {
         private readonly ObservableCollection<TEntity> _items;
         private readonly IQueryable _query;

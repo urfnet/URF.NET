@@ -4,7 +4,7 @@ using Repository.Pattern.Infrastructure;
 
 namespace Northwind.Entitiy.Models
 {
-    public partial class SalesTotalsByAmount : EntityBase
+    public partial class SalesTotalsByAmount : Entity
     {
         public Nullable<decimal> SaleAmount { get; set; }
         public int OrderID { get; set; }

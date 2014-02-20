@@ -4,7 +4,7 @@ using Repository.Pattern.Infrastructure;
 
 namespace Northwind.Entitiy.Models
 {
-    public partial class Supplier : EntityBase
+    public partial class Supplier : Entity
     {
         public Supplier()
         {

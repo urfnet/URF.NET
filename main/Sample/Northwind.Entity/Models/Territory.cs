@@ -4,7 +4,7 @@ using Repository.Pattern.Infrastructure;
 
 namespace Northwind.Entitiy.Models
 {
-    public partial class Territory : EntityBase
+    public partial class Territory : Entity
     {
         public Territory()
         {

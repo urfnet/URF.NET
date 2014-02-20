@@ -11,7 +11,7 @@ using Repository.Pattern.Infrastructure;
 
 namespace Repository.Pattern.Repositories
 {
-    public sealed class QueryFluent<TEntity> : IQueryFluent<TEntity> where TEntity : EntityBase
+    public sealed class QueryFluent<TEntity> : IQueryFluent<TEntity> where TEntity : Entity
     {
         private readonly Expression<Func<TEntity, bool>> _query;
         private readonly List<Expression<Func<TEntity, object>>> _includes;

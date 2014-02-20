@@ -4,7 +4,7 @@ using Repository.Pattern.Infrastructure;
 
 namespace Northwind.Entitiy.Models
 {
-    public partial class Region : EntityBase
+    public partial class Region : Entity
     {
         public Region()
         {

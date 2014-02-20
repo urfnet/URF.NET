@@ -11,7 +11,7 @@ using Repository.Pattern.Infrastructure;
 
 namespace Repository.Pattern.Repositories
 {
-    public interface IRepository<TEntity> where TEntity : EntityBase
+    public interface IRepository<TEntity> where TEntity : Entity
     {
         TEntity Find(params object[] keyValues);
         IQueryable<TEntity> SelectQuery(string query, params object[] parameters);

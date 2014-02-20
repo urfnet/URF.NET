@@ -48,7 +48,7 @@ namespace Repository.Providers.EntityFramework.Fakes
         }
 
         public void AddFakeDbSet<TEntity, TFakeDbSet>()
-            where TEntity : EntityBase, IObjectState, new()
+            where TEntity : Entity, IObjectState, new()
             where TFakeDbSet : FakeDbSet<TEntity>, IDbSet<TEntity>, new()
         {
             var fakeDbSet = Activator.CreateInstance<TFakeDbSet>();

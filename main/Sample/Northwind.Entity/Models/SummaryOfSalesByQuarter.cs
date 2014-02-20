@@ -4,7 +4,7 @@ using Repository.Pattern.Infrastructure;
 
 namespace Northwind.Entitiy.Models
 {
-    public partial class SummaryOfSalesByQuarter : EntityBase
+    public partial class SummaryOfSalesByQuarter : Entity
     {
         public Nullable<System.DateTime> ShippedDate { get; set; }
         public int OrderID { get; set; }

@@ -4,7 +4,7 @@ using Repository.Pattern.Infrastructure;
 
 namespace Northwind.Entitiy.Models
 {
-    public partial class Shipper : EntityBase
+    public partial class Shipper : Entity
     {
         public Shipper()
         {

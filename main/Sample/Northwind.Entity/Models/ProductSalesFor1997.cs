@@ -4,7 +4,7 @@ using Repository.Pattern.Infrastructure;
 
 namespace Northwind.Entitiy.Models
 {
-    public partial class ProductSalesFor1997 : EntityBase
+    public partial class ProductSalesFor1997 : Entity
     {
         public string CategoryName { get; set; }
         public string ProductName { get; set; }

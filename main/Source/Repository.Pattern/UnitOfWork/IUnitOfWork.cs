@@ -7,7 +7,7 @@ namespace Repository.Pattern.UnitOfWork
     {
         int SaveChanges();
         void Dispose(bool disposing);
-        IRepository<TEntity> Repository<TEntity>() where TEntity : Infrastructure.EntityBase;
+        IRepository<TEntity> Repository<TEntity>() where TEntity : Infrastructure.Entity;
         void BeginTransaction();
         int Commit();
         void Rollback();

@@ -4,7 +4,7 @@ using Repository.Pattern.Infrastructure;
 
 namespace Northwind.Entitiy.Models
 {
-    public partial class sysdiagram : EntityBase
+    public partial class sysdiagram : Entity
     {
         public string name { get; set; }
         public int principal_id { get; set; }
