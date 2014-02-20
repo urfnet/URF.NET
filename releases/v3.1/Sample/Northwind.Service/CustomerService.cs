@@ -49,7 +49,7 @@ namespace Northwind.Service
                 .OrderBy(q => q
                     .OrderBy(c => c.ContactName)
                     .ThenBy(c => c.CompanyName))
-                .GetPage(pageNumber, pageSize, out totalRecords);
+                .SelectPage(pageNumber, pageSize, out totalRecords);
 
             return customers;
         }

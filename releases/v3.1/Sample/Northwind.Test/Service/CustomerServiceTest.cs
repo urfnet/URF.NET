@@ -39,7 +39,7 @@ namespace Northwind.Test.Service
 
                 customerService.Add(newCustomer);
 
-                unitOfWork.Save();
+                unitOfWork.SaveChanges();
 
                 Customer savedCustomer = customerService.GetCustomer("CBRE");
 

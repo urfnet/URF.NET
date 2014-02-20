@@ -5,8 +5,11 @@ namespace Repository.Pattern.UnitOfWork
 {
     public interface IUnitOfWork : IDisposable
     {
-        void Save();
+        int SaveChanges();
         void Dispose(bool disposing);
         IRepository<TEntity> Repository<TEntity>() where TEntity : Infrastructure.EntityBase;
+        void BeginTransaction();
+        int Commit();
+        void Rollback();
     }
 }

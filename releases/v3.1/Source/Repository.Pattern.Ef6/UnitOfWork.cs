@@ -2,8 +2,13 @@
 
 using System;
 using System.Collections;
+using System.Data;
+using System.Data.Common;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Infrastructure;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Practices.ServiceLocation;
 using Repository.Pattern.Infrastructure;
 using Repository.Pattern.Repositories;
 using Repository.Pattern.UnitOfWork;
@@ -16,9 +21,11 @@ namespace Repository.Pattern.Ef6
     {
         #region Private Fields
 
-        private readonly IDataContextAsync _context;
+        private readonly DataContext _context;
         private bool _disposed;
+        private ObjectContext _objectContext;
         private Hashtable _repositories;
+        private DbTransaction _transaction;
 
         #endregion Private Fields
 
@@ -26,11 +33,14 @@ namespace Repository.Pattern.Ef6
 
         public UnitOfWork(IDataContextAsync context)
         {
-            _context = context;
+            _context = (DataContext) context;
         }
 
         public void Dispose()
         {
+            if (_objectContext.Connection.State == ConnectionState.Open)
+                _objectContext.Connection.Close();
+
             Dispose(true);
             GC.SuppressFinalize(this);
         }
@@ -44,12 +54,16 @@ namespace Repository.Pattern.Ef6
             _disposed = true;
         }
 
-        
         #endregion Constuctor/Dispose
 
-        public void Save()
+        public int SaveChanges()
         {
-            _context.SaveChanges();
+            return _context.SaveChanges();
+        }
+
+        public IRepository<TEntity> Repository<TEntity>() where TEntity : EntityBase
+        {
+            return RepositoryAsync<TEntity>();
         }
 
         public Task<int> SaveChangesAsync()
@@ -69,22 +83,57 @@ namespace Repository.Pattern.Ef6
                 _repositories = new Hashtable();
             }
 
-            var type = typeof(TEntity).Name;
+            var type = typeof (TEntity).Name;
 
             if (_repositories.ContainsKey(type))
             {
-                return (IRepositoryAsync<TEntity>)_repositories[type];
+                return (IRepositoryAsync<TEntity>) _repositories[type];
             }
 
-            var repositoryType = typeof(Repository<>);
-            _repositories.Add(type, Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)), _context));
+            var repositoryType = typeof (Repository<>);
+            _repositories.Add(type, Activator.CreateInstance(repositoryType.MakeGenericType(typeof (TEntity)), _context));
 
-            return (IRepositoryAsync<TEntity>)_repositories[type];
+            return (IRepositoryAsync<TEntity>) _repositories[type];
         }
 
-        public IRepository<TEntity> Repository<TEntity>() where TEntity : EntityBase
+        // Uncomment, if rather have IRepositoryAsync<TEntity> IoC vs. Reflection Activation
+        //public IRepositoryAsync<TEntity> RepositoryAsync<TEntity>() where TEntity : EntityBase
+        //{
+        //    return ServiceLocator.Current.GetInstance<IRepositoryAsync<TEntity>>();
+        //}
+
+        #region Unit of Work Transactions
+
+        public void BeginTransaction()
         {
-            return RepositoryAsync<TEntity>();
+            _objectContext = ((IObjectContextAdapter) _context).ObjectContext;
+            if (_objectContext.Connection.State != ConnectionState.Open)
+            {
+                _objectContext.Connection.Open();
+                _transaction = _objectContext.Connection.BeginTransaction();
+            }
         }
+
+        public int Commit()
+        {
+            var saveChanges = _context.SaveChanges();
+            _transaction.Commit();
+            return saveChanges;
+        }
+
+        public void Rollback()
+        {
+            _transaction.Rollback();
+            _context.SyncObjectsStatePostCommit();
+        }
+
+        public Task<int> CommitAsync()
+        {
+            var saveChangesAsync = SaveChangesAsync();
+            _transaction.Commit();
+            return saveChangesAsync;
+        }
+
+        #endregion
     }
 }

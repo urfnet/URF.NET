@@ -40,11 +40,11 @@ namespace Northwind.Test.Repository
             {
                 unitOfWork.Repository<Product>().Insert(new Product {ProductID = 2, Discontinued = true, ObjectState = ObjectState.Added});
 
-                unitOfWork.Save();
+                unitOfWork.SaveChanges();
 
                 unitOfWork.Repository<Product>().Delete(2);
 
-                unitOfWork.Save();
+                unitOfWork.SaveChanges();
 
                 var product = unitOfWork.Repository<Product>().Find(2);
 
@@ -61,7 +61,7 @@ namespace Northwind.Test.Repository
                 unitOfWork.Repository<Supplier>().Insert(new Supplier {SupplierID = 1, CompanyName = "Nokia", City = "Tampere", Country = "Finland", ContactName = "Stephen Elop", ContactTitle = "CEO"});
                 unitOfWork.Repository<Product>().Insert(new Product {ProductID = 2, Discontinued = true, ProductName = "Nokia Lumia 1520", SupplierID = 1, ObjectState = ObjectState.Added});
 
-                unitOfWork.Save();
+                unitOfWork.SaveChanges();
 
                 var product = unitOfWork.Repository<Product>().Find(2);
 
@@ -77,7 +77,7 @@ namespace Northwind.Test.Repository
             {
                 unitOfWork.Repository<Product>().Insert(new Product {ProductID = 2, Discontinued = true, ObjectState = ObjectState.Added});
 
-                unitOfWork.Save();
+                unitOfWork.SaveChanges();
 
                 var product = unitOfWork.Repository<Product>().Find(2);
 
@@ -85,7 +85,7 @@ namespace Northwind.Test.Repository
 
                 unitOfWork.Repository<Product>().Delete(product);
 
-                unitOfWork.Save();
+                unitOfWork.SaveChanges();
 
                 var productDeleted = unitOfWork.Repository<Product>().Find(2);
 
@@ -103,7 +103,7 @@ namespace Northwind.Test.Repository
                 unitOfWork.Repository<Product>().Insert(new Product {ProductID = 2, Discontinued = true});
                 unitOfWork.Repository<Product>().Insert(new Product {ProductID = 3, Discontinued = true});
 
-                unitOfWork.Save();
+                unitOfWork.SaveChanges();
 
                 var product = unitOfWork.Repository<Product>().Find(2);
 
@@ -133,7 +133,7 @@ namespace Northwind.Test.Repository
                 unitOfWork.Repository<Product>().Insert(new Product {ProductID = 2, Discontinued = true, ObjectState = ObjectState.Added});
                 unitOfWork.Repository<Product>().Insert(new Product {ProductID = 3, Discontinued = true, ObjectState = ObjectState.Added});
 
-                unitOfWork.Save();
+                unitOfWork.SaveChanges();
 
                 var discontinuedProducts = unitOfWork.Repository<Product>().Query(t => t.Discontinued).Select();
 
@@ -151,7 +151,7 @@ namespace Northwind.Test.Repository
                 unitOfWork.Repository<Product>().Insert(new Product {ProductID = 2, Discontinued = true, ObjectState = ObjectState.Added});
                 unitOfWork.Repository<Product>().Insert(new Product {ProductID = 3, Discontinued = true, ObjectState = ObjectState.Added});
 
-                unitOfWork.Save();
+                unitOfWork.SaveChanges();
 
                 var product = unitOfWork.Repository<Product>().Find(2);
 
@@ -189,7 +189,7 @@ namespace Northwind.Test.Repository
             {
                 unitOfWork.Repository<Product>().Insert(new Product {ProductID = 2, Discontinued = true});
 
-                unitOfWork.Save();
+                unitOfWork.SaveChanges();
 
                 var product = unitOfWork.Repository<Product>().Find(2);
 
@@ -199,7 +199,7 @@ namespace Northwind.Test.Repository
                 product.ObjectState = ObjectState.Modified;
 
                 unitOfWork.Repository<Product>().Update(product);
-                unitOfWork.Save();
+                unitOfWork.SaveChanges();
 
                 Assert.AreEqual(product.Discontinued, false, "Assert that our changes were saved.");
             }
@@ -213,7 +213,7 @@ namespace Northwind.Test.Repository
             {
                 unitOfWork.Repository<Product>().Insert(new Product {ProductID = 2, Discontinued = true});
 
-                unitOfWork.Save();
+                unitOfWork.SaveChanges();
 
                 var product = await unitOfWork.RepositoryAsync<Product>().FindAsync(2);
 

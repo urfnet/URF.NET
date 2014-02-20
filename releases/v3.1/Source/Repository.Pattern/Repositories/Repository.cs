@@ -34,7 +34,7 @@ namespace Repository.Pattern.Repositories
             return _dbSet.Find(keyValues);
         }
 
-        public virtual IQueryable<TEntity> SqlQuery(string query, params object[] parameters)
+        public virtual IQueryable<TEntity> SelectQuery(string query, params object[] parameters)
         {
             return _dbSet.SqlQuery(query, parameters).AsQueryable();
         }
@@ -113,17 +113,18 @@ namespace Repository.Pattern.Repositories
             return true;
         }
 
-        internal IQueryable<TEntity> Get(
+        internal IQueryable<TEntity> Select(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            List<Expression<Func<TEntity, object>>> includeProperties = null,
+            List<Expression<Func<TEntity, object>>> includes = null,
             int? page = null,
             int? pageSize = null)
         {
             IQueryable<TEntity> query = _dbSet;
 
-            if (includeProperties != null)
-                includeProperties.ForEach(i => query = query.Include(i));
+            if (includes != null)
+                foreach (var include in includes)
+                    query = query.Include(include);
 
             if (filter != null)
                 query = query.Where(filter);
@@ -137,14 +138,14 @@ namespace Repository.Pattern.Repositories
             return query;
         }
 
-        internal async Task<IEnumerable<TEntity>> GetAsync(
-            Expression<Func<TEntity, bool>> filter = null,
+        internal async Task<IEnumerable<TEntity>> SelectAsync(
+            Expression<Func<TEntity, bool>> query = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            List<Expression<Func<TEntity, object>>> includeProperties = null,
+            List<Expression<Func<TEntity, object>>> includes = null,
             int? page = null,
             int? pageSize = null)
         {
-            return Get(filter, orderBy, includeProperties, page, pageSize).AsEnumerable();
+            return Select(query, orderBy, includes, page, pageSize).AsEnumerable();
         }
 
         public IQueryable ODataQueryable(ODataQueryOptions<TEntity> oDataQueryOptions)

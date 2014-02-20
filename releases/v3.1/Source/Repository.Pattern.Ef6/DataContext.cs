@@ -66,7 +66,7 @@ namespace Repository.Pattern.Ef6
                 dbEntityEntry.State = StateHelper.ConvertState(((IObjectState)dbEntityEntry.Entity).ObjectState);
         }
 
-        private void SyncObjectsStatePostCommit()
+        public void SyncObjectsStatePostCommit()
         {
             foreach (var dbEntityEntry in ChangeTracker.Entries())
                 ((IObjectState)dbEntityEntry.Entity).ObjectState = StateHelper.ConvertState(dbEntityEntry.State);

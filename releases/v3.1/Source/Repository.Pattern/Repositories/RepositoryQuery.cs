@@ -38,28 +38,28 @@ namespace Repository.Pattern.Repositories
             return this;
         }
 
-        public IEnumerable<TEntity> GetPage(int page, int pageSize, out int totalCount)
+        public IEnumerable<TEntity> SelectPage(int page, int pageSize, out int totalCount)
         {
             _page = page;
             _pageSize = pageSize;
-            totalCount = _repository.Get(_filter).Count();
+            totalCount = _repository.Select(_filter).Count();
 
-            return _repository.Get(_filter, _orderByQuerable, _includeProperties, _page, _pageSize);
+            return _repository.Select(_filter, _orderByQuerable, _includeProperties, _page, _pageSize);
         }
 
         public IEnumerable<TEntity> Select()
         {
-            return _repository.Get(_filter, _orderByQuerable, _includeProperties, _page, _pageSize);
+            return _repository.Select(_filter, _orderByQuerable, _includeProperties, _page, _pageSize);
         }
 
         public async Task<IEnumerable<TEntity>> SingleAsync()
         {
-            return await _repository.GetAsync(_filter, _orderByQuerable, _includeProperties, _page, _pageSize);
+            return await _repository.SelectAsync(_filter, _orderByQuerable, _includeProperties, _page, _pageSize);
         }
 
         public IQueryable<TEntity> SqlQuery(string query, params object[] parameters)
         {
-            return _repository.SqlQuery(query, parameters).AsQueryable();
+            return _repository.SelectQuery(query, parameters).AsQueryable();
         }
     }
 }

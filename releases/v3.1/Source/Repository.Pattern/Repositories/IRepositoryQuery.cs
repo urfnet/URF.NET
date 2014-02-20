@@ -10,7 +10,7 @@ namespace Repository.Pattern.Repositories
     {
         RepositoryQuery<TEntity> OrderBy(Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy);
         RepositoryQuery<TEntity> Include(Expression<Func<TEntity, object>> expression);
-        IEnumerable<TEntity> GetPage(int page, int pageSize, out int totalCount);
+        IEnumerable<TEntity> SelectPage(int page, int pageSize, out int totalCount);
         IEnumerable<TEntity> Select();
         Task<IEnumerable<TEntity>> SingleAsync();
         IQueryable<TEntity> SqlQuery(string query, params object[] parameters);
