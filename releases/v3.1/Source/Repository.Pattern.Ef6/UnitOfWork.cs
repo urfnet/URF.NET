@@ -4,22 +4,19 @@ using System;
 using System.Collections;
 using System.Threading;
 using System.Threading.Tasks;
-using Repository.Pattern;
 using Repository.Pattern.Infrastructure;
 using Repository.Pattern.Repositories;
-using Repository.Pattern.UnitOfWorks;
-using Repository.Providers.EntityFramework;
+using Repository.Pattern.UnitOfWork;
 
 #endregion
 
-namespace Repository
+namespace Repository.Pattern.Ef6
 {
-    public class UnitOfWork : IUnitOfWorkAsync
+    public class UnitOfWork : IUnitOfWork, IUnitOfWorkAsync
     {
         #region Private Fields
 
-        private readonly IDataContext _context;
-        private readonly Guid _instanceId;
+        private readonly IDataContextAsync _context;
         private bool _disposed;
         private Hashtable _repositories;
 
@@ -27,10 +24,9 @@ namespace Repository
 
         #region Constuctor/Dispose
 
-        public UnitOfWork(IDataContext context)
+        public UnitOfWork(IDataContextAsync context)
         {
             _context = context;
-            _instanceId = Guid.NewGuid();
         }
 
         public void Dispose()
@@ -51,19 +47,17 @@ namespace Repository
         
         #endregion Constuctor/Dispose
 
-        public Guid InstanceId { get { return _instanceId; } }
-
         public void Save()
         {
             _context.SaveChanges();
         }
 
-        public Task<int> SaveAsync()
+        public Task<int> SaveChangesAsync()
         {
             return _context.SaveChangesAsync();
         }
 
-        public Task<int> SaveAsync(CancellationToken cancellationToken)
+        public Task<int> SaveChangesAsync(CancellationToken cancellationToken)
         {
             return _context.SaveChangesAsync(cancellationToken);
         }

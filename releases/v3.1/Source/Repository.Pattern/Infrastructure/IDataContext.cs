@@ -11,11 +11,14 @@ namespace Repository.Pattern.Infrastructure
 {
     public interface IDataContext : IDisposable
     {
-        Guid InstanceId { get; }
         DbSet<T> Set<T>() where T : class;
         int SaveChanges();
+        void SyncObjectState(object entity);
+    }
+
+    public interface IDataContextAsync : IDataContext
+    {
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
         Task<int> SaveChangesAsync();
-        void SyncObjectState(object entity);
     }
 }

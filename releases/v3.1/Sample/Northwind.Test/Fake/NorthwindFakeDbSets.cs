@@ -3,7 +3,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Northwind.Data.Models;
+using Northwind.Entitiy.Models;
 using Repository.Providers.EntityFramework.Fakes;
 
 #endregion

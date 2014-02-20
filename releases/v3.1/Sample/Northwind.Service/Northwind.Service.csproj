@@ -37,10 +37,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Northwind.Entity, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Northwind.Web\Bin\Northwind.Entity.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -60,6 +56,10 @@
     <ProjectReference Include="..\..\Source\Repository.Pattern\Repository.Pattern.csproj">
       <Project>{6E682A14-C872-4813-B620-76E108DEA683}</Project>
       <Name>Repository.Pattern</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Northwind.Entity\Northwind.Entitiy.csproj">
+      <Project>{97515F06-0783-420C-AC3A-45357015B699}</Project>
+      <Name>Northwind.Entitiy</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

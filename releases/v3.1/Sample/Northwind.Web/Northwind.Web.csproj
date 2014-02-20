@@ -1218,14 +1218,6 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Northwind.Data\Northwind.Data.csproj">
-      <Project>{33F5D861-F2E0-47FD-9F9D-E04FB83A06BD}</Project>
-      <Name>Northwind.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Northwind.Entity\Northwind.Entity.csproj">
-      <Project>{8C571C0E-8B5B-4410-89AB-FC0EE9F63495}</Project>
-      <Name>Northwind.Entity</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Source\Repository.Pattern.Ef6\Repository.Pattern.Ef6.csproj">
       <Project>{F68A1D19-93FB-47C1-A22B-42BEA3E4FD8C}</Project>
       <Name>Repository.Pattern.Ef6</Name>
@@ -1233,6 +1225,10 @@
     <ProjectReference Include="..\..\Source\Repository.Pattern\Repository.Pattern.csproj">
       <Project>{6E682A14-C872-4813-B620-76E108DEA683}</Project>
       <Name>Repository.Pattern</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Northwind.Entity\Northwind.Entitiy.csproj">
+      <Project>{97515F06-0783-420C-AC3A-45357015B699}</Project>
+      <Name>Northwind.Entitiy</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

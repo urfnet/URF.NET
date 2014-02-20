@@ -19,9 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Repository", "Nor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Test", "Northwind.Test\Northwind.Test.csproj", "{F358A9F4-BDC6-4100-ACD9-4DBF157CE513}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Data", "Northwind.Data\Northwind.Data.csproj", "{2600D145-1713-4C15-9010-D0DBDACBE431}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Entity", "Northwind.Entity\Northwind.Entity.csproj", "{97515F06-0783-420C-AC3A-45357015B699}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Entitiy", "Northwind.Entity\Northwind.Entitiy.csproj", "{97515F06-0783-420C-AC3A-45357015B699}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Web", "Northwind.Web\Northwind.Web.csproj", "{04DC8D7D-4512-4D1C-87B2-B8360F497D0B}"
 EndProject
@@ -79,16 +77,6 @@ Global
 		{F358A9F4-BDC6-4100-ACD9-4DBF157CE513}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{F358A9F4-BDC6-4100-ACD9-4DBF157CE513}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{F358A9F4-BDC6-4100-ACD9-4DBF157CE513}.Release|x86.ActiveCfg = Release|Any CPU
-		{2600D145-1713-4C15-9010-D0DBDACBE431}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2600D145-1713-4C15-9010-D0DBDACBE431}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2600D145-1713-4C15-9010-D0DBDACBE431}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{2600D145-1713-4C15-9010-D0DBDACBE431}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{2600D145-1713-4C15-9010-D0DBDACBE431}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{2600D145-1713-4C15-9010-D0DBDACBE431}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2600D145-1713-4C15-9010-D0DBDACBE431}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2600D145-1713-4C15-9010-D0DBDACBE431}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{2600D145-1713-4C15-9010-D0DBDACBE431}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{2600D145-1713-4C15-9010-D0DBDACBE431}.Release|x86.ActiveCfg = Release|Any CPU
 		{97515F06-0783-420C-AC3A-45357015B699}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{97515F06-0783-420C-AC3A-45357015B699}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97515F06-0783-420C-AC3A-45357015B699}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

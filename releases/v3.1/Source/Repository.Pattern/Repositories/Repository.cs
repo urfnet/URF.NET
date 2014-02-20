@@ -7,39 +7,28 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Repository.Pattern.Infrastructure;
 
 #endregion
 
 namespace Repository.Pattern.Repositories
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : Infrastructure.EntityBase
+    public class Repository<TEntity> : 
+        IRepository<TEntity>, 
+        IRepositoryAsync<TEntity> where TEntity : EntityBase
     {
-        private readonly Infrastructure.IDataContext _context;
+        private readonly IDataContextAsync _context;
         private readonly DbSet<TEntity> _dbSet;
-        private readonly Guid _instanceId;
 
-        public Repository(Infrastructure.IDataContext context)
+        public Repository(IDataContextAsync context)
         {
             _context = context;
             _dbSet = context.Set<TEntity>();
-            _instanceId = Guid.NewGuid();
         }
-
-        public Guid InstanceId { get { return _instanceId; } }
 
         public virtual TEntity Find(params object[] keyValues)
         {
             return _dbSet.Find(keyValues);
-        }
-
-        public virtual async Task<TEntity> FindAsync(params object[] keyValues)
-        {
-            return await _dbSet.FindAsync(keyValues);
-        }
-
-        public virtual async Task<TEntity> FindAsync(CancellationToken cancellationToken, params object[] keyValues)
-        {
-            return await _dbSet.FindAsync(cancellationToken, keyValues);
         }
 
         public virtual IQueryable<TEntity> SqlQuery(string query, params object[] parameters)
@@ -49,7 +38,7 @@ namespace Repository.Pattern.Repositories
 
         public virtual void Insert(TEntity entity)
         {
-            ((Infrastructure.IObjectState) entity).ObjectState = Infrastructure.ObjectState.Added;
+            ((IObjectState) entity).ObjectState = ObjectState.Added;
             _dbSet.Attach(entity);
             _context.SyncObjectState(entity);
         }
@@ -72,7 +61,7 @@ namespace Repository.Pattern.Repositories
 
         public virtual void Update(TEntity entity)
         {
-            ((Infrastructure.IObjectState) entity).ObjectState = Infrastructure.ObjectState.Modified;
+            ((IObjectState) entity).ObjectState = ObjectState.Modified;
             _dbSet.Attach(entity);
             _context.SyncObjectState(entity);
         }
@@ -85,7 +74,7 @@ namespace Repository.Pattern.Repositories
 
         public virtual void Delete(TEntity entity)
         {
-            ((Infrastructure.IObjectState) entity).ObjectState = Infrastructure.ObjectState.Deleted;
+            ((IObjectState) entity).ObjectState = ObjectState.Deleted;
             _dbSet.Attach(entity);
             _context.SyncObjectState(entity);
         }
@@ -94,6 +83,31 @@ namespace Repository.Pattern.Repositories
         {
             var repositoryGetFluentHelper = new RepositoryQuery<TEntity>(this, clause);
             return repositoryGetFluentHelper;
+        }
+
+        public virtual async Task<TEntity> FindAsync(params object[] keyValues)
+        {
+            return await _dbSet.FindAsync(keyValues);
+        }
+
+        public virtual async Task<TEntity> FindAsync(CancellationToken cancellationToken, params object[] keyValues)
+        {
+            return await _dbSet.FindAsync(cancellationToken, keyValues);
+        }
+
+        public virtual async Task<bool> DeleteAsync(params object[] keyValues)
+        {
+            return await DeleteAsync(CancellationToken.None, keyValues);
+        }
+
+        public virtual async Task<bool> DeleteAsync(CancellationToken cancellationToken, params object[] keyValues)
+        {
+            var entity = await FindAsync(cancellationToken, keyValues);
+            if (entity == null) return false;
+
+            _dbSet.Attach(entity);
+            _dbSet.Remove(entity);
+            return true;
         }
 
         internal IQueryable<TEntity> Get(

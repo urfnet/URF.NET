@@ -1,46 +1,190 @@
 ﻿#region
 
+using System;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using System.Web.Http;
 using System.Web.Http.OData;
-using Northwind.Data.Models;
-using Repository;
-using Repository.Pattern.UnitOfWorks;
+using Northwind.Entitiy.Models;
+using Repository.Pattern.Infrastructure;
+using Repository.Pattern.Repositories;
+using Repository.Pattern.UnitOfWork;
 
 #endregion
 
 namespace Northwind.Web.Api
 {
-    public class CustomerController : EntitySetController<Customer, string>
+    public class CustomerController : ODataController
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IRepositoryAsync<Customer> _customerRepositoryAsync;
+        private readonly IUnitOfWorkAsync _unitOfWorkAsync;
 
-
-        public CustomerController(IUnitOfWork unitOfWork)
+        public CustomerController(
+            IUnitOfWorkAsync unitOfWorkAsync,
+            IRepositoryAsync<Customer> customerRepositoryAsync)
         {
-            _unitOfWork = unitOfWork;
+            _unitOfWorkAsync = unitOfWorkAsync;
+            _customerRepositoryAsync = customerRepositoryAsync;
         }
 
-        public override IQueryable<Customer> Get()
+        // GET odata/Customer
+        [Queryable]
+        public IQueryable<Customer> GetCustomer()
         {
-            return _unitOfWork.Repository<Customer>().Query().Get();
+            return _customerRepositoryAsync.Query().Get();
         }
 
-        protected override Customer GetEntityByKey(string key)
+        // GET odata/Customer(5)
+        [Queryable]
+        public SingleResult<Customer> GetCustomer(string key)
         {
-            return _unitOfWork.Repository<Customer>().Find(key);
+            return SingleResult.Create(
+                _customerRepositoryAsync
+                    .Query(customer => customer.CustomerID == key)
+                    .Get()
+                    .AsQueryable());
         }
 
-        protected override Customer UpdateEntity(string key, Customer update)
+        // PUT odata/Customer(5)
+        public async Task<IHttpActionResult> Put(string key, Customer customer)
         {
-            _unitOfWork.Repository<Customer>().Update(update);
-            _unitOfWork.Save();
-            return update;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (key != customer.CustomerID)
+            {
+                return BadRequest();
+            }
+
+           customer.ObjectState = ObjectState.Modified;
+            _customerRepositoryAsync.Update(customer);
+
+            try
+            {
+                await _unitOfWorkAsync.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!CustomerExists(key))
+                {
+                    return NotFound();
+                }
+                throw;
+            }
+
+            return Updated(customer);
         }
 
-        public override void Delete(string key)
+        // POST odata/Customer
+        public async Task<IHttpActionResult> Post(Customer customer)
         {
-            _unitOfWork.Repository<Customer>().Delete(key);
-            _unitOfWork.Save();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _customerRepositoryAsync.Insert(customer);
+
+            try
+            {
+                await _unitOfWorkAsync.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (CustomerExists(customer.CustomerID))
+                {
+                    return Conflict();
+                }
+                throw;
+            }
+
+            return Created(customer);
+        }
+
+        // PATCH odata/Customer(5)
+        [AcceptVerbs("PATCH", "MERGE")]
+        public async Task<IHttpActionResult> Patch(string key, Delta<Customer> patch)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var customer = await _customerRepositoryAsync.FindAsync(key);
+
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            patch.Patch(customer);
+
+            _customerRepositoryAsync.Update(customer);
+
+            try
+            {
+                customer.ObjectState = ObjectState.Modified;
+                await _unitOfWorkAsync.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!CustomerExists(key))
+                {
+                    return NotFound();
+                }
+                throw;
+            }
+
+            return Updated(customer);
+        }
+
+        // DELETE odata/Customer(5)
+        public async Task<IHttpActionResult> Delete(string key)
+        {
+            var customer = await _customerRepositoryAsync.FindAsync(key);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            _customerRepositoryAsync.Delete(customer);
+            await _unitOfWorkAsync.SaveChangesAsync();
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        // GET odata/Customer(5)/CustomerDemographics
+        [Queryable]
+        public IQueryable<CustomerDemographic> GetCustomerDemographics(string key)
+        {
+            //return _customerRepositoryAsync.Queryable().Where(m => m.CustomerID == key).SelectMany(m => m.CustomerDemographics);
+            throw new NotImplementedException();
+        }
+
+        // GET odata/Customer(5)/Orders
+        [Queryable]
+        public IQueryable<Order> GetOrders(string key)
+        {
+            throw new NotImplementedException();
+            //return _customerRepositoryAsync.Queryable().Where(m => m.CustomerID == key).SelectMany(m => m.Orders);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _unitOfWorkAsync.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private bool CustomerExists(string key)
+        {
+            return _customerRepositoryAsync.Query(e => e.CustomerID == key).Get().Any();
         }
     }
 }

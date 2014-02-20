@@ -7,7 +7,6 @@ namespace Repository.Pattern.Repositories
 {
     public interface IRepository<TEntity> where TEntity : Infrastructure.EntityBase
     {
-        Guid InstanceId { get; }
         TEntity Find(params object[] keyValues);
         IQueryable<TEntity> SqlQuery(string query, params object[] parameters);
         void Insert(TEntity entity);

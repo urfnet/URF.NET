@@ -4,7 +4,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using Repository;
-using Repository.Pattern.UnitOfWorks;
+using Repository.Pattern.UnitOfWork;
 
 namespace Northwind.Service
 {

@@ -1,17 +1,13 @@
-#region
-
 using System;
-using Repository;
+using System.Collections.Generic;
 using Repository.Pattern.Infrastructure;
 
-#endregion
-
-namespace Northwind.Data.Models
+namespace Northwind.Entitiy.Models
 {
-    public class SummaryOfSalesByQuarter : EntityBase
+    public partial class SummaryOfSalesByQuarter : EntityBase
     {
+        public Nullable<System.DateTime> ShippedDate { get; set; }
         public int OrderID { get; set; }
-        public DateTime? ShippedDate { get; set; }
-        public decimal? Subtotal { get; set; }
+        public Nullable<decimal> Subtotal { get; set; }
     }
 }

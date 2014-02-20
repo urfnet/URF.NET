@@ -6,12 +6,12 @@ using Repository.Pattern.Repositories;
 
 #endregion
 
-namespace Repository.Pattern.UnitOfWorks
+namespace Repository.Pattern.UnitOfWork
 {
     public interface IUnitOfWorkAsync : IUnitOfWork
     {
-        Task<int> SaveAsync();
-        Task<int> SaveAsync(CancellationToken cancellationToken);
+        Task<int> SaveChangesAsync();
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
         IRepositoryAsync<TEntity> RepositoryAsync<TEntity>() where TEntity : Infrastructure.EntityBase;
     }
 }

@@ -10,7 +10,7 @@ using Repository.Pattern.Infrastructure;
 
 namespace Repository.Pattern.Ef6
 {
-    public class DataContext : DbContext, IDataContext
+    public class DataContext : DbContext, IDataContext, IDataContextAsync
     {
         private readonly Guid _instanceId;
 

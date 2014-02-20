@@ -12,7 +12,7 @@ using Repository.Pattern.Infrastructure;
 
 namespace Repository.Providers.EntityFramework.Fakes
 {
-    public abstract class FakeDbContext : IDataContext
+    public abstract class FakeDbContext : IDataContextAsync
     {
         private readonly Dictionary<Type, object> _fakeDbSets;
 

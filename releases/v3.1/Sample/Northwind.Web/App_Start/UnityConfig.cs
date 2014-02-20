@@ -2,10 +2,12 @@
 
 using System;
 using Microsoft.Practices.Unity;
-using Northwind.Data.Models;
+using Northwind.Entitiy.Models;
 using Repository;
+using Repository.Pattern.Ef6;
 using Repository.Pattern.Infrastructure;
-using Repository.Pattern.UnitOfWorks;
+using Repository.Pattern.Repositories;
+using Repository.Pattern.UnitOfWork;
 
 #endregion
 
@@ -48,8 +50,9 @@ namespace Northwind.Web.App_Start
 
             // TODO: Register your types here
             container
-                .RegisterType<IDataContext, NorthwindContext>(new PerRequestLifetimeManager())
-                .RegisterType<IUnitOfWork, UnitOfWork>(new PerRequestLifetimeManager());
+                .RegisterType<IDataContextAsync, NorthwindContext>(new PerRequestLifetimeManager())
+                .RegisterType<IUnitOfWorkAsync, UnitOfWork>(new PerRequestLifetimeManager())
+                .RegisterType<IRepositoryAsync<Customer>, Repository<Customer>>();
         }
     }
 }

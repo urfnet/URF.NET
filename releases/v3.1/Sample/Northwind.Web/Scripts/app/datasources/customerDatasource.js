@@ -1,5 +1,5 @@
 ﻿define(['kendo', 'customerModel'],
-    function(kendo, customerModel) {
+    function (kendo, customerModel) {
         var crudServiceBaseUrl = "/odata/Customer";
 
         var customerDatasource = new kendo.data.DataSource({
@@ -11,13 +11,13 @@
                     dataType: "json"
                 },
                 update: {
-                    url: function(data) {
+                    url: function (data) {
                         return crudServiceBaseUrl + "(" + data.CustomerID + ")";
                     },
                     dataType: "json"
                 },
                 destroy: {
-                    url: function(data) {
+                    url: function (data) {
                         return crudServiceBaseUrl + "(" + data.CustomerID + ")";
                     },
                     dataType: "json"
@@ -29,28 +29,13 @@
             serverFiltering: true,
             pageSize: 10,
             schema: {
-                data: function(data) {
-                    return data.value;
-                },
-                total: function(data) {
-                    return data["odata.count"];
-                },
-                errors: function(data) {
-                },
+                data: function (data) { return data.value; },
+                total: function (data) { return data["odata.count"]; },
                 model: customerModel
             },
-            error: function(e) {
-                if (e.errors) {
-                    var message = "Errors:\n";
-                    $.each(e.errors, function(key, value) {
-                        if ('errors' in value) {
-                            $.each(value.errors, function() {
-                                message += this + "\n";
-                            });
-                        }
-                    });
-                    alert(message);
-                }
+            error: function (e) {
+                alert(e.xhr.responseJSON["odata.error"]
+                    .innererror.internalexception.internalexception.message);
             }
         });
 

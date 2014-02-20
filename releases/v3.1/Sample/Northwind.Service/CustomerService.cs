@@ -2,10 +2,9 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Northwind.Data.Models;
-using Repository;
+using Northwind.Entitiy.Models;
 using Repository.Pattern.Infrastructure;
-using Repository.Pattern.UnitOfWorks;
+using Repository.Pattern.UnitOfWork;
 
 #endregion
 

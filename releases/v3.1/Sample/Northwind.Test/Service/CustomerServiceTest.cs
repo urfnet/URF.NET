@@ -1,14 +1,13 @@
 ﻿#region
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Northwind.Data.Models;
+using Northwind.Entitiy.Models;
 using Northwind.Service;
 using Northwind.Test.Fake;
 using Repository;
-using Repository.Pattern;
+using Repository.Pattern.Ef6;
 using Repository.Pattern.Infrastructure;
-using Repository.Pattern.UnitOfWorks;
-using Repository.Providers.EntityFramework;
+using Repository.Pattern.UnitOfWork;
 
 #endregion
 
@@ -20,7 +19,7 @@ namespace Northwind.Test.Service
         [TestMethod]
         public void AddNewCustomer()
         {
-            using (IDataContext context = new NorthwindFakeContext())
+            using (IDataContextAsync context = new NorthwindFakeContext())
             using (IUnitOfWork unitOfWork = new UnitOfWork(context))
             using (ICustomerService customerService = new CustomerService(unitOfWork))
             {

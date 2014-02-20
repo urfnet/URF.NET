@@ -2,7 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-using Northwind.Data.Models;
+using Northwind.Entitiy.Models;
 
 #endregion
 
