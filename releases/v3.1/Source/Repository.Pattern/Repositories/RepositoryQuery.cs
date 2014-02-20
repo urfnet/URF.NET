@@ -47,12 +47,12 @@ namespace Repository.Pattern.Repositories
             return _repository.Get(_filter, _orderByQuerable, _includeProperties, _page, _pageSize);
         }
 
-        public IEnumerable<TEntity> Get()
+        public IEnumerable<TEntity> Select()
         {
             return _repository.Get(_filter, _orderByQuerable, _includeProperties, _page, _pageSize);
         }
 
-        public async Task<IEnumerable<TEntity>> GetAsync()
+        public async Task<IEnumerable<TEntity>> SingleAsync()
         {
             return await _repository.GetAsync(_filter, _orderByQuerable, _includeProperties, _page, _pageSize);
         }

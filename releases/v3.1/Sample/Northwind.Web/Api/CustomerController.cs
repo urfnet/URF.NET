@@ -35,7 +35,7 @@ namespace Northwind.Web.Api
         // GET odata/Customer
         public PageResult<Customer> GetCustomer(ODataQueryOptions<Customer> oDataQueryOptions)
         {
-            var queryable = _customerRepositoryAsync.GetODataQuerable(oDataQueryOptions);
+            var queryable = _customerRepositoryAsync.ODataQueryable(oDataQueryOptions);
 
             return new PageResult<Customer>(
                 queryable as IEnumerable<Customer>, 
@@ -50,7 +50,7 @@ namespace Northwind.Web.Api
             return SingleResult.Create(
                 _customerRepositoryAsync
                     .Query(customer => customer.CustomerID == key)
-                    .Get()
+                    .Select()
                     .AsQueryable());
         }
 
@@ -191,7 +191,7 @@ namespace Northwind.Web.Api
 
         private bool CustomerExists(string key)
         {
-            return _customerRepositoryAsync.Query(e => e.CustomerID == key).Get().Any();
+            return _customerRepositoryAsync.Query(e => e.CustomerID == key).Select().Any();
         }
     }
 }

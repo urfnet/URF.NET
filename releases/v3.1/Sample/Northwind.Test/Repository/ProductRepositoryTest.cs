@@ -118,7 +118,7 @@ namespace Northwind.Test.Repository
             using (IDataContextAsync context = new NorthwindFakeContext())
             using (IUnitOfWork unitOfWork = new UnitOfWork(context))
             {
-                var products = unitOfWork.Repository<Product>().Query().Get().ToList();
+                var products = unitOfWork.Repository<Product>().Query().Select().ToList();
                 Assert.IsInstanceOfType(products, typeof (List<Product>));
             }
         }
@@ -135,7 +135,7 @@ namespace Northwind.Test.Repository
 
                 unitOfWork.Save();
 
-                var discontinuedProducts = unitOfWork.Repository<Product>().Query(t => t.Discontinued).Get();
+                var discontinuedProducts = unitOfWork.Repository<Product>().Query(t => t.Discontinued).Select();
 
                 Assert.AreEqual(2, discontinuedProducts.Count());
             }
@@ -175,7 +175,7 @@ namespace Northwind.Test.Repository
 
                 unitOfWork.Repository<Product>().InsertRange(newProducts);
 
-                var savedProducts = unitOfWork.Repository<Product>().Query().Get();
+                var savedProducts = unitOfWork.Repository<Product>().Query().Select();
 
                 Assert.AreEqual(savedProducts.Count(), newProducts.Length);
             }

@@ -20,6 +20,6 @@ namespace Repository.Pattern.Repositories
         void Delete(object id);
         void Delete(TEntity entity);
         IRepositoryQuery<TEntity> Query(Expression<Func<TEntity, bool>> clause = null);
-        IQueryable GetODataQuerable(ODataQueryOptions<TEntity> oDataQueryOptions);
+        IQueryable ODataQueryable(ODataQueryOptions<TEntity> oDataQueryOptions);
     }
 }

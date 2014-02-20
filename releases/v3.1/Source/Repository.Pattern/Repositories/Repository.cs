@@ -147,7 +147,7 @@ namespace Repository.Pattern.Repositories
             return Get(filter, orderBy, includeProperties, page, pageSize).AsEnumerable();
         }
 
-        public IQueryable GetODataQuerable(ODataQueryOptions<TEntity> oDataQueryOptions)
+        public IQueryable ODataQueryable(ODataQueryOptions<TEntity> oDataQueryOptions)
         {
             return oDataQueryOptions.ApplyTo(_dbSet);
         }
