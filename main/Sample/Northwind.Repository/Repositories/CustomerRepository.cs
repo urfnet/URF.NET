@@ -8,6 +8,7 @@ using Repository.Pattern.Repositories;
 
 namespace Northwind.Repository
 {
+    // Exmaple: How to add custom methods to a repository.
     public static class CustomerRepository
     {
         public static decimal GetCustomerOrderTotalByYear(

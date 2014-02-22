@@ -61,6 +61,9 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\..\Sample\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="LinqKit">
+      <HintPath>..\..\Sample\packages\LinqKit.1.0\lib\35\LinqKit.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Data.Edm, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\Sample\packages\Microsoft.Data.Edm.5.6.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
     </Reference>
@@ -95,7 +98,10 @@
     <Compile Include="DataContext\IDataContext.cs" />
     <Compile Include="DataContext\IDataContextAsync.cs" />
     <Compile Include="Infrastructure\IObjectState.cs" />
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Repositories\IQueryObject.cs" />
     <Compile Include="Repositories\IRepositoryAsync.cs" />
+    <Compile Include="Repositories\QueryObject.cs" />
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Repositories\QueryFluent.cs" />
     <Compile Include="UnitOfWork\IUnitOfWorkAsync.cs" />

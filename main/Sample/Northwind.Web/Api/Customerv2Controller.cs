@@ -1,47 +1,41 @@
-﻿#region
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Query;
 using Northwind.Entitiy.Models;
-using Northwind.Repository;
 using Repository.Pattern.Infrastructure;
 using Repository.Pattern.Repositories;
 using Repository.Pattern.UnitOfWork;
 
-#endregion
-
 namespace Northwind.Web.Api
 {
-    public class CustomerController : ODataController
+    public class Customer2Controller : ODataController
     {
         private readonly IRepositoryAsync<Customer> _customerRepository;
-        private readonly IUnitOfWorkAsync _unitOfWorkAsync;
+        private readonly IUnitOfWorkAsync _unitOfWork;
 
-        public CustomerController(
-            IUnitOfWorkAsync unitOfWorkAsync,
+        public Customer2Controller(
+            IUnitOfWorkAsync unitOfWork,
             IRepositoryAsync<Customer> customerRepository)
         {
-            _unitOfWorkAsync = unitOfWorkAsync;
+            _unitOfWork = unitOfWork;
             _customerRepository = customerRepository;
         }
 
         // GET odata/Customer
         public PageResult<Customer> GetCustomer(ODataQueryOptions<Customer> oDataQueryOptions)
         {
-            //_customerRepository.Query(new CustomerQuery() { Id = "ALKM" });
-
             var queryable = _customerRepository.ODataQueryable(oDataQueryOptions);
 
             return new PageResult<Customer>(
-                queryable as IEnumerable<Customer>, 
+                queryable as IEnumerable<Customer>,
                 Request.GetNextPageLink(),
                 Request.GetInlineCount());
         }
@@ -50,6 +44,7 @@ namespace Northwind.Web.Api
         [Queryable]
         public SingleResult<Customer> GetCustomer(string key)
         {
+
             return SingleResult.Create(
                 _customerRepository
                     .Query(customer => customer.CustomerID == key)
@@ -70,12 +65,12 @@ namespace Northwind.Web.Api
                 return BadRequest();
             }
 
-           customer.ObjectState = ObjectState.Modified;
+            customer.ObjectState = ObjectState.Modified;
             _customerRepository.Update(customer);
 
             try
             {
-                await _unitOfWorkAsync.SaveChangesAsync();
+                await _unitOfWork.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -101,7 +96,7 @@ namespace Northwind.Web.Api
 
             try
             {
-                await _unitOfWorkAsync.SaveChangesAsync();
+                await _unitOfWork.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
@@ -116,7 +111,7 @@ namespace Northwind.Web.Api
         }
 
         // PATCH odata/Customer(5)
-        [AcceptVerbs("PATCH", "MERGE")]
+        [System.Web.Mvc.AcceptVerbs("PATCH", "MERGE")]
         public async Task<IHttpActionResult> Patch(string key, Delta<Customer> patch)
         {
             if (!ModelState.IsValid)
@@ -138,7 +133,7 @@ namespace Northwind.Web.Api
             try
             {
                 customer.ObjectState = ObjectState.Modified;
-                await _unitOfWorkAsync.SaveChangesAsync();
+                await _unitOfWork.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -162,7 +157,7 @@ namespace Northwind.Web.Api
             }
 
             _customerRepository.Delete(customer);
-            await _unitOfWorkAsync.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -187,7 +182,7 @@ namespace Northwind.Web.Api
         {
             if (disposing)
             {
-                _unitOfWorkAsync.Dispose();
+                _unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }

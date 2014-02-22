@@ -14,6 +14,5 @@ namespace Repository.Pattern.UnitOfWork
         Task<int> SaveChangesAsync();
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
         IRepositoryAsync<TEntity> RepositoryAsync<TEntity>() where TEntity : Entity;
-        Task<int> CommitAsync();
     }
 }

@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Query;
+using LinqKit;
 using Repository.Pattern.DataContext;
 using Repository.Pattern.Infrastructure;
 
@@ -83,7 +84,17 @@ namespace Repository.Pattern.Repositories
             _context.SyncObjectState(entity);
         }
 
-        public virtual IQueryFluent<TEntity> Query(Expression<Func<TEntity, bool>> query = null)
+        public IQueryFluent<TEntity> Query()
+        {
+            return new QueryFluent<TEntity>(this);
+        }
+
+        public virtual IQueryFluent<TEntity> Query(QueryObject<TEntity> queryObject)
+        {
+            return new QueryFluent<TEntity>(this, queryObject);
+        }
+
+        public virtual IQueryFluent<TEntity> Query(Expression<Func<TEntity, bool>> query)
         {
             return new QueryFluent<TEntity>(this, query);
         }
@@ -126,11 +137,11 @@ namespace Repository.Pattern.Repositories
                 foreach (var include in includes)
                     query = query.Include(include);
 
-            if (filter != null)
-                query = query.Where(filter);
-
             if (orderBy != null)
                 query = orderBy(query);
+
+            if (filter != null)
+                query = query.AsExpandable().Where(filter);
 
             if (page != null && pageSize != null)
                 query = query.Skip((page.Value - 1)*pageSize.Value).Take(pageSize.Value);

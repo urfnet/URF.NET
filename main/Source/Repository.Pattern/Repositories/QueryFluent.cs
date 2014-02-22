@@ -13,16 +13,27 @@ namespace Repository.Pattern.Repositories
 {
     public sealed class QueryFluent<TEntity> : IQueryFluent<TEntity> where TEntity : Entity
     {
-        private readonly Expression<Func<TEntity, bool>> _query;
+        private readonly Expression<Func<TEntity, bool>> _expression;
         private readonly List<Expression<Func<TEntity, object>>> _includes;
         private readonly Repository<TEntity> _repository;
         private Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> _orderBy;
 
-        public QueryFluent(Repository<TEntity> repository, Expression<Func<TEntity, bool>> query = null)
+        public QueryFluent(Repository<TEntity> repository)
         {
-            _query = query;
             _repository = repository;
             _includes = new List<Expression<Func<TEntity, object>>>();
+        }
+
+        public QueryFluent(Repository<TEntity> repository, QueryObject<TEntity> queryObject)
+            : this(repository)
+        {
+            _expression = queryObject.Query();
+        }
+
+        public QueryFluent(Repository<TEntity> repository, Expression<Func<TEntity, bool>> expression) 
+            : this(repository)
+        {
+            _expression = expression;
         }
 
         public QueryFluent<TEntity> OrderBy(Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy)
@@ -39,22 +50,22 @@ namespace Repository.Pattern.Repositories
 
         public IEnumerable<TEntity> SelectPage(int page, int pageSize, out int totalCount)
         {
-            totalCount = _repository.Select(_query).Count();
-            return _repository.Select(_query, _orderBy, _includes, page, page);
+            totalCount = _repository.Select(_expression).Count();
+            return _repository.Select(_expression, _orderBy, _includes, page, page);
         }
         public IEnumerable<TEntity> Select()
         {
-            return _repository.Select(_query, _orderBy, _includes);
+            return _repository.Select(_expression, _orderBy, _includes);
         }
 
         public IEnumerable<TResult> Select<TResult>(Expression<Func<TEntity, TResult>> selector)
         {
-            return _repository.Select(_query, _orderBy, _includes).Select(selector);
+            return _repository.Select(_expression, _orderBy, _includes).Select(selector);
         }
 
         public async Task<IEnumerable<TEntity>> SingleAsync()
         {
-            return await _repository.SelectAsync(_query, _orderBy, _includes);
+            return await _repository.SelectAsync(_expression, _orderBy, _includes);
         }
 
         public IQueryable<TEntity> SqlQuery(string query, params object[] parameters)

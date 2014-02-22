@@ -9,7 +9,7 @@ namespace Repository.Pattern.UnitOfWork
         void Dispose(bool disposing);
         IRepository<TEntity> Repository<TEntity>() where TEntity : Infrastructure.Entity;
         void BeginTransaction();
-        int Commit();
+        bool Commit();
         void Rollback();
     }
 }
