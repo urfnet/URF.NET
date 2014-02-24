@@ -11,7 +11,7 @@ using Repository.Pattern.Infrastructure;
 
 namespace <#= code.EscapeNamespace(efHost.Namespace) #>
 {
-    public partial class <#= efHost.EntityType.Name #> : EntityBase
+    public partial class <#= efHost.EntityType.Name #> : Entity
     {
 <#
     var collectionNavigations = efHost.EntityType.NavigationProperties.Where(
