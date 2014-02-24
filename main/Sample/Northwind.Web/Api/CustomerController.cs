@@ -34,11 +34,9 @@ namespace Northwind.Web.Api
         }
 
         // GET odata/Customer
-        public PageResult<Customer> GetCustomer(ODataQueryOptions<Customer> oDataQueryOptions)
+        public PageResult<Customer> GetCustomer(ODataQueryOptions<Customer> options)
         {
-            //_customerRepository.Query(new CustomerQuery() { Id = "ALKM" });
-
-            var queryable = _customerRepository.ODataQueryable(oDataQueryOptions);
+            var queryable = _customerRepository.ODataQueryable(options);
 
             return new PageResult<Customer>(
                 queryable as IEnumerable<Customer>, 
@@ -171,16 +169,21 @@ namespace Northwind.Web.Api
         [Queryable]
         public IQueryable<CustomerDemographic> GetCustomerDemographics(string key)
         {
-            //return _customerRepositoryAsync.Queryable().Where(m => m.CustomerID == key).SelectMany(m => m.CustomerDemographics);
-            throw new NotImplementedException();
+            return _customerRepository.Query(m => m.CustomerID == key)
+                .Select()
+                .AsQueryable()
+                .SelectMany(m => m.CustomerDemographics);
         }
 
         // GET odata/Customer(5)/Orders
         [Queryable]
         public IQueryable<Order> GetOrders(string key)
         {
-            throw new NotImplementedException();
-            //return _customerRepositoryAsync.Queryable().Where(m => m.CustomerID == key).SelectMany(m => m.Orders);
+            return _customerRepository
+                .Query(m => m.CustomerID == key)
+                .Select()
+                .AsQueryable()
+                .SelectMany(m => m.Orders);
         }
 
         protected override void Dispose(bool disposing)

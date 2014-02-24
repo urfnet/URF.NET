@@ -2,9 +2,10 @@
 
 using Northwind.Entitiy.Models;
 using Repository.Pattern.Repositories;
+
 #endregion
 
-namespace Northwind.Repository
+namespace Northwind.Repository.Queries
 {
     public class CustomerLogisticsQuery : QueryObject<Customer>
     {
