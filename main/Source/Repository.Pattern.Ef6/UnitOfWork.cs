@@ -21,7 +21,7 @@ namespace Repository.Pattern.Ef6
     {
         #region Private Fields
 
-        private readonly DataContext _dataContext;
+        private readonly IDataContextAsync _dataContext;
         private bool _disposed;
         private ObjectContext _objectContext;
         private Dictionary<string, object> _repositories;
@@ -33,12 +33,12 @@ namespace Repository.Pattern.Ef6
 
         public UnitOfWork(IDataContextAsync dataContext)
         {
-            _dataContext = (DataContext) dataContext;
+            _dataContext = dataContext;
         }
 
         public void Dispose()
         {
-            if (_objectContext.Connection.State == ConnectionState.Open)
+            if (_objectContext != null && _objectContext.Connection.State == ConnectionState.Open)
                 _objectContext.Connection.Close();
 
             Dispose(true);
@@ -111,7 +111,7 @@ namespace Repository.Pattern.Ef6
         public void Rollback()
         {
             _transaction.Rollback();
-            _dataContext.SyncObjectsStatePostCommit();
+            ((DataContext)_dataContext).SyncObjectsStatePostCommit();
         }
 
         #endregion
