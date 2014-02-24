@@ -1,9 +1,9 @@
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using Northwind.Entitiy.Models.Mapping;
+using Northwind.Entities.Models.Mapping;
 using Repository.Pattern.Ef6;
 
-namespace Northwind.Entitiy.Models
+namespace Northwind.Entities.Models
 {
     public partial class NorthwindContext : DataContext
     {

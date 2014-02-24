@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 
-namespace Northwind.Entitiy.Models.Mapping
+namespace Northwind.Entities.Models.Mapping
 {
     public class Products_by_CategoryMap : EntityTypeConfiguration<Products_by_Category>
     {

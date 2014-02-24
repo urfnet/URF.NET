@@ -12,7 +12,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Repository", "Nor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Test", "Northwind.Test\Northwind.Test.csproj", "{F358A9F4-BDC6-4100-ACD9-4DBF157CE513}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Entitiy", "Northwind.Entity\Northwind.Entitiy.csproj", "{97515F06-0783-420C-AC3A-45357015B699}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Entities", "Northwind.Entity\Northwind.Entities.csproj", "{97515F06-0783-420C-AC3A-45357015B699}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Web", "Northwind.Web\Northwind.Web.csproj", "{04DC8D7D-4512-4D1C-87B2-B8360F497D0B}"
 EndProject

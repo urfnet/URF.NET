@@ -3,7 +3,7 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
-using Northwind.Entitiy.Models;
+using Northwind.Entities.Models;
 using Repository.Pattern.Repositories;
 
 #endregion

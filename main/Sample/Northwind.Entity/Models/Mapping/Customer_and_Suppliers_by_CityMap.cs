@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 
-namespace Northwind.Entitiy.Models.Mapping
+namespace Northwind.Entities.Models.Mapping
 {
     public class Customer_and_Suppliers_by_CityMap : EntityTypeConfiguration<Customer_and_Suppliers_by_City>
     {

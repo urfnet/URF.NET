@@ -1,8 +1,7 @@
 ﻿#region
 
-using Northwind.Entitiy.Models;
+using Northwind.Entities.Models;
 using Repository.Pattern.Ef6;
-using Repository.Providers.EntityFramework.Fakes;
 
 #endregion
 

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Repository.Pattern.Infrastructure;
 
-namespace Northwind.Entitiy.Models
+namespace Northwind.Entities.Models
 {
     public partial class Customer_and_Suppliers_by_City : Entity
     {

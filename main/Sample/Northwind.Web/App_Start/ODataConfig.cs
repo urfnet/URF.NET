@@ -2,7 +2,7 @@
 
 using System.Web.Http;
 using System.Web.Http.OData.Builder;
-using Northwind.Entitiy.Models;
+using Northwind.Entities.Models;
 
 #endregion
 

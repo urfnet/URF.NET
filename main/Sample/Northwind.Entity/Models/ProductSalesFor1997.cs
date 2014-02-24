@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Repository.Pattern.Infrastructure;
 
-namespace Northwind.Entitiy.Models
+namespace Northwind.Entities.Models
 {
     public partial class ProductSalesFor1997 : Entity
     {

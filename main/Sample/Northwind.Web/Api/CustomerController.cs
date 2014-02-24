@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Query;
-using Northwind.Entitiy.Models;
+using Northwind.Entities.Models;
 using Northwind.Repository;
 using Repository.Pattern.Infrastructure;
 using Repository.Pattern.Repositories;

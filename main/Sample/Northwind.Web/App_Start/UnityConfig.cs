@@ -2,7 +2,7 @@
 
 using System;
 using Microsoft.Practices.Unity;
-using Northwind.Entitiy.Models;
+using Northwind.Entities.Models;
 using Repository;
 using Repository.Pattern.DataContext;
 using Repository.Pattern.Ef6;

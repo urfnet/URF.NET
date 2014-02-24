@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Northwind.Entitiy.Models;
+using Northwind.Entities.Models;
 using Repository.Pattern.Repositories;
 
 namespace Northwind.Repository.Queries

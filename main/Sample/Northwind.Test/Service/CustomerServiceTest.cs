@@ -1,13 +1,11 @@
 ﻿#region
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Northwind.Entitiy.Models;
+using Northwind.Entities.Models;
 using Northwind.Service;
 using Northwind.Test.Fake;
-using Repository;
 using Repository.Pattern.DataContext;
 using Repository.Pattern.Ef6;
-using Repository.Pattern.Infrastructure;
 using Repository.Pattern.UnitOfWork;
 
 #endregion
@@ -42,7 +40,7 @@ namespace Northwind.Test.Service
 
                 unitOfWork.SaveChanges();
 
-                Customer savedCustomer = customerService.GetCustomer("CBRE");
+                var savedCustomer = customerService.GetCustomer("CBRE");
 
                 Assert.AreEqual(newCustomer.CustomerID, savedCustomer.CustomerID);
             }
