@@ -57,8 +57,8 @@
       <Project>{6E682A14-C872-4813-B620-76E108DEA683}</Project>
       <Name>Repository.Pattern</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Northwind.Entity\Northwind.Entities.csproj">
-      <Project>{97515F06-0783-420C-AC3A-45357015B699}</Project>
+    <ProjectReference Include="..\Northwind.Entities\Northwind.Entities.csproj">
+      <Project>{94E81D48-74B2-42EB-B389-F25C8C23F9C4}</Project>
       <Name>Northwind.Entities</Name>
     </ProjectReference>
   </ItemGroup>
