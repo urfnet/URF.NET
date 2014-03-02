@@ -41,18 +41,18 @@ namespace Repository.Pattern.Ef6
             return changes;
         }
 
-        public override Task<int> SaveChangesAsync()
+        public override async Task<int> SaveChangesAsync()
         {
             SyncObjectsStatePreCommit();
-            var changesAsync = base.SaveChangesAsync();
+            var changesAsync = await base.SaveChangesAsync();
             SyncObjectsStatePostCommit();
             return changesAsync;
         }
 
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken)
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
         {
             SyncObjectsStatePreCommit();
-            var changesAsync = base.SaveChangesAsync(cancellationToken);
+            var changesAsync = await base.SaveChangesAsync(cancellationToken);
             SyncObjectsStatePostCommit();
             return changesAsync;
         }
@@ -61,6 +61,7 @@ namespace Repository.Pattern.Ef6
         {
             Entry(entity).State = StateHelper.ConvertState(((IObjectState)entity).ObjectState);
         }
+
         private void SyncObjectsStatePreCommit()
         {
             foreach (var dbEntityEntry in ChangeTracker.Entries())
