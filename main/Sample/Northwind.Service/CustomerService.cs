@@ -1,86 +1,33 @@
 ﻿#region
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Northwind.Entities.Models;
-using Repository.Pattern.Infrastructure;
-using Repository.Pattern.UnitOfWork;
+using Repository.Pattern.Repositories;
+using Service.Pattern;
 
 #endregion
 
 namespace Northwind.Service
 {
-    public class CustomerService : ICustomerService
+    public interface ICustomerService : IService<Customer>
     {
-        private readonly IUnitOfWork _unitOfWork;
+        // Add any custom business logic (methods) here
+        // All methods in Service<TEntity> are ovverridable for any custom implementations
+    }
 
-        private bool _disposed;
-
-        public CustomerService(IUnitOfWork unitOfWork)
+    public class CustomerService : Service<Customer>, ICustomerService
+    {
+        public CustomerService(IRepositoryAsync<Customer> repository) : base(repository)
         {
-            _unitOfWork = unitOfWork;
         }
 
-        public Customer GetCustomer(string customerId)
-        {
-            return _unitOfWork.Repository<Customer>().Find(customerId);
-        }
-
-        public Customer Create(Customer customer)
-        {
-            customer.ObjectState = ObjectState.Added;
-            _unitOfWork.Repository<Customer>().Insert(customer);
-            return customer;
-        }
-
-        public void Delete(string id)
-        {
-            _unitOfWork.Repository<Customer>().Delete(id);
-        }
-
-        public void Update(Customer customer)
-        {
-            customer.ObjectState = ObjectState.Modified;
-            _unitOfWork.Repository<Customer>().Update(customer);
-        }
-
-        public IEnumerable<Customer> GetPagedList(int pageNumber, int pageSize, out int totalRecords)
-        {
-            var customers = _unitOfWork.Repository<Customer>()
-                .Query(q => !string.IsNullOrEmpty(q.ContactName))
-                .OrderBy(q => q
-                    .OrderBy(c => c.ContactName)
-                    .ThenBy(c => c.CompanyName))
-                .SelectPage(pageNumber, pageSize, out totalRecords);
-
-            return customers;
-        }
-
-        public Customer Add(Customer customer)
-        {
-            _unitOfWork.Repository<Customer>().Insert(customer);
-            return customer;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
-        ///     Disposes the DbContext.
-        /// </summary>
-        /// <param name="disposing">
-        ///     True to release both managed and unmanaged resources; false to release only unmanaged
-        ///     resources.
-        /// </param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_disposed) return;
-            if (disposing) _unitOfWork.Dispose();
-            _disposed = true;
-        }
+        // Add any custom business logic (methods) here
+        // All methods in Service<TEntity> are ovverridable for any custom implementations
+        // Can ovveride any of the Repository methods to add business logic in them
+        // e.g.
+        //public override void Delete(Customer entity)
+        //{
+        //    // Add business logic before or after deleting entity.
+        //    base.Delete(entity);
+        //}
     }
 }

@@ -12,14 +12,18 @@ namespace Northwind.Web
     {
         public static void Register(HttpConfiguration config)
         {
-            ODataModelBuilder modelBuilder = new ODataConventionModelBuilder();
+            ODataModelBuilder builder = new ODataConventionModelBuilder();
 
-            modelBuilder.EntitySet<Customer>(typeof (Customer).Name);
-            modelBuilder.EntitySet<Order>(typeof (Order).Name);
-            modelBuilder.EntitySet<OrderDetail>(typeof (OrderDetail).Name);
-            modelBuilder.EntitySet<CustomerDemographic>(typeof (CustomerDemographic).Name);
+            builder.EntitySet<Customer>(typeof (Customer).Name);
+            builder.EntitySet<Order>(typeof (Order).Name);
+            builder.EntitySet<OrderDetail>(typeof (OrderDetail).Name);
+            builder.EntitySet<CustomerDemographic>(typeof (CustomerDemographic).Name);
 
-            var model = modelBuilder.GetEdmModel();
+            builder.EntitySet<Product>(typeof(Product).Name);
+            builder.EntitySet<Category>(typeof(Category).Name); 
+            builder.EntitySet<Supplier>(typeof(Supplier).Name); 
+
+            var model = builder.GetEdmModel();
             config.Routes.MapODataRoute("ODataRoute", "odata", model);
 
             config.EnableQuerySupport();

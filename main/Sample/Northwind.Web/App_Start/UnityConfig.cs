@@ -3,6 +3,7 @@
 using System;
 using Microsoft.Practices.Unity;
 using Northwind.Entities.Models;
+using Northwind.Service;
 using Repository;
 using Repository.Pattern.DataContext;
 using Repository.Pattern.Ef6;
@@ -53,7 +54,9 @@ namespace Northwind.Web.App_Start
             container
                 .RegisterType<IDataContextAsync, NorthwindContext>(new PerRequestLifetimeManager())
                 .RegisterType<IUnitOfWorkAsync, UnitOfWork>(new PerRequestLifetimeManager())
-                .RegisterType<IRepositoryAsync<Customer>, Repository<Customer>>();
+                .RegisterType<IRepositoryAsync<Customer>, Repository<Customer>>()
+                .RegisterType<IRepositoryAsync<Product>, Repository<Product>>()
+                .RegisterType<IProductService, ProductService>();
         }
     }
 }

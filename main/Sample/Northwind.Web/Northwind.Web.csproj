@@ -169,7 +169,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\CustomerController.cs" />
-    <Compile Include="Api\Customerv2Controller.cs" />
+    <Compile Include="Api\ProductController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\ODataConfig.cs" />
@@ -360,6 +360,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="App_Data\Northwind.bak" />
+    <Content Include="CodeTemplates\ODataControllerWithContext\Controller.cs.t4" />
     <None Include="Properties\PublishProfiles\easyspa.pubxml" />
     <None Include="Properties\PublishProfiles\longle - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\longle - Web Deploy.pubxml" />
@@ -1217,7 +1218,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
-    <Folder Include="Views\Customerv2\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -1235,6 +1235,10 @@
       <Project>{6E682A14-C872-4813-B620-76E108DEA683}</Project>
       <Name>Repository.Pattern</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Source\Service.Pattern\Service.Pattern.csproj">
+      <Project>{86F86650-EE3C-4372-8FEC-40C2FE015022}</Project>
+      <Name>Service.Pattern</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Northwind.Entities\Northwind.Entities.csproj">
       <Project>{94E81D48-74B2-42EB-B389-F25C8C23F9C4}</Project>
       <Name>Northwind.Entities</Name>
@@ -1242,6 +1246,10 @@
     <ProjectReference Include="..\Northwind.Repository\Northwind.Repository.csproj">
       <Project>{0fb607ea-4bb3-404b-9461-2232b5423885}</Project>
       <Name>Northwind.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Northwind.Service\Northwind.Service.csproj">
+      <Project>{678DB4A2-A20D-4F71-8A98-D8BBE879DEDD}</Project>
+      <Name>Northwind.Service</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
