@@ -1,9 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Repository.Pattern.Infrastructure;
 
 namespace Repository.Pattern.Repositories
 {
-    public interface IRepositoryAsync<TEntity> : IRepository<TEntity> where TEntity : Infrastructure.Entity
+    public interface IRepositoryAsync<TEntity> : IRepository<TEntity> where TEntity : IObjectState
     {
         Task<TEntity> FindAsync(params object[] keyValues);
         Task<TEntity> FindAsync(CancellationToken cancellationToken, params object[] keyValues);

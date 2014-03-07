@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Repository.Pattern.Infrastructure;
+using Repository.Pattern.Ef6;
 
 namespace Northwind.Entities.Models
 {

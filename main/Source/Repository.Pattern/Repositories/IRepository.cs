@@ -11,7 +11,7 @@ using Repository.Pattern.Infrastructure;
 
 namespace Repository.Pattern.Repositories
 {
-    public interface IRepository<TEntity> where TEntity : Entity
+    public interface IRepository<TEntity> where TEntity : IObjectState
     {
         TEntity Find(params object[] keyValues);
         IQueryable<TEntity> SelectQuery(string query, params object[] parameters);
@@ -22,7 +22,7 @@ namespace Repository.Pattern.Repositories
         void Update(TEntity entity);
         void Delete(object id);
         void Delete(TEntity entity);
-        IQueryFluent<TEntity> Query(QueryObject<TEntity> queryObject);
+        IQueryFluent<TEntity> Query(IQueryObject<TEntity> queryObject);
 
         IQueryFluent<TEntity> Query(Expression<Func<TEntity, bool>> query);
 

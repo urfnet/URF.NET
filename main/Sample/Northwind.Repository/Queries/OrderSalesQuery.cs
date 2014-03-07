@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using Northwind.Entities.Models;
+using Repository.Pattern.Ef6;
 using Repository.Pattern.Repositories;
 
 #endregion

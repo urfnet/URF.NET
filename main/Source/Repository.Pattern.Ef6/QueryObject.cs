@@ -3,10 +3,11 @@
 using System;
 using System.Linq.Expressions;
 using LinqKit;
+using Repository.Pattern.Repositories;
 
 #endregion
 
-namespace Repository.Pattern.Repositories
+namespace Repository.Pattern.Ef6
 {
     public abstract class QueryObject<TEntity> : IQueryObject<TEntity>
     {
@@ -26,12 +27,12 @@ namespace Repository.Pattern.Repositories
             return _query == null ? query : _query.Or(query.Expand());
         }
 
-        public Expression<Func<TEntity, bool>> And(QueryObject<TEntity> queryObject)
+        public Expression<Func<TEntity, bool>> And(IQueryObject<TEntity> queryObject)
         {
             return And(queryObject.Query());
         }
 
-        public Expression<Func<TEntity, bool>> Or(QueryObject<TEntity> queryObject)
+        public Expression<Func<TEntity, bool>> Or(IQueryObject<TEntity> queryObject)
         {
             return Or(queryObject.Query());
         }

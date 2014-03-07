@@ -9,6 +9,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Repository.Pattern.Ef6;
 using Repository.Pattern.Infrastructure;
 
 #endregion

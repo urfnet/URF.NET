@@ -6,10 +6,11 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Repository.Pattern.Infrastructure;
+using Repository.Pattern.Repositories;
 
 #endregion
 
-namespace Repository.Pattern.Repositories
+namespace Repository.Pattern.Ef6
 {
     public sealed class QueryFluent<TEntity> : IQueryFluent<TEntity> where TEntity : Entity
     {
@@ -24,7 +25,7 @@ namespace Repository.Pattern.Repositories
             _includes = new List<Expression<Func<TEntity, object>>>();
         }
 
-        public QueryFluent(Repository<TEntity> repository, QueryObject<TEntity> queryObject)
+        public QueryFluent(Repository<TEntity> repository, IQueryObject<TEntity> queryObject)
             : this(repository)
         {
             _expression = queryObject.Query();
@@ -36,13 +37,13 @@ namespace Repository.Pattern.Repositories
             _expression = expression;
         }
 
-        public QueryFluent<TEntity> OrderBy(Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy)
+        public IQueryFluent<TEntity> OrderBy(Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy)
         {
             _orderBy = orderBy;
             return this;
         }
 
-        public QueryFluent<TEntity> Include(Expression<Func<TEntity, object>> expression)
+        public IQueryFluent<TEntity> Include(Expression<Func<TEntity, object>> expression)
         {
             _includes.Add(expression);
             return this;

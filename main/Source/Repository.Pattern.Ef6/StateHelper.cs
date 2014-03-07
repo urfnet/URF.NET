@@ -2,10 +2,11 @@
 
 using System;
 using System.Data.Entity;
+using Repository.Pattern.Infrastructure;
 
 #endregion
 
-namespace Repository.Pattern.Infrastructure
+namespace Repository.Pattern.Ef6
 {
     public class StateHelper
     {
