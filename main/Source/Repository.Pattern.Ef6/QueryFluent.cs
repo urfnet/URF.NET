@@ -52,7 +52,7 @@ namespace Repository.Pattern.Ef6
         public IEnumerable<TEntity> SelectPage(int page, int pageSize, out int totalCount)
         {
             totalCount = _repository.Select(_expression).Count();
-            return _repository.Select(_expression, _orderBy, _includes, page, page);
+            return _repository.Select(_expression, _orderBy, _includes, page, pageSize);
         }
         public IEnumerable<TEntity> Select()
         {
