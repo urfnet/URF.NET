@@ -12,7 +12,7 @@ namespace Northwind.Repository
     public static class CustomerRepository
     {
         public static decimal GetCustomerOrderTotalByYear(
-            this IRepository<Customer> customerRepository,
+            this IRepositoryAsync<Customer> customerRepository,
             int customerId, int year)
         {
             return customerRepository

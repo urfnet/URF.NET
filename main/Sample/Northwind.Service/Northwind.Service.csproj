@@ -92,6 +92,10 @@
       <Project>{94E81D48-74B2-42EB-B389-F25C8C23F9C4}</Project>
       <Name>Northwind.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Northwind.Repository\Northwind.Repository.csproj">
+      <Project>{0fb607ea-4bb3-404b-9461-2232b5423885}</Project>
+      <Name>Northwind.Repository</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
