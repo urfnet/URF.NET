@@ -12,6 +12,7 @@ using System.Web.Http.OData;
 using System.Web.Http.OData.Query;
 using Northwind.Entities.Models;
 using Northwind.Repository;
+using Northwind.Service;
 using Repository.Pattern.Infrastructure;
 using Repository.Pattern.Repositories;
 using Repository.Pattern.UnitOfWork;
@@ -22,12 +23,12 @@ namespace Northwind.Web.Api
 {
     public class CustomerController : ODataController
     {
-        private readonly IRepositoryAsync<Customer> _customerRepository;
         private readonly IUnitOfWorkAsync _unitOfWorkAsync;
+        private readonly IRepositoryAsync<Customer> _customerRepository;
 
         public CustomerController(
             IUnitOfWorkAsync unitOfWorkAsync,
-            IRepositoryAsync<Customer> customerRepository)
+            IRepositoryAsync<Customer> customerRepository, ICustomerService customerService)
         {
             _unitOfWorkAsync = unitOfWorkAsync;
             _customerRepository = customerRepository;
@@ -36,7 +37,7 @@ namespace Northwind.Web.Api
         // GET odata/Customer
         public PageResult<Customer> GetCustomer(ODataQueryOptions<Customer> options)
         {
-            var queryable = _customerRepository.ODataQueryable(options);
+            var queryable = _customerRepository.Queryable(options);
 
             return new PageResult<Customer>(
                 queryable as IEnumerable<Customer>, 

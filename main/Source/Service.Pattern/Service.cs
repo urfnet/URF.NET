@@ -105,12 +105,12 @@ namespace Service.Pattern
 
         public IQueryable ODataQueryable(ODataQueryOptions<TEntity> oDataQueryOptions)
         {
-            return _repository.ODataQueryable(oDataQueryOptions);
+            return _repository.Queryable(oDataQueryOptions);
         }
 
         public IQueryable<TEntity> ODataQueryable()
         {
-            return _repository.ODataQueryable();
+            return _repository.Queryable();
         }
     }
 }

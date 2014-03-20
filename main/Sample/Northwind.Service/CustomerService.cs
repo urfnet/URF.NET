@@ -1,8 +1,8 @@
 ﻿#region
 
 using Northwind.Entities.Models;
+using Northwind.Repository.Repositories;
 using Repository.Pattern.Repositories;
-using Northwind.Repository;
 using Service.Pattern;
 
 #endregion
@@ -38,6 +38,5 @@ namespace Northwind.Service
         {
             return _repository.GetCustomerOrderTotalByYear(customerId, year);
         }
-
     }
 }

@@ -6,13 +6,13 @@ using Repository.Pattern.Repositories;
 
 #endregion
 
-namespace Northwind.Repository
+namespace Northwind.Repository.Repositories
 {
     // Exmaple: How to add custom methods to a repository.
     public static class CustomerRepository
     {
         public static decimal GetCustomerOrderTotalByYear(
-            this IRepositoryAsync<Customer> customerRepository,
+            this IRepository<Customer> customerRepository,
             int customerId, int year)
         {
             return customerRepository

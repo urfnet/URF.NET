@@ -25,7 +25,7 @@ namespace Repository.Pattern.Repositories
         IQueryFluent<TEntity> Query(IQueryObject<TEntity> queryObject);
         IQueryFluent<TEntity> Query(Expression<Func<TEntity, bool>> query);
         IQueryFluent<TEntity> Query();
-        IQueryable ODataQueryable(ODataQueryOptions<TEntity> oDataQueryOptions);
-        IQueryable<TEntity> ODataQueryable();
+        IQueryable Queryable(ODataQueryOptions<TEntity> oDataQueryOptions);
+        IQueryable<TEntity> Queryable();
     }
 }

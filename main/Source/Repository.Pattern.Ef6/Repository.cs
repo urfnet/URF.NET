@@ -166,12 +166,12 @@ namespace Repository.Pattern.Ef6
             return Select(query, orderBy, includes, page, pageSize).AsEnumerable();
         }
 
-        public IQueryable ODataQueryable(ODataQueryOptions<TEntity> oDataQueryOptions)
+        public IQueryable Queryable(ODataQueryOptions<TEntity> oDataQueryOptions)
         {
             return oDataQueryOptions.ApplyTo(_dbSet);
         }
 
-        public IQueryable<TEntity> ODataQueryable()
+        public IQueryable<TEntity> Queryable()
         {
             return _dbSet;
         }
