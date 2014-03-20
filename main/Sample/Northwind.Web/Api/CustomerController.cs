@@ -24,25 +24,20 @@ namespace Northwind.Web.Api
     public class CustomerController : ODataController
     {
         private readonly IUnitOfWorkAsync _unitOfWorkAsync;
-        private readonly IRepositoryAsync<Customer> _customerRepository;
+        private readonly ICustomerService _customerService;
 
         public CustomerController(
             IUnitOfWorkAsync unitOfWorkAsync,
-            IRepositoryAsync<Customer> customerRepository, ICustomerService customerService)
+            ICustomerService customerService)
         {
             _unitOfWorkAsync = unitOfWorkAsync;
-            _customerRepository = customerRepository;
+            _customerService = customerService;
         }
 
         // GET odata/Customer
-        public PageResult<Customer> GetCustomer(ODataQueryOptions<Customer> options)
+        public IQueryable<Customer> GetCustomer()
         {
-            var queryable = _customerRepository.Queryable(options);
-
-            return new PageResult<Customer>(
-                queryable as IEnumerable<Customer>, 
-                Request.GetNextPageLink(),
-                Request.GetInlineCount());
+            return _customerService.ODataQueryable();
         }
 
         // GET odata/Customer(5)
@@ -50,7 +45,7 @@ namespace Northwind.Web.Api
         public SingleResult<Customer> GetCustomer(string key)
         {
             return SingleResult.Create(
-                _customerRepository
+                _customerService
                     .Query(customer => customer.CustomerID == key)
                     .Select()
                     .AsQueryable());
@@ -70,7 +65,7 @@ namespace Northwind.Web.Api
             }
 
            customer.ObjectState = ObjectState.Modified;
-            _customerRepository.Update(customer);
+            _customerService.Update(customer);
 
             try
             {
@@ -96,7 +91,7 @@ namespace Northwind.Web.Api
                 return BadRequest(ModelState);
             }
 
-            _customerRepository.Insert(customer);
+            _customerService.Insert(customer);
 
             try
             {
@@ -123,7 +118,7 @@ namespace Northwind.Web.Api
                 return BadRequest(ModelState);
             }
 
-            var customer = await _customerRepository.FindAsync(key);
+            var customer = await _customerService.FindAsync(key);
 
             if (customer == null)
             {
@@ -132,7 +127,7 @@ namespace Northwind.Web.Api
 
             patch.Patch(customer);
 
-            _customerRepository.Update(customer);
+            _customerService.Update(customer);
 
             try
             {
@@ -154,13 +149,13 @@ namespace Northwind.Web.Api
         // DELETE odata/Customer(5)
         public async Task<IHttpActionResult> Delete(string key)
         {
-            var customer = await _customerRepository.FindAsync(key);
+            var customer = await _customerService.FindAsync(key);
             if (customer == null)
             {
                 return NotFound();
             }
 
-            _customerRepository.Delete(customer);
+            _customerService.Delete(customer);
             await _unitOfWorkAsync.SaveChangesAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -170,7 +165,7 @@ namespace Northwind.Web.Api
         [Queryable]
         public IQueryable<CustomerDemographic> GetCustomerDemographics(string key)
         {
-            return _customerRepository.Query(m => m.CustomerID == key)
+            return _customerService.Query(m => m.CustomerID == key)
                 .Select()
                 .AsQueryable()
                 .SelectMany(m => m.CustomerDemographics);
@@ -180,7 +175,7 @@ namespace Northwind.Web.Api
         [Queryable]
         public IQueryable<Order> GetOrders(string key)
         {
-            return _customerRepository
+            return _customerService
                 .Query(m => m.CustomerID == key)
                 .Select()
                 .AsQueryable()
@@ -198,7 +193,7 @@ namespace Northwind.Web.Api
 
         private bool CustomerExists(string key)
         {
-            return _customerRepository.Query(e => e.CustomerID == key).Select().Any();
+            return _customerService.Query(e => e.CustomerID == key).Select().Any();
         }
     }
 }

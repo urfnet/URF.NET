@@ -56,7 +56,8 @@ namespace Northwind.Web.App_Start
                 .RegisterType<IUnitOfWorkAsync, UnitOfWork>(new PerRequestLifetimeManager())
                 .RegisterType<IRepositoryAsync<Customer>, Repository<Customer>>()
                 .RegisterType<IRepositoryAsync<Product>, Repository<Product>>()
-                .RegisterType<IProductService, ProductService>();
+                .RegisterType<IProductService, ProductService>()
+                .RegisterType<ICustomerService, CustomerService>();
         }
     }
 }
