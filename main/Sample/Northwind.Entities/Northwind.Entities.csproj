@@ -112,6 +112,10 @@
     <Compile Include="Models\sysdiagram.cs" />
     <Compile Include="Models\Territory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StoredProcedures\INorthwindStoredProcedures.cs" />
+    <Compile Include="StoredProcedures\Models\CustomerOrderHistory.cs" />
+    <Compile Include="StoredProcedures\Models\CustomerOrderDetail.cs" />
+    <Compile Include="StoredProcedures\NorthwindContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

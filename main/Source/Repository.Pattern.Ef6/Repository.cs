@@ -12,6 +12,7 @@ using LinqKit;
 using Repository.Pattern.DataContext;
 using Repository.Pattern.Infrastructure;
 using Repository.Pattern.Repositories;
+using Repository.Pattern.UnitOfWork;
 
 #endregion
 
@@ -22,12 +23,15 @@ namespace Repository.Pattern.Ef6
         IRepositoryAsync<TEntity> where TEntity : Entity
     {
         private readonly IDataContextAsync _context;
+        private readonly IUnitOfWorkAsync _unitOfWork;
         private readonly DbSet<TEntity> _dbSet;
 
-        public Repository(IDataContextAsync context)
+        public Repository(IDataContextAsync context, IUnitOfWorkAsync unitOfWork)
         {
             _context = context;
-            // Temporarily for FakeDbContext, Unit Test Fakes
+            _unitOfWork = unitOfWork;
+
+            // Temporarily for FakeDbContext, Unit Test and Fakes
             var dbContext = context as DbContext;
             if (dbContext != null) 
                 _dbSet = dbContext.Set<TEntity>();
@@ -174,6 +178,11 @@ namespace Repository.Pattern.Ef6
         public IQueryable<TEntity> Queryable()
         {
             return _dbSet;
+        }
+
+        public IRepository<T> GetRepository<T>() where T : IObjectState
+        {
+            return _unitOfWork.Repository<T>();
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Northwind.Web
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
-                "DefaultApi", "api/{controller}/{id}",
+                "DefaultApi", "api/{controller}/{action}/{id}",
                 new {id = RouteParameter.Optional});
         }
     }

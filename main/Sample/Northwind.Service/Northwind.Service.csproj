@@ -72,8 +72,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomerService.cs" />
+    <Compile Include="IStoredProcedureService.cs" />
     <Compile Include="ProductService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StoredProcedureService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Source\Repository.Pattern.Ef6\Repository.Pattern.Ef6.csproj">

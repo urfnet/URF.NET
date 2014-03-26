@@ -169,6 +169,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\CustomerController.cs" />
+    <Compile Include="Api\ProcedureController.cs" />
     <Compile Include="Api\ProductController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
