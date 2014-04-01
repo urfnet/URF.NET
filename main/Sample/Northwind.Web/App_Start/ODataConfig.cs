@@ -30,7 +30,7 @@ namespace Northwind.Web
             builder.EntitySet<Supplier>(typeof(Supplier).Name); 
 
             var model = builder.GetEdmModel();
-            config.Routes.MapODataRoute("ODataRoute", "odata", model);
+            config.Routes.MapODataRoute("odata", "odata", model);
 
             config.EnableQuerySupport();
         }
