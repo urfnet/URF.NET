@@ -13,7 +13,7 @@ namespace Repository.Pattern.Ef6
 {
     public class DataContext : DbContext, IDataContext, IDataContextAsync
     {
-        private readonly Guid _instanceId;
+        private readonly Guid _instanceId; 
 
         public DataContext(string nameOrConnectionString)
             : base(nameOrConnectionString)
