@@ -6,7 +6,6 @@ using System;
 
 namespace Repository.Pattern.DataContext
 {
-    // This is a test commit
     public interface IDataContext : IDisposable
     {
         int SaveChanges();
