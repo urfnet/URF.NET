@@ -3,6 +3,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Northwind.Entities.Models;
+using Northwind.Repository.Models;
 using Northwind.Repository.Repositories;
 using Repository.Pattern.Repositories;
 using Service.Pattern;
@@ -17,6 +18,7 @@ namespace Northwind.Service
         // All methods in Service<TEntity> are ovverridable for any custom implementations
         decimal CustomerOrderTotalByYear(string customerId, int year);
         IEnumerable<Customer> CustomersByCompany(string companyName);
+        IEnumerable<CustomerOrder> GetCustomerOrder(string country);
     }
 
     // Add any custom business logic (methods) here
@@ -45,6 +47,11 @@ namespace Northwind.Service
         public IEnumerable<Customer> CustomersByCompany(string companyName)
         {
             return _repository.CustomersByCompany(companyName);
+        }
+
+        public IEnumerable<CustomerOrder> GetCustomerOrder(string country)
+        {
+            return _repository.GetCustomerOrder(country);
         }
     }
 }

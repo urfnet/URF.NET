@@ -7,14 +7,11 @@ using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading;
-using System.Threading.Tasks;
-using Repository.Pattern.Ef6;
 using Repository.Pattern.Infrastructure;
 
 #endregion
 
-namespace Repository.Providers.EntityFramework.Fakes
+namespace Repository.Pattern.Ef6
 {
     public abstract class FakeDbSet<TEntity> : DbSet<TEntity>, IDbSet<TEntity> where TEntity : Entity, new()
     {

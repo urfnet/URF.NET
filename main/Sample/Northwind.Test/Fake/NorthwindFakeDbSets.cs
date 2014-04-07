@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Northwind.Entities.Models;
-using Repository.Providers.EntityFramework.Fakes;
+using Repository.Pattern.Ef6;
 
 #endregion
 

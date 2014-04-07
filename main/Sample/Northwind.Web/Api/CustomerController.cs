@@ -149,6 +149,10 @@ namespace Northwind.Web.Api
         // DELETE odata/Customer(5)
         public async Task<IHttpActionResult> Delete(string key)
         {
+            var query = await _customerService.Query(c => c.CustomerID == key).Include(x => x.Orders).SelectAsync();
+            var customerWithOrders = query.FirstOrDefault();
+
+
             var customer = await _customerService.FindAsync(key);
             if (customer == null)
             {

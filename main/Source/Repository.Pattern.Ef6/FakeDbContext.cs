@@ -7,7 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Repository.Pattern.DataContext;
 using Repository.Pattern.Infrastructure;
-using Repository.Providers.EntityFramework.Fakes;
 
 #endregion
 

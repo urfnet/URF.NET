@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Queries\CustomerLogisticsQuery.cs" />
     <Compile Include="Queries\OrderSalesQuery.cs" />
+    <Compile Include="Models\CustomerOrder.cs" />
     <Compile Include="Repositories\CustomerRepository.cs" />
     <Compile Include="Queries\CustomerSalesQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

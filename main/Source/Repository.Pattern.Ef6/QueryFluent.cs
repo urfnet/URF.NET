@@ -64,7 +64,7 @@ namespace Repository.Pattern.Ef6
             return _repository.Select(_expression, _orderBy, _includes).Select(selector);
         }
 
-        public async Task<IEnumerable<TEntity>> SingleAsync()
+        public async Task<IEnumerable<TEntity>> SelectAsync()
         {
             return await _repository.SelectAsync(_expression, _orderBy, _includes);
         }
