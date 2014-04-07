@@ -85,7 +85,7 @@ namespace Repository.Pattern.Ef6
                 return (IRepositoryAsync<TEntity>) _repositories[type];
 
             var repositoryType = typeof (Repository<>);
-            _repositories.Add(type, Activator.CreateInstance(repositoryType.MakeGenericType(typeof (TEntity)), _dataContext));
+            _repositories.Add(type, Activator.CreateInstance(repositoryType.MakeGenericType(typeof (TEntity)), _dataContext, this));
 
             return (IRepositoryAsync<TEntity>) _repositories[type];
         }
