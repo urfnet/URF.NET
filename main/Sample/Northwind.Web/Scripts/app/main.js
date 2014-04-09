@@ -1,8 +1,12 @@
 ﻿require.config({
     paths: {
         //packages
-        'jquery': '/scripts/jquery-2.0.3.min',
+        'jquery': '/scripts/jquery-2.1.0.min',
+        'jquerymigrate': '/scripts/jquery-migrate-1.2.1.min',
+
         'kendo': '/scripts/kendo/2013.3.1119/kendo.web.min',
+        //'kendo': '/scripts/kendo/2014.1.318/kendo.web.min',
+
         'text': '/scripts/text',
         'router': '/scripts/app/router',
         //models
@@ -16,10 +20,10 @@
         'util': '/scripts/util'
     },
     shim: {
-        'kendo': ['jquery']
+        'kendo': ['jquery', 'jquerymigrate']
     },
     priority: ['text', 'router', 'app'],
-    jquery: '2.0.3',
+    jquery: '2.1.0',
     waitSeconds: 30
 });
 

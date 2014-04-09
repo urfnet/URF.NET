@@ -8,6 +8,7 @@
     <WebStackScaffolding_IsAsyncSelected>True</WebStackScaffolding_IsAsyncSelected>
     <WebStackScaffolding_DbContextTypeFullName>Northwind.Entities.Models.NorthwindContext</WebStackScaffolding_DbContextTypeFullName>
     <NameOfLastUsedPublishProfile>longle - Web Deploy</NameOfLastUsedPublishProfile>
+    <ProjectView>ProjectFiles</ProjectView>
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
