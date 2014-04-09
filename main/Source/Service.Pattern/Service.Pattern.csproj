@@ -39,7 +39,6 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
-
     <Reference Include="System.Net.Http">
       <HintPath>..\..\Sample\packages\Microsoft.AspNet.WebApi.Client.5.1.2\lib\net45\System.Net.Http.dll</HintPath>
       <Private>True</Private>

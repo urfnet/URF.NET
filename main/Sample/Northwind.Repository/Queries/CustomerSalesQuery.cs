@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Northwind.Entities.Models;
 using Repository.Pattern.Ef6;
-using Repository.Pattern.Repositories;
 
 namespace Northwind.Repository.Queries
 {

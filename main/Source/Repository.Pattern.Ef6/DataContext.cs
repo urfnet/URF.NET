@@ -1,5 +1,3 @@
-#region
-
 using System;
 using System.Data.Entity;
 using System.Threading;
@@ -7,31 +5,22 @@ using System.Threading.Tasks;
 using Repository.Pattern.DataContext;
 using Repository.Pattern.Infrastructure;
 
-#endregion
-
 namespace Repository.Pattern.Ef6
 {
-    public class DataContext : DbContext, IDataContext, IDataContextAsync
+    public class DataContext : DbContext, IDataContextAsync
     {
-        private readonly Guid _instanceId; 
+        #region Private Fields
+        private readonly Guid _instanceId;
+        #endregion Private Fields
 
-        public DataContext(string nameOrConnectionString)
-            : base(nameOrConnectionString)
+        public DataContext(string nameOrConnectionString) : base(nameOrConnectionString)
         {
             _instanceId = Guid.NewGuid();
             Configuration.LazyLoadingEnabled = false;
             Configuration.ProxyCreationEnabled = false;
         }
 
-        public Guid InstanceId
-        {
-            get { return _instanceId; }
-        }
-
-        public new DbSet<T> Set<T>() where T : class
-        {
-            return base.Set<T>();
-        }
+        public Guid InstanceId { get { return _instanceId; } }
 
         public override int SaveChanges()
         {
@@ -57,21 +46,23 @@ namespace Repository.Pattern.Ef6
             return changesAsync;
         }
 
-        public void SyncObjectState(object entity)
-        {
-            Entry(entity).State = StateHelper.ConvertState(((IObjectState)entity).ObjectState);
-        }
+        public void SyncObjectState(object entity) { Entry(entity).State = StateHelper.ConvertState(((IObjectState)entity).ObjectState); }
+        public new DbSet<T> Set<T>() where T : class { return base.Set<T>(); }
 
         private void SyncObjectsStatePreCommit()
         {
             foreach (var dbEntityEntry in ChangeTracker.Entries())
+            {
                 dbEntityEntry.State = StateHelper.ConvertState(((IObjectState)dbEntityEntry.Entity).ObjectState);
+            }
         }
 
         public void SyncObjectsStatePostCommit()
         {
             foreach (var dbEntityEntry in ChangeTracker.Entries())
+            {
                 ((IObjectState)dbEntityEntry.Entity).ObjectState = StateHelper.ConvertState(dbEntityEntry.State);
+            }
         }
     }
 }

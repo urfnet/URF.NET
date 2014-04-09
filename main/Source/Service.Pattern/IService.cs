@@ -30,7 +30,5 @@ namespace Service.Pattern
         Task<bool> DeleteAsync(CancellationToken cancellationToken, params object[] keyValues);
         IQueryable ODataQueryable(ODataQueryOptions<TEntity> oDataQueryOptions);
         IQueryable<TEntity> ODataQueryable();
-
-
     }
 }

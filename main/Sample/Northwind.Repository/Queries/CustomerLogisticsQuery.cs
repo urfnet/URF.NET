@@ -1,10 +1,5 @@
-﻿#region
-
-using Northwind.Entities.Models;
+﻿using Northwind.Entities.Models;
 using Repository.Pattern.Ef6;
-using Repository.Pattern.Repositories;
-
-#endregion
 
 namespace Northwind.Repository.Queries
 {
@@ -17,7 +12,7 @@ namespace Northwind.Repository.Queries
         }
 
         public CustomerLogisticsQuery LivesInCity(string city)
-        {   
+        {
             Add(x => x.City == city);
             return this;
         }

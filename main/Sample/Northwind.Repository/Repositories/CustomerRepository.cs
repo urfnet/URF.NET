@@ -1,32 +1,24 @@
-﻿#region
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Northwind.Entities.Models;
 using Northwind.Repository.Models;
 using Repository.Pattern.Repositories;
-
-#endregion
 
 namespace Northwind.Repository.Repositories
 {
     // Exmaple: How to add custom methods to a repository.
     public static class CustomerRepository
     {
-        public static decimal GetCustomerOrderTotalByYear(
-            this IRepository<Customer> repository,
-            string customerId, int year)
+        public static decimal GetCustomerOrderTotalByYear(this IRepository<Customer> repository, string customerId, int year)
         {
             return repository
                 .Find(customerId)
                 .Orders.SelectMany(o => o.OrderDetails)
-                .Select(o => o.Quantity*o.UnitPrice)
+                .Select(o => o.Quantity * o.UnitPrice)
                 .Sum();
         }
 
-        public static IEnumerable<Customer> CustomersByCompany(
-            this IRepositoryAsync<Customer> repository,
-            string companyName)
+        public static IEnumerable<Customer> CustomersByCompany(this IRepositoryAsync<Customer> repository, string companyName)
         {
             return repository
                 .Queryable()
@@ -34,25 +26,23 @@ namespace Northwind.Repository.Repositories
                 .AsEnumerable();
         }
 
-        public static IEnumerable<CustomerOrder> GetCustomerOrder(
-            this IRepository<Customer> repository,
-            string country)
+        public static IEnumerable<CustomerOrder> GetCustomerOrder(this IRepository<Customer> repository, string country)
         {
             var customers = repository.GetRepository<Customer>().Queryable();
             var orders = repository.GetRepository<Order>().Queryable();
 
-        var query = from c in customers
-            join o in orders on new {a = c.CustomerID, b = c.Country}
-                equals new {a = o.CustomerID, b = country}
-            select new CustomerOrder
-            {
-                CustomerId = c.CustomerID,
-                ContactName = c.ContactName,
-                OrderId = o.OrderID,
-                OrderDate = o.OrderDate
-            };
+            var query = from c in customers
+                        join o in orders on new {a = c.CustomerID, b = c.Country}
+                            equals new {a = o.CustomerID, b = country}
+                        select new CustomerOrder
+                               {
+                                   CustomerId = c.CustomerID,
+                                   ContactName = c.ContactName,
+                                   OrderId = o.OrderID,
+                                   OrderDate = o.OrderDate
+                               };
 
-        return query.AsEnumerable();
+            return query.AsEnumerable();
         }
     }
 }

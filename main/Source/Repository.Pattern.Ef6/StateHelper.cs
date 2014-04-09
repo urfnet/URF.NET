@@ -1,10 +1,6 @@
-﻿#region
-
-using System;
+﻿using System;
 using System.Data.Entity;
 using Repository.Pattern.Infrastructure;
-
-#endregion
 
 namespace Repository.Pattern.Ef6
 {
@@ -16,10 +12,13 @@ namespace Repository.Pattern.Ef6
             {
                 case ObjectState.Added:
                     return EntityState.Added;
+
                 case ObjectState.Modified:
                     return EntityState.Modified;
+
                 case ObjectState.Deleted:
                     return EntityState.Deleted;
+
                 default:
                     return EntityState.Unchanged;
             }
@@ -31,14 +30,19 @@ namespace Repository.Pattern.Ef6
             {
                 case EntityState.Detached:
                     return ObjectState.Unchanged;
+
                 case EntityState.Unchanged:
                     return ObjectState.Unchanged;
+
                 case EntityState.Added:
                     return ObjectState.Added;
+
                 case EntityState.Deleted:
                     return ObjectState.Deleted;
+
                 case EntityState.Modified:
                     return ObjectState.Modified;
+
                 default:
                     throw new ArgumentOutOfRangeException("state");
             }
