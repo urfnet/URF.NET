@@ -24,7 +24,7 @@ namespace Service.Pattern
         public virtual TEntity Find(params object[] keyValues) { return _repository.Find(keyValues); }
 
         //IF 04/09/2014
-        public SingleResult<TEntity> GetSingleResult(params object[] keyValues) { return SingleResult.Create((new List<TEntity> { _repository.Find(keyValues) }).AsQueryable()); }
+        public SingleResult<TEntity> GetSingleResult(params object[] keyValues) { return SingleResult.Create((new List<TEntity> { Find(keyValues) }).AsQueryable()); }
 
         public virtual IQueryable<TEntity> SelectQuery(string query, params object[] parameters) { return _repository.SelectQuery(query, parameters).AsQueryable(); }
 
