@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web.Http;
 using System.Web.Http.OData.Query;
 using Repository.Pattern.Infrastructure;
 using Repository.Pattern.Repositories;
@@ -21,6 +22,9 @@ namespace Service.Pattern
         #endregion Constructor
 
         public virtual TEntity Find(params object[] keyValues) { return _repository.Find(keyValues); }
+
+        //IF 04/09/2014
+        public SingleResult<TEntity> GetSingleResult(params object[] keyValues) { return SingleResult.Create((new List<TEntity> { _repository.Find(keyValues) }).AsQueryable()); }
 
         public virtual IQueryable<TEntity> SelectQuery(string query, params object[] parameters) { return _repository.SelectQuery(query, parameters).AsQueryable(); }
 
@@ -50,7 +54,7 @@ namespace Service.Pattern
 
         public virtual async Task<bool> DeleteAsync(params object[] keyValues) { return await DeleteAsync(CancellationToken.None, keyValues); }
 
-        //IF 3/19/2014 - Before: return await DeleteAsync(cancellationToken, keyValues);
+        //IF 04/08/2014 - Before: return await DeleteAsync(cancellationToken, keyValues);
         public virtual async Task<bool> DeleteAsync(CancellationToken cancellationToken, params object[] keyValues) { return await _repository.DeleteAsync(cancellationToken, keyValues); }
 
         public IQueryable ODataQueryable(ODataQueryOptions<TEntity> oDataQueryOptions) { return _repository.Queryable(oDataQueryOptions); }
