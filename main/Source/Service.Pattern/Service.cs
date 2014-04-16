@@ -100,7 +100,7 @@ namespace Service.Pattern
 
         public virtual async Task<bool> DeleteAsync(CancellationToken cancellationToken, params object[] keyValues)
         {
-            return await DeleteAsync(cancellationToken, keyValues);
+            return await _repository.DeleteAsync(cancellationToken, keyValues);
         }
 
         public IQueryable ODataQueryable(ODataQueryOptions<TEntity> oDataQueryOptions)

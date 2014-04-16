@@ -35,10 +35,10 @@ namespace Northwind.Web.Api
         }
 
         // GET odata/Customer
-        public IQueryable<Customer> GetCustomer()
-        {
-            return _customerService.ODataQueryable();
-        }
+    public IQueryable<Customer> GetCustomer()
+    {
+        return _customerService.ODataQueryable();
+    }
 
         // GET odata/Customer(5)
         [Queryable]
