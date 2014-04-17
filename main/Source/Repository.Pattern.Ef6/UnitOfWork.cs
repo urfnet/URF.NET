@@ -98,8 +98,8 @@ namespace Repository.Pattern.Ef6
             if (_objectContext.Connection.State != ConnectionState.Open)
             {
                 _objectContext.Connection.Open();
-                _transaction = _objectContext.Connection.BeginTransaction();
             }
+            _transaction = _objectContext.Connection.BeginTransaction();
         }
 
         public bool Commit()
