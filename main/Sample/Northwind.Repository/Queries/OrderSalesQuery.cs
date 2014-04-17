@@ -1,13 +1,8 @@
-﻿#region
-
-using System;
+﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
 using Northwind.Entities.Models;
 using Repository.Pattern.Ef6;
-using Repository.Pattern.Repositories;
-
-#endregion
 
 namespace Northwind.Repository.Queries
 {
@@ -20,7 +15,7 @@ namespace Northwind.Repository.Queries
 
         public override Expression<Func<Order, bool>> Query()
         {
-            return (x => 
+            return (x =>
                 x.OrderDetails.Sum(y => y.UnitPrice) > Amount &&
                 x.OrderDate >= FromDate &&
                 x.OrderDate <= ToDate &&
