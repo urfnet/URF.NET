@@ -10,7 +10,7 @@
     <WebStackScaffolding_ViewDialogWidth>600</WebStackScaffolding_ViewDialogWidth>
     <WebStackScaffolding_DbContextDialogWidth>600</WebStackScaffolding_DbContextDialogWidth>
     <WebStackScaffolding_DbContextTypeFullName>Northwind.Web2.NorthwindModel</WebStackScaffolding_DbContextTypeFullName>
-    <NameOfLastUsedPublishProfile>KendoAngularJS</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>longle - Web Deploy</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
