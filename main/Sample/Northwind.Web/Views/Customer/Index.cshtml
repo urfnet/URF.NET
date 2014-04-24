@@ -30,11 +30,8 @@
                      k-on-change="onChange(kendoEvent)">
                 </div>
                 <style scoped>
-                    #grid .k-toolbar {
-                        padding: 15px;
-                    }
-
                     .toolbar {
+                        padding: 15px;
                         float: right;
                     }
                 </style>
@@ -44,13 +41,13 @@
         <script type="text/x-kendo-template" id="toolbar">
             <div>
                 <div class="toolbar">
-                    <button kendo-button ng-click="edit()"><span class="k-icon k-i-tick"></span>Edit</button>
-                    <button kendo-button ng-click="destroy()"><span class="k-icon k-i-tick"></span>Delete</button>
-                    <button kendo-button ng-click="details()"><span class="k-icon k-i-tick"></span>Edit Details</button>
+                    <button kendo-button ng-click="edit(this)"><span class="k-icon k-i-tick"></span>Edit</button>
+                    <button kendo-button ng-click="destroy(this)"><span class="k-icon k-i-tick"></span>Delete</button>
+                    <button kendo-button ng-click="details(this)"><span class="k-icon k-i-tick"></span>Edit Details</button>
                 </div>
                 <div class="toolbar" style="display:none">
-                    <button kendo-button ng-click="save()"><span class="k-icon k-i-tick"></span>Save</button>
-                    <button kendo-button ng-click="cancel()"><span class="k-icon k-i-tick"></span>Cancel</button>
+                    <button kendo-button ng-click="save(this)"><span class="k-icon k-i-tick"></span>Save</button>
+                    <button kendo-button ng-click="cancel(this)"><span class="k-icon k-i-tick"></span>Cancel</button>
                 </div>
             </div>
         </script>

@@ -1,10 +1,11 @@
 using System.Web.Http;
 using Microsoft.Practices.Unity.WebApi;
+using Northwind.Web;
 
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Northwind.Web2.App_Start.UnityWebApiActivator), "Start")]
-[assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(Northwind.Web2.App_Start.UnityWebApiActivator), "Shutdown")]
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(UnityWebApiActivator), "Start")]
+[assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(UnityWebApiActivator), "Shutdown")]
 
-namespace Northwind.Web2.App_Start
+namespace Northwind.Web
 {
     /// <summary>Provides the bootstrapping for integrating Unity with WebApi when it is hosted in ASP.NET</summary>
     public static class UnityWebApiActivator

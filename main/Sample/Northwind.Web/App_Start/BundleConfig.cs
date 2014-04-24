@@ -1,7 +1,6 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
-namespace Northwind.Web2
+namespace Northwind.Web
 {
     public class BundleConfig
     {

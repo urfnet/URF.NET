@@ -1,7 +1,7 @@
 ﻿using System.Web.Http;
 using System.Web.Http.OData.Builder;
 
-namespace Northwind.Web2
+namespace Northwind.Web
 {
     public static class ODataConfig
     {

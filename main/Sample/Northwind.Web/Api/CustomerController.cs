@@ -9,7 +9,7 @@ using Northwind.Service;
 using Repository.Pattern.Infrastructure;
 using Repository.Pattern.UnitOfWork;
 
-namespace Northwind.Web2.Api
+namespace Northwind.Web.Api
 {
     public class CustomerController : ODataController
     {

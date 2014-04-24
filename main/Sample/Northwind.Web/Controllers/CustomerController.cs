@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace Northwind.Web2.Controllers
+namespace Northwind.Web.Controllers
 {
     public class CustomerController : Controller
     {

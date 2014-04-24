@@ -1,6 +1,5 @@
 using System;
 using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.Configuration;
 using Northwind.Entities.Models;
 using Northwind.Service;
 using Repository.Pattern.DataContext;
@@ -8,7 +7,7 @@ using Repository.Pattern.Ef6;
 using Repository.Pattern.Repositories;
 using Repository.Pattern.UnitOfWork;
 
-namespace Northwind.Web2.App_Start
+namespace Northwind.Web
 {
     /// <summary>
     /// Specifies the Unity configuration for the main container.

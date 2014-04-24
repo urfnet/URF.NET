@@ -1,7 +1,6 @@
-﻿using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
-namespace Northwind.Web2
+namespace Northwind.Web
 {
     public class FilterConfig
     {
