@@ -20,14 +20,30 @@ textarea {
   display: none !important;
 }
 
-@keyframes slideOutLeft {
-	to 		{ transform: translateX(-100%); }
-}
+/*.ng-enter, .ng-leave {
+    -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1s;
+    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1s;
 
-@keyframes slideInRight {
-	from 	{ transform:translateX(100%); }
-	to 		{ transform: translateX(0); }
-}
+    display:block;
+    width:1170px;
 
-.view-enter { animation:slideInRight 0.5s both ease-in; }
-.view-leave { animation:slideOutLeft 0.5s both ease-in; }
+    padding-left: 15px;
+    padding-right: 15px;
+
+    position:absolute;
+    left:0;
+    right:0;
+  }
+
+  .ng-enter {
+    left:100%;
+  }
+
+  .ng-enter.ng-enter-active {
+    position: absolute;
+    left:0;
+  }
+
+  .ng-leave.ng-leave-active {
+    left:-100%;
+  }*/
