@@ -7,6 +7,7 @@
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    position: relative;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
@@ -20,9 +21,9 @@ textarea {
   display: none !important;
 }
 
-/*.ng-enter, .ng-leave {
-    -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1s;
-    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1s;
+.ng-enter, .ng-leave {
+    -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) .5s;
+    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) .5s;
 
     display:block;
     width:1170px;
@@ -40,10 +41,9 @@ textarea {
   }
 
   .ng-enter.ng-enter-active {
-    position: absolute;
     left:0;
   }
 
   .ng-leave.ng-leave-active {
-    left:-100%;
-  }*/
+    left:-200%;
+  }
