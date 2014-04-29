@@ -24,6 +24,9 @@ namespace Northwind.Web
             builder.EntitySet<Entities.Models.Category>(typeof(Entities.Models.Category).Name);
             builder.EntitySet<Entities.Models.Supplier>(typeof(Entities.Models.Supplier).Name);
 
+            builder.EntitySet<Entities.Models.Employee>(typeof(Entities.Models.Employee).Name);
+            builder.EntitySet<Entities.Models.Shipper>(typeof(Entities.Models.Shipper).Name);
+
             var model = builder.GetEdmModel();
             config.Routes.MapODataRoute("odata", "odata", model);
 
