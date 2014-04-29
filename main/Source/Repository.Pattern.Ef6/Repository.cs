@@ -113,8 +113,10 @@ namespace Repository.Pattern.Ef6
             {
                 return false;
             }
+
+            entity.ObjectState = ObjectState.Deleted;
             _dbSet.Attach(entity);
-            _dbSet.Remove(entity);
+
             return true;
         }
 
