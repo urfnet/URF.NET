@@ -19,12 +19,23 @@ namespace Northwind.Web
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/angular").Include(
+                      "~/Scripts/angular.js",
+                      "~/Scripts/angular-route.js",
+                      "~/Scripts/angular-animate.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/kendo").Include(
-                      "~/Scripts/angular.min.js",
-                      "~/Scripts/kendo/2014.1.318/kendo.web.min.js",
-                      "~/Scripts/angular-kendo.min.js",
-                      "~/Scripts/app/app.js"));
-            
+                "~/Scripts/kendo/2014.1.318/kendo.web.min.js",
+                "~/Scripts/angular-kendo.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/app").Include(
+                      "~/Scripts/app/app.js",
+                      "~/Scripts/app/services/customerModel.js",
+                      "~/Scripts/app/services/customerDataSource.js",
+                      "~/Scripts/app/controllers/homeController.js",
+                      "~/Scripts/app/controllers/customerController.js",
+                      "~/Scripts/app/controllers/customerEditController.js"));
+
             //Styles
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

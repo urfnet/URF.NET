@@ -7,19 +7,11 @@
 
     <title>@ViewBag.Title</title>
 
-    @*@Styles.Render("~/Content/css")
-        @Styles.Render("~/Content/kendo")
-
-        @Scripts.Render("~/bundles/modernizr")*@
-
-    <link href="~/Content/bootstrap.css" rel="stylesheet" />
-    <link href="~/Content/Site.css" rel="stylesheet" />
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/kendo")
     @RenderSection("Styles", required: false)
 
     @Scripts.Render("~/bundles/modernizr")
-
-    <link href="~/Content/kendo/2014.1.318/kendo.common.min.css" rel="stylesheet" />
-    <link href="~/Content/kendo/2014.1.318/kendo.bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -48,26 +40,12 @@
         </footer>
     </div>
 
-    @*@Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @Scripts.Render("~/bundles/kendo")
-    *@
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/angular")
+    @Scripts.Render("~/bundles/app")
+    @Scripts.Render("~/bundles/kendo")
 
-    <script src="~/Scripts/jquery-2.1.0.min.js"></script>
-    <script src="~/Scripts/angular.min.js"></script>
-    <script src="~/Scripts/angular-route.min.js"></script>
-    <script src="~/Scripts/angular-animate.min.js"></script>
-    <script src="~/Scripts/kendo/2014.1.318/kendo.web.min.js"></script>
-    <script src="~/Scripts/angular-kendo.min.js"></script>
-
-    <script src="~/Scripts/app/app.js"></script>
-    <script src="~/Scripts/app/services/customerModel.js"></script>
-    <script src="~/Scripts/app/services/customerDataSource.js"></script>
-    <script src="~/Scripts/app/controllers/homeController.js"></script>
-    <script src="~/Scripts/app/controllers/customerController.js"></script>
-    <script src="~/Scripts/app/controllers/customerEditController.js"></script>
-
-    <script src="~/Scripts/bootstrap.min.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
