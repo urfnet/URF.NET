@@ -11,6 +11,7 @@
     <WebStackScaffolding_DbContextDialogWidth>600</WebStackScaffolding_DbContextDialogWidth>
     <WebStackScaffolding_DbContextTypeFullName>Northwind.Web2.NorthwindModel</WebStackScaffolding_DbContextTypeFullName>
     <NameOfLastUsedPublishProfile>longle - Web Deploy</NameOfLastUsedPublishProfile>
+    <ProjectView>ProjectFiles</ProjectView>
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
