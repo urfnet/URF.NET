@@ -3,13 +3,23 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="SPA Application" />
 
     <title>@ViewBag.Title</title>
 
-    @Styles.Render("~/Content/css")
-    @Styles.Render("~/Content/kendo")
+    @*@Styles.Render("~/Content/css")
+        @Styles.Render("~/Content/kendo")
+
+        @Scripts.Render("~/bundles/modernizr")*@
+
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    @RenderSection("Styles", required: false)
 
     @Scripts.Render("~/bundles/modernizr")
+
+    <link href="~/Content/kendo/2014.1.318/kendo.common.min.css" rel="stylesheet" />
+    <link href="~/Content/kendo/2014.1.318/kendo.bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -20,32 +30,44 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("http://blog.longle.net", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <a href="#/home" class="navbar-brand">http://blog.longle.net</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="#/home">Home</a></li>
                     <li><a href="#/customer">Customer</a></li>
-
-                    @*<li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
-                        <li>@Html.ActionLink("Customer", "Index", "Customer", new { area = "" }, null)</li>*@
+                    <li><a href="#/help">API</a></li>
                 </ul>
             </div>
         </div>
     </div>
     <div class="container body-content">
-        <ng-view>
-        </ng-view>
-        <hr />
+        @RenderBody()
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>Copyright &copy; @DateTime.Now.Year - SPA Application</p>
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/kendo")
+    @*@Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/bundles/kendo")
+    *@
 
-    @RenderSection("scripts", required: false)
+    <script src="~/Scripts/jquery-2.1.0.min.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/angular-route.min.js"></script>
+    <script src="~/Scripts/angular-animate.min.js"></script>
+    <script src="~/Scripts/kendo/2014.1.318/kendo.web.min.js"></script>
+    <script src="~/Scripts/angular-kendo.min.js"></script>
+
+    <script src="~/Scripts/app/app.js"></script>
+    <script src="~/Scripts/app/services/customerModel.js"></script>
+    <script src="~/Scripts/app/services/customerDataSource.js"></script>
+    <script src="~/Scripts/app/controllers/homeController.js"></script>
+    <script src="~/Scripts/app/controllers/customerController.js"></script>
+    <script src="~/Scripts/app/controllers/customerEditController.js"></script>
+
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

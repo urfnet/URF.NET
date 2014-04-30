@@ -1,9 +1,9 @@
-@using System.Web.Http
 @using Northwind.Web.Areas.HelpPage.Models
-@model HelpPageApiModel
 
+@model HelpPageApiModel
 @{
     var description = Model.ApiDescription;
+
     ViewBag.Title = description.HttpMethod.Method + " " + description.RelativePath;
 }
 

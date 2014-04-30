@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width" />
     
     <title>@ViewBag.Title</title>
+    @RenderSection("Styles", required: false)
     
-    @RenderSection("scripts", required: false)
+    @RenderSection("Scripts", required: false)
 </head>
 <body>
     @RenderBody()

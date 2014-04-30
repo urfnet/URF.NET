@@ -10,9 +10,12 @@ namespace Northwind.Web.Controllers
 
             return View();
         }
+        
         public ActionResult Home()
         {
-            return View();
+            ViewBag.Title = "Home Page";
+
+            return PartialView();
         }
     }
 }

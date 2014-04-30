@@ -7,12 +7,12 @@ namespace Northwind.Web.Controllers
         // GET: Customer
         public ActionResult Index()
         {
-            return View();
+            return PartialView();
         }
 
         public ActionResult Edit()
         {
-            return View();
+            return PartialView();
         }
     }
 }

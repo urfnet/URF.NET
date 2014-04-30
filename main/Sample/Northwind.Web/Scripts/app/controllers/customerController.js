@@ -70,6 +70,7 @@ northwindApp.controller('customerController',
         $scope.onChange = function (e)
         {
             var grid = e.sender;
+
             $rootScope.lastSelectedDataItem = grid.dataItem(grid.select());
         },
 
