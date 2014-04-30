@@ -1,7 +1,8 @@
 ﻿'use strict';
 
 var northwindApp = angular.module('northwindApp', ['kendo.directives', 'ngRoute', 'ngAnimate'])
-    .config(function ($routeProvider) {
+    .config(function ($routeProvider)
+    {
         $routeProvider
             .when('/home',
             {

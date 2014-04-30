@@ -1,6 +1,7 @@
 ﻿'use strict';
 
-northwindApp.factory('customerModel', function() {
+northwindApp.factory('customerModel', function ()
+{
     return kendo.data.Model.define({
         id: "CustomerID",
         fields: {
