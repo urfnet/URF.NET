@@ -148,13 +148,15 @@ namespace Repository.Pattern.Ef6
             return query;
         }
 
-#pragma warning disable 1998
         internal async Task<IEnumerable<TEntity>> SelectAsync(
-#pragma warning restore 1998
             Expression<Func<TEntity, bool>> query = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             List<Expression<Func<TEntity, object>>> includes = null,
             int? page = null,
-            int? pageSize = null) { return Select(query, orderBy, includes, page, pageSize).AsEnumerable(); }
+            int? pageSize = null)
+        {
+            //See: Best Practices in Asynchronous Programming http://msdn.microsoft.com/en-us/magazine/jj991977.aspx
+            return await Task.Run(() => Select(query, orderBy, includes, page, pageSize).AsEnumerable()).ConfigureAwait(false);
+        }
     }
 }
