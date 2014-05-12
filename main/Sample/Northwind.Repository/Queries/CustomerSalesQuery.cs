@@ -8,7 +8,7 @@ namespace Northwind.Repository.Queries
     {
         public CustomerSalesQuery WithPurchasesMoreThan(decimal amount)
         {
-            Add(x => x.Orders
+            And(x => x.Orders
                 .SelectMany(y => y.OrderDetails)
                 .Sum(z => z.UnitPrice * z.Quantity) > amount);
 
@@ -17,7 +17,7 @@ namespace Northwind.Repository.Queries
 
         public CustomerSalesQuery WithQuantitiesMoreThan(decimal quantity)
         {
-            Add(x => x.Orders
+            And(x => x.Orders
                 .SelectMany(y => y.OrderDetails)
                 .Sum(z => z.Quantity) > quantity);
 

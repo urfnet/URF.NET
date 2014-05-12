@@ -7,13 +7,13 @@ namespace Northwind.Repository.Queries
     {
         public CustomerLogisticsQuery FromCountry(string country)
         {
-            Add(x => x.Country == country);
+            And(x => x.Country == country);
             return this;
         }
 
         public CustomerLogisticsQuery LivesInCity(string city)
         {
-            Add(x => x.City == city);
+            And(x => x.City == city);
             return this;
         }
     }
