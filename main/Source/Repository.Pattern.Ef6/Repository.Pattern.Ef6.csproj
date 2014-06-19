@@ -92,6 +92,9 @@
   <ItemGroup>
     <Compile Include="DataContext.cs" />
     <Compile Include="Entity.cs" />
+    <Compile Include="Factories\IRepositoryProvider.cs" />
+    <Compile Include="Factories\RepositoryFactories.cs" />
+    <Compile Include="Factories\RepositoryProvider.cs" />
     <Compile Include="FakeDbContext.cs" />
     <Compile Include="FakeDbSet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

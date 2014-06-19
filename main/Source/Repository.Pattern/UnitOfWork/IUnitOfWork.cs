@@ -9,7 +9,7 @@ namespace Repository.Pattern.UnitOfWork
     {
         int SaveChanges();
         void Dispose(bool disposing);
-        IRepository<TEntity> Repository<TEntity>() where TEntity : IObjectState;
+        IRepository<TEntity> Repository<TEntity>() where TEntity : class, IObjectState;
         //IF 04/09/2014 Add IsolationLevel
         void BeginTransaction(IsolationLevel isolationLevel = IsolationLevel.Unspecified);
         bool Commit();

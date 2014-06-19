@@ -14,7 +14,7 @@ using Repository.Pattern.UnitOfWork;
 
 namespace Repository.Pattern.Ef6
 {
-    public class Repository<TEntity> : IRepositoryAsync<TEntity> where TEntity : Entity
+    public class Repository<TEntity> : IRepositoryAsync<TEntity> where TEntity : class, IObjectState
     {
         #region Private Fields
         private readonly IDataContextAsync _context;
@@ -97,7 +97,7 @@ namespace Repository.Pattern.Ef6
 
         public IQueryable<TEntity> Queryable() { return _dbSet; }
 
-        public IRepository<T> GetRepository<T>() where T : IObjectState { return _unitOfWork.Repository<T>(); }
+        public IRepository<T> GetRepository<T>() where T : class, IObjectState { return _unitOfWork.Repository<T>(); }
 
         public virtual async Task<TEntity> FindAsync(params object[] keyValues) { return await _dbSet.FindAsync(keyValues); }
 
