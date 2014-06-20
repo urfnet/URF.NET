@@ -13,7 +13,7 @@ namespace Repository.Pattern.Ef6.Factories
     /// to find one in its cache of repositories.
     /// </summary>
     /// <remarks>
-    /// Repositories created by this provider tend to require a <see cref="DbContext"/>
+    /// Repositories created by this provider tend to require a <see cref="DataContext"/>
     /// to retrieve data.
     /// </remarks>
     public interface IRepositoryProvider
@@ -27,10 +27,10 @@ namespace Repository.Pattern.Ef6.Factories
         IUnitOfWorkAsync UnitOfWork { get; set; }
 
         /// <summary>
-        /// Get an <see cref="KesselRun.HomeLibrary.GenericRepository.IRepository{T}"/> for entity type, T.
+        /// Get an <see cref="IRepository{T}"/> for entity type, T.
         /// </summary>
         /// <typeparam name="T">
-        /// Root entity type of the <see cref="KesselRun.HomeLibrary.GenericRepository.IRepository{T}"/>.
+        /// Root entity type of the <see cref="IRepository{T}"/>.
         /// </typeparam>
         IRepositoryAsync<T> GetRepositoryForEntityType<T>() where T : class, IObjectState;
 
@@ -41,7 +41,7 @@ namespace Repository.Pattern.Ef6.Factories
         /// Type of the repository, typically a custom repository interface.
         /// </typeparam>
         /// <param name="factory">
-        /// An optional repository creation function that takes a <see cref="DbContext"/>
+        /// An optional repository creation function that takes a <see cref="DataContext"/>
         /// and returns a repository of T. Used if the repository must be created.
         /// </param>
         /// <remarks>

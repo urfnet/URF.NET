@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using Repository.Pattern.DataContext;
 using Repository.Pattern.Infrastructure;
+using Repository.Pattern.Repositories;
 using Repository.Pattern.UnitOfWork;
 
 namespace Repository.Pattern.Ef6.Factories
@@ -12,8 +13,8 @@ namespace Repository.Pattern.Ef6.Factories
     /// </summary>
     /// <remarks>
     /// An instance of this class contains repository factory functions for different types.
-    /// Each factory function takes an EF <see cref="DbContext"/> and returns
-    /// a repository bound to that DbContext.
+    /// Each factory function takes an EF <see cref="IDataContextAsync"/> and returns
+    /// a repository bound to that DataContext.
     /// <para>
     /// Designed to be a "Singleton", configured at web application start with
     /// all of the factory functions needed to create any type of repository.
@@ -79,11 +80,11 @@ namespace Repository.Pattern.Ef6.Factories
         }
 
         /// <summary>
-        /// Get the factory for <see cref="KesselRun.HomeLibrary.GenericRepository.IRepository{T}"/> where T is an entity type.
+        /// Get the factory for <see cref="IRepository{TEntity}"/> where T is a reference type and implements IObjectState.
         /// </summary>
         /// <typeparam name="T">The root type of the repository, typically an entity type.</typeparam>
         /// <returns>
-        /// A factory that creates the <see cref="KesselRun.HomeLibrary.GenericRepository.IRepository{T}"/>, given an EF <see cref="DbContext"/>.
+        /// A factory that creates the <see cref="IRepository{T}"/>, given an EF <see cref="DbContext"/>.
         /// </returns>
         /// <remarks>
         /// Looks first for a custom factory in <see cref="_repositoryFactories"/>.
@@ -97,7 +98,7 @@ namespace Repository.Pattern.Ef6.Factories
         }
 
         /// <summary>
-        /// Default factory for a <see cref="KesselRun.HomeLibrary.GenericRepository.IRepository{T}"/> where T is an entity.
+        /// Default factory for a <see cref="IRepository{T}"/> where T is a reference type and implements IObjectState.
         /// </summary>
         /// <typeparam name="T">Type of the repository's root entity</typeparam>
         protected virtual Func<IDataContextAsync, IUnitOfWorkAsync, object> DefaultEntityRepositoryFactory<T>() where T : class, IObjectState

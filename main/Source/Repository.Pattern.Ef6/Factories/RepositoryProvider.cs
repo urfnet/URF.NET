@@ -8,7 +8,7 @@ using Repository.Pattern.UnitOfWork;
 namespace Repository.Pattern.Ef6.Factories
 {
     /// <summary>
-    /// Provides an <see cref="KesselRun.HomeLibrary.GenericRepository.IRepository{T}"/> for a client request.
+    /// Provides an <see cref="IRepository{T}"/> for a client request.
     /// </summary>
     /// <remarks>
     /// Caches repositories of a given type so that repositories are only created once per provider. Create a new provider per client request.
@@ -30,7 +30,7 @@ namespace Repository.Pattern.Ef6.Factories
         }
 
         /// <summary>
-        /// Get and set the <see cref="DbContext"/> with which to initialize a repository if one must be created.
+        /// Get and set the <see cref="DataContext"/> with which to initialize a repository if one must be created.
         /// </summary>
         public IDataContextAsync DbContext { get; set; }
         public IUnitOfWorkAsync UnitOfWork { get; set; }
@@ -46,10 +46,10 @@ namespace Repository.Pattern.Ef6.Factories
         protected Dictionary<Type, object> Repositories { get; private set; }
 
         /// <summary>
-        /// Get or create-and-cache the default <see cref="KesselRun.HomeLibrary.GenericRepository.IRepository{T}"/> for an entity of type T.
+        /// Get or create-and-cache the default <see cref="IRepository{T}"/> for an entity of type T.
         /// </summary>
         /// <typeparam name="T">
-        /// Root entity type of the <see cref="KesselRun.HomeLibrary.GenericRepository.IRepository{T}"/>.
+        /// Root entity type of the <see cref="IRepository{T}"/>.
         /// </typeparam>
         /// <remarks>
         /// If can't find repository in cache, use a factory to create one.
@@ -92,11 +92,14 @@ namespace Repository.Pattern.Ef6.Factories
         /// <summary>Make a repository of type T.</summary>
         /// <typeparam name="T">Type of repository to make.</typeparam>
         /// <param name="dbContext">
-        /// The <see cref="DbContext"/> with which to initialize the repository.
+        /// The <see cref="DataContext"/> with which to initialize the repository.
         /// </param>        
         /// <param name="factory">
-        /// Factory with <see cref="DbContext"/> argument. Used to make the repository.
+        /// Factory with <see cref="DataContext"/> argument. Used to make the repository.
         /// If null, gets factory from <see cref="_repositoryFactories"/>.
+        /// </param>
+        /// <param name="unitOfWorkAsync">
+        /// The <see cref="IUnitOfWorkAsync"/> which is passed to the constructor of the <see cref="IRepository{T}"/>.
         /// </param>
         /// <returns></returns>
         protected virtual T MakeRepository<T>(Func<IDataContextAsync, IUnitOfWorkAsync, object> factory, IDataContextAsync dbContext, IUnitOfWorkAsync unitOfWorkAsync)
