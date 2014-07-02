@@ -51,8 +51,22 @@
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Build.Framework" />
+    <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Assemblies\Microsoft.SqlServer.ConnectionInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Management.Sdk.Sfc, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Assemblies\Microsoft.SqlServer.Management.Sdk.Sfc.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Smo, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Assemblies\Microsoft.SqlServer.Smo.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -67,6 +81,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="IntegrationTests\CustomerTests.cs" />
     <Compile Include="UnitTests\Fake\NorthwindFakeContext.cs" />
     <Compile Include="UnitTests\Fake\NorthwindFakeDbSets.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -78,6 +93,10 @@
     <ProjectReference Include="..\Northwind.Entities\Northwind.Entities.csproj">
       <Project>{94E81D48-74B2-42EB-B389-F25C8C23F9C4}</Project>
       <Name>Northwind.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Northwind.Repository\Northwind.Repository.csproj">
+      <Project>{0fb607ea-4bb3-404b-9461-2232b5423885}</Project>
+      <Name>Northwind.Repository</Name>
     </ProjectReference>
     <ProjectReference Include="..\Northwind.Service\Northwind.Service.csproj">
       <Project>{678DB4A2-A20D-4F71-8A98-D8BBE879DEDD}</Project>
@@ -97,7 +116,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="IntegrationTests\" />
+    <Content Include="Assemblies\Microsoft.SqlServer.ConnectionInfo.dll" />
+    <Content Include="Assemblies\Microsoft.SqlServer.Management.Sdk.Sfc.dll" />
+    <Content Include="Assemblies\Microsoft.SqlServer.Smo.dll" />
+    <Content Include="Assemblies\Microsoft.SqlServer.SmoExtended.dll" />
+    <Content Include="README.txt" />
+    <Content Include="Sql\instnwnd.sql" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

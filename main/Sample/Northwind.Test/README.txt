@@ -1,0 +1,1 @@
+﻿**PLEASE MAKE SURE /Sql/instnwnd.sql is copied to C:\\temp\instnwnd.sql for test to run succesfully
