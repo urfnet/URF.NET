@@ -23,6 +23,6 @@ namespace Repository.Pattern.Repositories
         IQueryFluent<TEntity> Query();
         IQueryable Queryable(ODataQueryOptions<TEntity> oDataQueryOptions);
         IQueryable<TEntity> Queryable();
-        IRepository<T> GetRepository<T>() where T : IObjectState;
+        IRepository<T> GetRepository<T>() where T : class, IObjectState;
     }
 }

@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Repository.Pattern.Infrastructure;
 using Repository.Pattern.Repositories;
 
 namespace Repository.Pattern.Ef6
 {
-    public sealed class QueryFluent<TEntity> : IQueryFluent<TEntity> where TEntity : Entity
+    public sealed class QueryFluent<TEntity> : IQueryFluent<TEntity> where TEntity : class, IObjectState
     {
         #region Private Fields
         private readonly Expression<Func<TEntity, bool>> _expression;
