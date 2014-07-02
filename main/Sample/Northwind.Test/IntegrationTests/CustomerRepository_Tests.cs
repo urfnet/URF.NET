@@ -8,7 +8,6 @@ using Northwind.Entities.Models;
 using Northwind.Repository.Models;
 using Repository.Pattern.DataContext;
 using Repository.Pattern.Ef6;
-using Repository.Pattern.Ef6.Factories;
 using Repository.Pattern.Repositories;
 using Repository.Pattern.UnitOfWork;
 using Northwind.Repository.Repositories;
@@ -18,8 +17,6 @@ namespace Northwind.Test.IntegrationTests
     [TestClass]
     public class CustomerRepositoryTests
     {
-        readonly IRepositoryProvider _repositoryProvider = new RepositoryProvider(new RepositoryFactories());
-
         [TestInitialize]
         public void SettingUpNorthwindTestDatabase()
         {
@@ -36,7 +33,6 @@ namespace Northwind.Test.IntegrationTests
             var server = new Server(new ServerConnection(connection));
             server.ConnectionContext.ExecuteNonQuery(script);
             TestContext.WriteLine("NorthwindTest Db created for intergration tests");
-
         }
 
         [TestCleanup]
@@ -49,7 +45,7 @@ namespace Northwind.Test.IntegrationTests
         public void GetCustomerOrderTest()
         {
             using (IDataContextAsync context = new NorthwindContext())
-            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context, _repositoryProvider))
+            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
             {
                 IRepositoryAsync<Customer> customerRepository = new Repository<Customer>(context, unitOfWork);
                 var customerOrders = customerRepository.GetCustomerOrder("USA");
