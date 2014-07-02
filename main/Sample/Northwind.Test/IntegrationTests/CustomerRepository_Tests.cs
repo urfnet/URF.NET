@@ -26,6 +26,7 @@ namespace Northwind.Test.IntegrationTests
             TestContext.WriteLine("TestFixture executing, creating NorthwindTest Db for intergration  tests");
             const string sqlConnectionString = "Data Source=.;Initial Catalog=master;Integrated Security=True";
             TestContext.WriteLine("Loading and parsing create NorthwindTest database Sql script");
+
             var file = new FileInfo("C:\\temp\\instnwnd.sql");
             var script = file.OpenText().ReadToEnd();
             var connection = new SqlConnection(sqlConnectionString);
