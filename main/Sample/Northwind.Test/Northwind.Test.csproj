@@ -81,13 +81,11 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="IntegrationTests\CustomerTests.cs" />
+    <Compile Include="IntegrationTests\CustomerRepository_Tests.cs" />
     <Compile Include="UnitTests\Fake\NorthwindFakeContext.cs" />
     <Compile Include="UnitTests\Fake\NorthwindFakeDbSets.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTests\Repository\ProductRepositoryTest.cs" />
-    <Compile Include="UnitTests\Service\CustomerServiceTest.cs" />
-    <Compile Include="UnitTests\StoredProcedure\UnitTest1.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Northwind.Entities\Northwind.Entities.csproj">
