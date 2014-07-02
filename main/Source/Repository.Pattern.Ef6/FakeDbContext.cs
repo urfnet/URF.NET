@@ -18,7 +18,7 @@ namespace Repository.Pattern.Ef6
         void Dispose();
 
         void AddFakeDbSet<TEntity, TFakeDbSet>()
-            where TEntity : Entity, IObjectState, new()
+            where TEntity : Entity, new()
             where TFakeDbSet : FakeDbSet<TEntity>, IDbSet<TEntity>, new();
 
         void SyncObjectState(object entity);
@@ -50,7 +50,7 @@ namespace Repository.Pattern.Ef6
         public DbSet<T> Set<T>() where T : class { return (DbSet<T>)_fakeDbSets[typeof(T)]; }
 
         public void AddFakeDbSet<TEntity, TFakeDbSet>()
-            where TEntity : Entity, IObjectState, new()
+            where TEntity : Entity, new()
             where TFakeDbSet : FakeDbSet<TEntity>, IDbSet<TEntity>, new()
         {
             var fakeDbSet = Activator.CreateInstance<TFakeDbSet>();

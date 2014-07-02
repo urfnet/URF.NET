@@ -4,6 +4,7 @@ using Northwind.Entities.Models;
 using Northwind.Service;
 using Repository.Pattern.DataContext;
 using Repository.Pattern.Ef6;
+using Repository.Pattern.Ef6.Factories;
 using Repository.Pattern.Repositories;
 using Repository.Pattern.UnitOfWork;
 
@@ -42,6 +43,10 @@ namespace Northwind.Web
 
             container
                 .RegisterType<IDataContextAsync, NorthwindContext>(new PerRequestLifetimeManager())
+                .RegisterType<IRepositoryProvider, RepositoryProvider>(
+                    new PerRequestLifetimeManager(), 
+                    new InjectionConstructor(new object[]{new RepositoryFactories()})
+                    )
                 .RegisterType<IUnitOfWorkAsync, UnitOfWork>(new PerRequestLifetimeManager())
                 .RegisterType<IRepositoryAsync<Customer>, Repository<Customer>>()
                 .RegisterType<IRepositoryAsync<Product>, Repository<Product>>()
