@@ -18,7 +18,7 @@ namespace Northwind.Test.IntegrationTests
     public class CustomerRepositoryTests
     {
         [TestInitialize]
-        public void Setup()
+        public void SettingUpNorthwindTestDatabase()
         {
             TestContext.WriteLine("Please copy //Sql//instnwnd.sql is copied to C:\\temp\\instnwnd.sql for test to run succesfully");
             TestContext.WriteLine("TestFixture executing, creating NorthwindTest Db for intergration  tests");
