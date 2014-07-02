@@ -20,7 +20,9 @@ namespace Northwind.Test.IntegrationTests
         [TestInitialize]
         public void SettingUpNorthwindTestDatabase()
         {
-            TestContext.WriteLine("Please copy //Sql//instnwnd.sql is copied to C:\\temp\\instnwnd.sql for test to run succesfully");
+            TestContext.WriteLine("Please copy Northwind.Test/Sql/instnwnd.sql is copied to C:\\temp\\instnwnd.sql for test to run succesfully");
+            TestContext.WriteLine("Please verify the the Northwind.Test/app.config connection string is correct for your environment");
+
             TestContext.WriteLine("TestFixture executing, creating NorthwindTest Db for intergration  tests");
             const string sqlConnectionString = "Data Source=.;Initial Catalog=master;Integrated Security=True";
             TestContext.WriteLine("Loading and parsing create NorthwindTest database Sql script");
