@@ -29,11 +29,11 @@ namespace Repository.Pattern.Ef6.Factories
         /// each one is a factory for a repository of a particular type.
         /// </summary>
         /// <remarks>
-        /// MODIFY THIS METHOD TO ADD CUSTOM FACTORY FUNCTIONS
+        /// **DO NOT MODIFY, THE FEATURE TO ADD CUSTOM REPOSITORIES IS NOT COMPLETE**
         /// </remarks>
-        private IDictionary<Type, Func<IDataContextAsync, IUnitOfWorkAsync, object>> GetFactories()
+        private IDictionary<Type, Func<IDataContextAsync, IUnitOfWorkAsync, dynamic>> GetFactories()
         {
-            return new Dictionary<Type, Func<IDataContextAsync, IUnitOfWorkAsync, object>>
+            return new Dictionary<Type, Func<IDataContextAsync, IUnitOfWorkAsync, dynamic>>
             {
                 //{typeof(IArticleRepository), dbContext => new ArticleRepository(dbContext)},
                 //{typeof(IUrlRepository), dbContext => new UrlRepository(dbContext)},
@@ -57,7 +57,7 @@ namespace Repository.Pattern.Ef6.Factories
         /// <remarks>
         /// This consructor is primarily useful for testing this class
         /// </remarks>
-        public RepositoryFactories(IDictionary<Type, Func<IDataContextAsync, IUnitOfWorkAsync, object>> factories)
+        public RepositoryFactories(IDictionary<Type, Func<IDataContextAsync, IUnitOfWorkAsync, dynamic>> factories)
         {
             _repositoryFactories = factories;
         }
@@ -71,9 +71,9 @@ namespace Repository.Pattern.Ef6.Factories
         /// The type parameter, T, is typically the repository type 
         /// but could be any type (e.g., an entity type)
         /// </remarks>
-        public Func<IDataContextAsync, IUnitOfWorkAsync, object> GetRepositoryFactory<T>()
+        public Func<IDataContextAsync, IUnitOfWorkAsync, dynamic> GetRepositoryFactory<T>()
         {
-            Func<IDataContextAsync, IUnitOfWorkAsync, object> factory;
+            Func<IDataContextAsync, IUnitOfWorkAsync, dynamic> factory;
             _repositoryFactories.TryGetValue(typeof(T), out factory);
             return factory;
         }
@@ -91,7 +91,7 @@ namespace Repository.Pattern.Ef6.Factories
         /// You can substitute an alternative factory for the default one by adding
         /// a repository factory for type "T" to <see cref="_repositoryFactories"/>.
         /// </remarks>
-        public Func<IDataContextAsync, IUnitOfWorkAsync, object> GetRepositoryFactoryForEntityType<T>() where T : class, IObjectState
+        public Func<IDataContextAsync, IUnitOfWorkAsync, dynamic> GetRepositoryFactoryForEntityType<T>() where T : class, IObjectState
         {
             return GetRepositoryFactory<T>() ?? DefaultEntityRepositoryFactory<T>();
         }
@@ -100,7 +100,7 @@ namespace Repository.Pattern.Ef6.Factories
         /// Default factory for a <see cref="IRepository{T}"/> where T is a reference type and implements IObjectState.
         /// </summary>
         /// <typeparam name="T">Type of the repository's root entity</typeparam>
-        protected virtual Func<IDataContextAsync, IUnitOfWorkAsync, object> DefaultEntityRepositoryFactory<T>() where T : class, IObjectState
+        protected virtual Func<IDataContextAsync, IUnitOfWorkAsync, dynamic> DefaultEntityRepositoryFactory<T>() where T : class, IObjectState
         {
             return (dbContext, unitOfWork) => new Repository<T>(dbContext, unitOfWork);
         }
@@ -114,6 +114,6 @@ namespace Repository.Pattern.Ef6.Factories
         /// that takes a <see cref="DbContext"/> argument and returns
         /// a repository object. Caller must know how to cast it.
         /// </remarks>
-        private readonly IDictionary<Type, Func<IDataContextAsync, IUnitOfWorkAsync, object>> _repositoryFactories;
+        private readonly IDictionary<Type, Func<IDataContextAsync, IUnitOfWorkAsync, dynamic>> _repositoryFactories;
     }
 }

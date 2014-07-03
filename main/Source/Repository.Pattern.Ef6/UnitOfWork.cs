@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Data.Entity.Core.Objects;
@@ -105,23 +104,6 @@ namespace Repository.Pattern.Ef6
 
         public IRepositoryAsync<TEntity> RepositoryAsync<TEntity>() where TEntity : class, IObjectState
         {
-            // todo: DaveRogers review
-            // caching is happening in UoW and RepoProvider, changinng to just use the one from RepoProvider.Repositories
-
-            //if (_repositories == null)
-            //{
-            //    _repositories = new Dictionary<string, dynamic>();
-            //}
-
-            //var type = typeof(TEntity).Name;
-
-            //if (_repositories.ContainsKey(type))
-            //{
-            //    return _repositories[type];
-            //}
-
-            //_repositories.Add(type, RepositoryProvider.GetRepositoryForEntityType<TEntity>());
-
             return RepositoryProvider.GetRepositoryForEntityType<TEntity>();
         }
 
