@@ -20,7 +20,6 @@ namespace Repository.Pattern.Ef6
         private readonly IDataContextAsync _dataContext;
         private bool _disposed;
         private ObjectContext _objectContext;
-        private Dictionary<string, dynamic> _repositories;
         private DbTransaction _transaction;
         #endregion Private Fields
 
@@ -67,21 +66,7 @@ namespace Repository.Pattern.Ef6
 
         public IRepositoryAsync<TEntity> RepositoryAsync<TEntity>() where TEntity : class, IObjectState
         {
-            if (_repositories == null)
-            {
-                _repositories = new Dictionary<string, dynamic>();
-            }
-
-            var type = typeof(TEntity).Name;
-
-            if (_repositories.ContainsKey(type))
-            {
-                return _repositories[type];
-            }
-
-            _repositories.Add(type, RepositoryProvider.GetRepositoryForEntityType<TEntity>());
-
-            return _repositories[type];
+            return RepositoryProvider.GetRepositoryForEntityType<TEntity>();
         }
 
         #region Unit of Work Transactions
