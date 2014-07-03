@@ -82,6 +82,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="IntegrationTests\CustomerRepository_Tests.cs" />
+    <Compile Include="IntegrationTests\UnitOfWork_Tests.cs" />
     <Compile Include="UnitTests\Fake\NorthwindFakeContext.cs" />
     <Compile Include="UnitTests\Fake\NorthwindFakeDbSets.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

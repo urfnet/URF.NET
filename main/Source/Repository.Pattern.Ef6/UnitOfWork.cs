@@ -17,13 +17,16 @@ namespace Repository.Pattern.Ef6
     public class UnitOfWork : IUnitOfWorkAsync
     {
         #region Private Fields
+
         private readonly IDataContextAsync _dataContext;
         private bool _disposed;
         private ObjectContext _objectContext;
         private DbTransaction _transaction;
+
         #endregion Private Fields
 
         #region Constuctor/Dispose
+
         public UnitOfWork(IDataContextAsync dataContext, IRepositoryProvider repositoryProvider)
         {
             RepositoryProvider = repositoryProvider;
@@ -33,36 +36,72 @@ namespace Repository.Pattern.Ef6
 
         public void Dispose()
         {
-            if (_objectContext != null && _objectContext.Connection.State == ConnectionState.Open)
-            {
-                _objectContext.Connection.Close();
-            }
-
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
+        ~UnitOfWork()
+        {
+            //I am *not* calling you from Dispose, it's *not* safe
+            Dispose(false);
+        }
+
         public virtual void Dispose(bool disposing)
         {
-            if (!_disposed && disposing)
+            if (_disposed)
+                return;
+
+            if (disposing)
             {
+                // free other managed objects that implement
+                // IDisposable only
+
+                // closing connection  before calling _dataContext.Dispose();
+
+                try
+                {
+                    if (_objectContext != null && _objectContext.Connection.State == ConnectionState.Open)
+                    {
+                        _objectContext.Connection.Close();
+                    }
+                }
+                catch (ObjectDisposedException)
+                {
+                    // do nothing, the objectContext has already been disposed
+                }
+
                 _dataContext.Dispose();
             }
+
+            // release any unmanaged objects
+            // set the object references to null
+
             _disposed = true;
         }
+
         #endregion Constuctor/Dispose
 
         protected IRepositoryProvider RepositoryProvider { get; set; }
-        public int SaveChanges() { return _dataContext.SaveChanges(); }
+
+        public int SaveChanges()
+        {
+            return _dataContext.SaveChanges();
+        }
 
         public IRepository<TEntity> Repository<TEntity>() where TEntity : class, IObjectState
         {
             return RepositoryAsync<TEntity>();
         }
 
-        public Task<int> SaveChangesAsync() { return _dataContext.SaveChangesAsync(); }
+        public Task<int> SaveChangesAsync()
+        {
+            return _dataContext.SaveChangesAsync();
+        }
 
-        public Task<int> SaveChangesAsync(CancellationToken cancellationToken) { return _dataContext.SaveChangesAsync(cancellationToken); }
+        public Task<int> SaveChangesAsync(CancellationToken cancellationToken)
+        {
+            return _dataContext.SaveChangesAsync(cancellationToken);
+        }
 
         public IRepositoryAsync<TEntity> RepositoryAsync<TEntity>() where TEntity : class, IObjectState
         {
@@ -87,10 +126,11 @@ namespace Repository.Pattern.Ef6
         }
 
         #region Unit of Work Transactions
+
         //IF 04/09/2014 Add IsolationLevel
         public void BeginTransaction(IsolationLevel isolationLevel = IsolationLevel.Unspecified)
         {
-            _objectContext = ((IObjectContextAdapter)_dataContext).ObjectContext;
+            _objectContext = ((IObjectContextAdapter) _dataContext).ObjectContext;
             if (_objectContext.Connection.State != ConnectionState.Open)
             {
                 _objectContext.Connection.Open();
@@ -108,8 +148,9 @@ namespace Repository.Pattern.Ef6
         public void Rollback()
         {
             _transaction.Rollback();
-            ((DataContext)_dataContext).SyncObjectsStatePostCommit();
+            ((DataContext) _dataContext).SyncObjectsStatePostCommit();
         }
+
         #endregion
 
         // Uncomment, if rather have IRepositoryAsync<TEntity> IoC vs. Reflection Activation
