@@ -36,7 +36,7 @@ namespace Northwind.Test.Repository
         public void DeleteProductById()
         {
             using (IDataContextAsync northwindFakeContext = new NorthwindFakeContext())
-            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(northwindFakeContext,_repositoryProvider))
+            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(northwindFakeContext, _repositoryProvider))
             {
                 unitOfWork.Repository<Product>().Insert(new Product { ProductID = 2, Discontinued = true, ObjectState = ObjectState.Added });
 

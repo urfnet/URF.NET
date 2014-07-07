@@ -6,12 +6,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Data.SqlClient;
 using Northwind.Entities.Models;
 using Northwind.Repository.Models;
+using Northwind.Service;
 using Repository.Pattern.DataContext;
 using Repository.Pattern.Ef6;
 using Repository.Pattern.Ef6.Factories;
 using Repository.Pattern.Repositories;
 using Repository.Pattern.UnitOfWork;
 using Northwind.Repository.Repositories;
+using Service.Pattern;
 
 namespace Northwind.Test.IntegrationTests
 {
@@ -56,6 +58,20 @@ namespace Northwind.Test.IntegrationTests
                 var enumerable = customerOrders as CustomerOrder[] ?? customerOrders.ToArray();
                 TestContext.WriteLine("Customers found: {0}", enumerable.Count());
                 Assert.IsTrue(enumerable.Any());
+            }
+        }
+
+        [TestMethod]
+        public void FindCustomerById_Test()
+        {
+            using (IDataContextAsync context = new NorthwindContext())
+            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context, _repositoryProvider))
+            {
+                IRepositoryAsync<Customer> customerRepository = new Repository<Customer>(context, unitOfWork);
+                IService<Customer> customerService = new CustomerService(customerRepository);
+                var customer = customerService.Find("ALFKI");
+                TestContext.WriteLine("Customers found: {0}", customer.ContactName);                
+                Assert.AreEqual(customer.ContactName, "Maria Anders");
             }
         }
 
