@@ -17,7 +17,7 @@ namespace Repository.Pattern.Ef6
     {
         #region Private Fields
 
-        private readonly IDataContextAsync _dataContext;
+        private IDataContextAsync _dataContext;
         private bool _disposed;
         private ObjectContext _objectContext;
         private DbTransaction _transaction;
@@ -37,12 +37,6 @@ namespace Repository.Pattern.Ef6
         {
             Dispose(true);
             GC.SuppressFinalize(this);
-        }
-
-        ~UnitOfWork()
-        {
-            //I am *not* calling you from Dispose, it's *not* safe
-            Dispose(false);
         }
 
         public virtual void Dispose(bool disposing)
@@ -70,6 +64,7 @@ namespace Repository.Pattern.Ef6
                 }
 
                 _dataContext.Dispose();
+                _dataContext = null;
             }
 
             // release any unmanaged objects
