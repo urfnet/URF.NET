@@ -48,7 +48,6 @@ namespace Repository.Pattern.Ef6
         }
 
         public void SyncObjectState(object entity) { Entry(entity).State = StateHelper.ConvertState(((IObjectState)entity).ObjectState); }
-        public new DbSet<T> Set<T>() where T : class { return base.Set<T>(); }
 
         private void SyncObjectsStatePreCommit()
         {
