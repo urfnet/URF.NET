@@ -31,6 +31,11 @@ namespace Repository.Pattern.Ef6
             return changes;
         }
 
+        public void SyncObjectState<TEntity>(TEntity entity) where TEntity : class, IObjectState
+        {
+            Entry(entity).State = StateHelper.ConvertState(entity.ObjectState);
+        }
+
         public override async Task<int> SaveChangesAsync()
         {
             SyncObjectsStatePreCommit();
@@ -46,8 +51,6 @@ namespace Repository.Pattern.Ef6
             SyncObjectsStatePostCommit();
             return changesAsync;
         }
-
-        public void SyncObjectState(object entity) { Entry(entity).State = StateHelper.ConvertState(((IObjectState)entity).ObjectState); }
 
         private void SyncObjectsStatePreCommit()
         {

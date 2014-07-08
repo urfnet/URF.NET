@@ -37,6 +37,11 @@ namespace Repository.Pattern.Ef6
         }
 
         public int SaveChanges() { return default(int); }
+        public void SyncObjectState<TEntity>(TEntity entity) where TEntity : class, IObjectState
+        {
+            // no implentation needed, unit tests which uses FakeDbContext since there is no actual database for unit tests, 
+            // there is no actual DbContext to sync with, please look at the Intergration Tests for test that will run against an actual database.
+        }
 
         public Task<int> SaveChangesAsync(CancellationToken cancellationToken) { return new Task<int>(() => default(int)); }
 
@@ -44,7 +49,6 @@ namespace Repository.Pattern.Ef6
 
         public void Dispose() { }
 
-        public void SyncObjectState(object entity) { }
         public Guid InstanceId { get; private set; }
 
         public DbSet<T> Set<T>() where T : class { return (DbSet<T>)_fakeDbSets[typeof(T)]; }
@@ -55,6 +59,11 @@ namespace Repository.Pattern.Ef6
         {
             var fakeDbSet = Activator.CreateInstance<TFakeDbSet>();
             _fakeDbSets.Add(typeof(TEntity), fakeDbSet);
+        }
+
+        public void SyncObjectState(object entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }
