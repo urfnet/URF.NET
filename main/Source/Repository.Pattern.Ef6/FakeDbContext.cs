@@ -8,35 +8,28 @@ using Repository.Pattern.Infrastructure;
 
 namespace Repository.Pattern.Ef6
 {
-    public interface IFakeDbContext
+    public interface IFakeDbContext : IDataContextAsync
     {
-        Guid InstanceId { get; }
         DbSet<T> Set<T>() where T : class;
-        int SaveChanges();
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
-        Task<int> SaveChangesAsync();
-        void Dispose();
 
         void AddFakeDbSet<TEntity, TFakeDbSet>()
             where TEntity : Entity, new()
             where TFakeDbSet : FakeDbSet<TEntity>, IDbSet<TEntity>, new();
-
-        void SyncObjectState(object entity);
     }
 
-    public abstract class FakeDbContext : IDataContextAsync, IFakeDbContext
+    public abstract class FakeDbContext : IFakeDbContext
     {
-        #region Private Fields
+        #region Private Fields  
         private readonly Dictionary<Type, object> _fakeDbSets;
         #endregion Private Fields
 
         protected FakeDbContext()
         {
             _fakeDbSets = new Dictionary<Type, object>();
-            InstanceId = Guid.NewGuid(); //IF 04/09/2014
         }
 
         public int SaveChanges() { return default(int); }
+
         public void SyncObjectState<TEntity>(TEntity entity) where TEntity : class, IObjectState
         {
             // no implentation needed, unit tests which uses FakeDbContext since there is no actual database for unit tests, 
@@ -49,8 +42,6 @@ namespace Repository.Pattern.Ef6
 
         public void Dispose() { }
 
-        public Guid InstanceId { get; private set; }
-
         public DbSet<T> Set<T>() where T : class { return (DbSet<T>)_fakeDbSets[typeof(T)]; }
 
         public void AddFakeDbSet<TEntity, TFakeDbSet>()
@@ -59,11 +50,6 @@ namespace Repository.Pattern.Ef6
         {
             var fakeDbSet = Activator.CreateInstance<TFakeDbSet>();
             _fakeDbSets.Add(typeof(TEntity), fakeDbSet);
-        }
-
-        public void SyncObjectState(object entity)
-        {
-            throw new NotImplementedException();
         }
     }
 }
