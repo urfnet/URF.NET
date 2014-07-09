@@ -125,7 +125,7 @@ namespace Repository.Pattern.Ef6
         public void Rollback()
         {
             _transaction.Rollback();
-            ((DataContext) _dataContext).SyncObjectsStatePostCommit();
+            _dataContext.SyncObjectsStatePostCommit();
         }
 
         #endregion

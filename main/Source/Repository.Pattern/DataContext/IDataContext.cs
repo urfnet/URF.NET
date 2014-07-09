@@ -7,5 +7,6 @@ namespace Repository.Pattern.DataContext
     {
         int SaveChanges();
         void SyncObjectState<TEntity>(TEntity entity) where TEntity : class, IObjectState;
+        void SyncObjectsStatePostCommit();
     }
 }

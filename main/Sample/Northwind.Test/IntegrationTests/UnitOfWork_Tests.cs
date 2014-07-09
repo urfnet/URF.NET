@@ -2,16 +2,62 @@
 using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Northwind.Entities.Models;
+using Northwind.Service;
 using Repository.Pattern.DataContext;
 using Repository.Pattern.Ef6;
 using Repository.Pattern.Ef6.Factories;
+using Repository.Pattern.Infrastructure;
+using Repository.Pattern.Repositories;
 using Repository.Pattern.UnitOfWork;
+using Service.Pattern;
 
 namespace Northwind.Test.IntegrationTests
 {
     [TestClass]
     public class UnitOfWork_Tests
     {
+        [TestMethod]
+        public void UnitOfWork_Transaction_Test()
+        {
+            IRepositoryProvider repositoryProvider = new RepositoryProvider(new RepositoryFactories());
+
+            using(IDataContextAsync context = new NorthwindContext())
+            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context, repositoryProvider))
+            {
+                IRepositoryAsync<Customer> customerRepository = new Repository<Customer>(context, unitOfWork);
+                IService<Customer> customerService = new CustomerService(customerRepository);
+
+                try
+                {
+                    unitOfWork.BeginTransaction();
+                
+                    customerService.Insert(new Customer { CustomerID = "YODA", CompanyName = "SkyRanch", ObjectState = ObjectState.Added});
+                    customerService.Insert(new Customer { CustomerID = "JEDI", CompanyName = "SkyRanch", ObjectState = ObjectState.Added});
+
+                    var customer = customerService.Find("YODA");
+                    Assert.AreSame(customer.CustomerID, "YODA");
+
+                    customer = customerService.Find("JEDI");
+                    Assert.AreSame(customer.CustomerID, "JEDI");
+
+                    // save
+                    var saveChangesAsync = unitOfWork.SaveChanges();
+                    //Assert.AreSame(saveChangesAsync, 2);
+
+                    // Will cause an exception, cannot insert customer with the same CustomerId (primary key constraint)
+                    customerService.Insert(new Customer { CustomerID = "JEDI", CompanyName = "SkyRanch", ObjectState = ObjectState.Added });
+                    //save 
+                    unitOfWork.SaveChanges();
+
+                    unitOfWork.Commit();
+                }
+                catch (Exception e)
+                {
+                    unitOfWork.Rollback();
+                }
+            }
+        }
+
         [TestMethod]
         public void UnitOfWork_Dispose_Test()
         {
@@ -69,5 +115,7 @@ namespace Northwind.Test.IntegrationTests
             var field = type.GetField(fieldName, bindFlags);
             return field != null ? field.GetValue(instance) : null;
         }
+
+        public TestContext TestContext { get; set; }
     }
 }

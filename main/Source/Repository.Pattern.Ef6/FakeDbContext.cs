@@ -51,5 +51,7 @@ namespace Repository.Pattern.Ef6
             var fakeDbSet = Activator.CreateInstance<TFakeDbSet>();
             _fakeDbSets.Add(typeof(TEntity), fakeDbSet);
         }
+
+        public void SyncObjectsStatePostCommit() { }
     }
 }
