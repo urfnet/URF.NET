@@ -21,30 +21,41 @@ namespace Northwind.Test.IntegrationTests
     public class CustomerRepositoryTests
     {
         readonly IRepositoryProvider _repositoryProvider = new RepositoryProvider(new RepositoryFactories());
+        const string sqlConnectionString = "Data Source=.;Initial Catalog=master;Integrated Security=True";
 
         [TestInitialize]
         public void SettingUpNorthwindTestDatabase()
         {
-            TestContext.WriteLine("Please copy Northwind.Test/Sql/instnwnd.sql is copied to C:\\temp\\instnwnd.sql for test to run succesfully");
+            TestContext.WriteLine("Please ensure Northwind.Test/Sql/instnwnd.sql is copied to C:\\temp\\instnwnd.sql for test to run succesfully");
             TestContext.WriteLine("Please verify the the Northwind.Test/app.config connection string is correct for your environment");
 
-            TestContext.WriteLine("TestFixture executing, creating NorthwindTest Db for intergration  tests");
-            const string sqlConnectionString = "Data Source=.;Initial Catalog=master;Integrated Security=True";
+            TestContext.WriteLine("TestFixture executing, creating NorthwindTest Db for integration  tests");
             TestContext.WriteLine("Loading and parsing create NorthwindTest database Sql script");
 
             var file = new FileInfo("C:\\temp\\instnwnd.sql");
             var script = file.OpenText().ReadToEnd();
-            var connection = new SqlConnection(sqlConnectionString);
-            var server = new Server(new ServerConnection(connection));
-            server.ConnectionContext.ExecuteNonQuery(script);
-            TestContext.WriteLine("NorthwindTest Db created for intergration tests");
-
+            RunSqlOnMaster(script);
+            TestContext.WriteLine("NorthwindTest Db created for integration tests");
         }
 
         [TestCleanup]
         public void Cleanup()
         {
-            //TODO: delete NorthwindTest database
+            //  kill any live transactions
+            var script1 = "ALTER DATABASE NorthwindTest SET READ_ONLY WITH ROLLBACK IMMEDIATE";
+            //  drop the db and deletes the files on disk
+            var script2 = "DROP DATABASE NorthwindTest;"; 
+            RunSqlOnMaster(script1);
+            RunSqlOnMaster(script2);
+        }
+
+        private static void RunSqlOnMaster(string script)
+        {
+            using (var connection = new SqlConnection(sqlConnectionString))
+            {
+                var server = new Server(new ServerConnection(connection));
+                server.ConnectionContext.ExecuteNonQuery(script);
+            }
         }
 
         [TestMethod]

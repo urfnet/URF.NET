@@ -33,7 +33,7 @@ namespace Repository.Pattern.Ef6
         public void SyncObjectState<TEntity>(TEntity entity) where TEntity : class, IObjectState
         {
             // no implentation needed, unit tests which uses FakeDbContext since there is no actual database for unit tests, 
-            // there is no actual DbContext to sync with, please look at the Intergration Tests for test that will run against an actual database.
+            // there is no actual DbContext to sync with, please look at the Integration Tests for test that will run against an actual database.
         }
 
         public Task<int> SaveChangesAsync(CancellationToken cancellationToken) { return new Task<int>(() => default(int)); }
