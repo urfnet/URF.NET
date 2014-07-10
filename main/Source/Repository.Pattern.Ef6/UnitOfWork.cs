@@ -113,7 +113,7 @@ namespace Repository.Pattern.Ef6
                 _objectContext.Connection.Open();
             }
 
-            _transaction = _objectContext.Connection.BeginTransaction();
+            _transaction = _objectContext.Connection.BeginTransaction(isolationLevel);
         }
 
         public bool Commit()
