@@ -77,10 +77,7 @@ namespace Repository.Pattern.Ef6
         ///     objects written to the underlying database.</returns>
         public override async Task<int> SaveChangesAsync()
         {
-            SyncObjectsStatePreCommit();
-            var changesAsync = await base.SaveChangesAsync();
-            SyncObjectsStatePostCommit();
-            return changesAsync;
+            return await this.SaveChangesAsync(CancellationToken.None);
         }
         /// <summary>
         ///     Asynchronously saves all changes made in this context to the underlying database.
