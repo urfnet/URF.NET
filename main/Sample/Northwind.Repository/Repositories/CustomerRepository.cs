@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using Northwind.Entities.Models;
 using Northwind.Repository.Models;
@@ -13,9 +14,11 @@ namespace Northwind.Repository.Repositories
             int year)
         {
             return repository
-                .Find(customerId)
-                .Orders.SelectMany(o => o.OrderDetails)
-                .Select(o => o.Quantity*o.UnitPrice)
+                .Queryable()
+                .Where(c => c.CustomerID == customerId)
+                .SelectMany(c => c.Orders.Where(o => o.OrderDate != null && o.OrderDate.Value.Year == 1998))
+                .SelectMany(c => c.OrderDetails)
+                .Select(c => c.Quantity*c.UnitPrice)
                 .Sum();
         }
 

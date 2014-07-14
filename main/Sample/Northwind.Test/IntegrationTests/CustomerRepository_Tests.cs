@@ -47,12 +47,15 @@ namespace Northwind.Test.IntegrationTests
         [TestCleanup]
         public void Cleanup()
         {
+            // There is a state issue where NorthwindTest exists in the master database, however the actual NorthwindTest Db does not exists
+            // We can just leave the TestInitialize method which will drop the Db before recreating it for until we figure this out.
+
             //  kill any live transactions
-            const string script1 = "ALTER DATABASE NorthwindTest SET READ_ONLY WITH ROLLBACK IMMEDIATE";
+            //const string script1 = "ALTER DATABASE NorthwindTest SET READ_ONLY WITH ROLLBACK IMMEDIATE";
             //  drop the db and deletes the files on disk
-            const string script2 = "DROP DATABASE NorthwindTest;";
-            RunSqlOnMaster(script1);
-            RunSqlOnMaster(script2);
+            //const string script2 = "DROP DATABASE NorthwindTest;";
+            //RunSqlOnMaster(script1);
+            //RunSqlOnMaster(script2);
         }
 
         private static void RunSqlOnMaster(string script)
@@ -89,6 +92,19 @@ namespace Northwind.Test.IntegrationTests
                 var customer = customerService.Find("ALFKI");
                 TestContext.WriteLine("Customers found: {0}", customer.ContactName);
                 Assert.AreEqual(customer.ContactName, "Maria Anders");
+            }
+        }
+
+        [TestMethod]
+        public void CustomerOrderTotalByYear()
+        {
+            using (IDataContextAsync context = new NorthwindContext())
+            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context, _repositoryProvider))
+            {
+                IRepositoryAsync<Customer> customerRepository = new Repository<Customer>(context, unitOfWork);
+                ICustomerService customerService = new CustomerService(customerRepository);
+                var customerOrderTotalByYear = customerService.CustomerOrderTotalByYear("ALFKI", 1998);
+                Assert.AreEqual(customerOrderTotalByYear, (decimal)2302.2000);
             }
         }
     }
