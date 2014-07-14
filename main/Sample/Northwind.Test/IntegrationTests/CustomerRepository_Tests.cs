@@ -1,28 +1,33 @@
-﻿using System.Configuration;
+﻿#region
+
+using System.Configuration;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using Microsoft.SqlServer.Management.Common;
 using Microsoft.SqlServer.Management.Smo;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Data.SqlClient;
 using Northwind.Entities.Models;
 using Northwind.Repository.Models;
+using Northwind.Repository.Repositories;
 using Northwind.Service;
 using Repository.Pattern.DataContext;
 using Repository.Pattern.Ef6;
 using Repository.Pattern.Ef6.Factories;
 using Repository.Pattern.Repositories;
 using Repository.Pattern.UnitOfWork;
-using Northwind.Repository.Repositories;
 using Service.Pattern;
+
+#endregion
 
 namespace Northwind.Test.IntegrationTests
 {
     [TestClass]
     public class CustomerRepositoryTests
     {
-        readonly IRepositoryProvider _repositoryProvider = new RepositoryProvider(new RepositoryFactories());
-        readonly static string MasterConnectionString = ConfigurationManager.ConnectionStrings["MasterDbConnection"].ConnectionString;
+        private static readonly string MasterConnectionString = ConfigurationManager.ConnectionStrings["MasterDbConnection"].ConnectionString;
+        private readonly IRepositoryProvider _repositoryProvider = new RepositoryProvider(new RepositoryFactories());
+        public TestContext TestContext { get; set; }
 
         [TestInitialize]
         public void SettingUpNorthwindTestDatabase()
@@ -43,9 +48,9 @@ namespace Northwind.Test.IntegrationTests
         public void Cleanup()
         {
             //  kill any live transactions
-            var script1 = "ALTER DATABASE NorthwindTest SET READ_ONLY WITH ROLLBACK IMMEDIATE";
+            const string script1 = "ALTER DATABASE NorthwindTest SET READ_ONLY WITH ROLLBACK IMMEDIATE";
             //  drop the db and deletes the files on disk
-            var script2 = "DROP DATABASE NorthwindTest;"; 
+            const string script2 = "DROP DATABASE NorthwindTest;";
             RunSqlOnMaster(script1);
             RunSqlOnMaster(script2);
         }
@@ -82,11 +87,9 @@ namespace Northwind.Test.IntegrationTests
                 IRepositoryAsync<Customer> customerRepository = new Repository<Customer>(context, unitOfWork);
                 IService<Customer> customerService = new CustomerService(customerRepository);
                 var customer = customerService.Find("ALFKI");
-                TestContext.WriteLine("Customers found: {0}", customer.ContactName);                
+                TestContext.WriteLine("Customers found: {0}", customer.ContactName);
                 Assert.AreEqual(customer.ContactName, "Maria Anders");
             }
         }
-
-        public TestContext TestContext { get; set; }
     }
 }
