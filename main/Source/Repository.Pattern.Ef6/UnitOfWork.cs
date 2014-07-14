@@ -55,6 +55,16 @@ namespace Repository.Pattern.Ef6
         protected IRepositoryProvider RepositoryProvider { get; set; }
         public int SaveChanges() { return _dataContext.SaveChanges(); }
 
+        public dynamic GetCustomRepository(Type type)
+        {
+            return RepositoryProvider.GetCustomRepository(type);
+        }
+
+        public dynamic GetCustomRepository<T>()
+        {
+            return RepositoryProvider.GetCustomRepository<T>();
+        }
+
         public IRepository<TEntity> Repository<TEntity>() where TEntity : class, IObjectState
         {
             return RepositoryAsync<TEntity>();

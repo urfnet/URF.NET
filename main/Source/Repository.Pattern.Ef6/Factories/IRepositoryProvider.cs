@@ -18,6 +18,10 @@ namespace Repository.Pattern.Ef6.Factories
     /// </remarks>
     public interface IRepositoryProvider
     {
+        dynamic GetCustomRepository<T>();
+        dynamic GetCustomRepository(Type type);
+
+
         /// <summary>
         /// Get and set the <see cref="DbContext"/> with which to initialize a repository
         /// if one must be created.

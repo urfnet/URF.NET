@@ -29,6 +29,30 @@ namespace Repository.Pattern.Ef6.Factories
             Repositories = new Dictionary<Type, dynamic>();
         }
 
+        public dynamic GetCustomRepository<T>()
+        {
+            return GetFactory(typeof(T))(); // get factory and invoke it in 1 fell swoop
+        }
+
+        public dynamic GetCustomRepository(Type type)
+        {
+            return GetFactory(type)();  // get factory and invoke it in 1 fell swoop
+        }
+
+        private Func<dynamic> GetFactory(Type type)
+        {
+            if (type == null) throw new ArgumentNullException("type");
+
+            Func<dynamic> repository;
+
+            if (_repositoryFactories.CustomRepositoryFactories.TryGetValue(type, out repository))
+            {
+                return repository;
+            }
+
+            throw new NotSupportedException(string.Format("There is no custom repository for the type {0}", type));            
+        }
+
         /// <summary>
         /// Get and set the <see cref="DataContext"/> with which to initialize a repository if one must be created.
         /// </summary>
