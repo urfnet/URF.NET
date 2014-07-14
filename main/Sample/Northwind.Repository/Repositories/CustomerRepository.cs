@@ -10,8 +10,7 @@ namespace Northwind.Repository.Repositories
     // Exmaple: How to add custom methods to a repository.
     public static class CustomerRepository
     {
-        public static decimal GetCustomerOrderTotalByYear(this IRepository<Customer> repository, string customerId,
-            int year)
+        public static decimal GetCustomerOrderTotalByYear(this IRepository<Customer> repository, string customerId, int year)
         {
             return repository
                 .Queryable()
@@ -22,8 +21,7 @@ namespace Northwind.Repository.Repositories
                 .Sum();
         }
 
-        public static IEnumerable<Customer> CustomersByCompany(this IRepositoryAsync<Customer> repository,
-            string companyName)
+        public static IEnumerable<Customer> CustomersByCompany(this IRepositoryAsync<Customer> repository, string companyName)
         {
             return repository
                 .Queryable()
