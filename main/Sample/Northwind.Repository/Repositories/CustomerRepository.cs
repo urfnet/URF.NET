@@ -16,7 +16,7 @@ namespace Northwind.Repository.Repositories
             return repository
                 .Queryable()
                 .Where(c => c.CustomerID == customerId)
-                .SelectMany(c => c.Orders.Where(o => o.OrderDate != null && o.OrderDate.Value.Year == 1998))
+                .SelectMany(c => c.Orders.Where(o => o.OrderDate != null && o.OrderDate.Value.Year == year))
                 .SelectMany(c => c.OrderDetails)
                 .Select(c => c.Quantity*c.UnitPrice)
                 .Sum();
