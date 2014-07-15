@@ -29,6 +29,7 @@ namespace Northwind.Test.IntegrationTests
     {
         private static readonly string MasterConnectionString = ConfigurationManager.ConnectionStrings["MasterDbConnection"].ConnectionString;
         private readonly IRepositoryProvider _repositoryProvider = new RepositoryProvider(new RepositoryFactories());
+
         public TestContext TestContext { get; set; }
 
         [TestInitialize]
@@ -97,7 +98,7 @@ namespace Northwind.Test.IntegrationTests
                 unitOfWork.SaveChanges();
             }
 
-            //  Query for newly created customer by ID from a new context, to ensure it's pulling from cache
+            //  Query for newly created customer by ID from a new context, to ensure it's not pulling from cache
             using (IDataContextAsync context = new NorthwindContext())
             using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context, _repositoryProvider))
             {
@@ -145,7 +146,7 @@ namespace Northwind.Test.IntegrationTests
                 unitOfWork.SaveChanges();
             }
 
-            //  Query for newly created customer by ID from a new context, to ensure it's pulling from cache
+            //  Query for newly created customer by ID from a new context, to ensure it's not pulling from cache
             using (IDataContextAsync context = new NorthwindContext())
             using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context, _repositoryProvider))
             {
