@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.IO;
@@ -14,6 +15,7 @@ using Northwind.Service;
 using Repository.Pattern.DataContext;
 using Repository.Pattern.Ef6;
 using Repository.Pattern.Ef6.Factories;
+using Repository.Pattern.Infrastructure;
 using Repository.Pattern.Repositories;
 using Repository.Pattern.UnitOfWork;
 using Service.Pattern;
@@ -64,6 +66,99 @@ namespace Northwind.Test.IntegrationTests
             {
                 var server = new Server(new ServerConnection(connection));
                 server.ConnectionContext.ExecuteNonQuery(script);
+            }
+        }
+
+        [TestMethod]
+        public void CreateCustomerTest()
+        {
+            // Create new customer
+            using (IDataContextAsync context = new NorthwindContext())
+            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context, _repositoryProvider))
+            {
+                IRepositoryAsync<Customer> customerRepository = new Repository<Customer>(context, unitOfWork);
+
+                var customer = new Customer
+                {
+                    CustomerID = "LLE37",
+                    CompanyName = "CBRE",
+                    ContactName = "Long Le",
+                    ContactTitle = "App/Dev Architect",
+                    Address = "11111 Sky Ranch",
+                    City = "Dallas",
+                    PostalCode = "75042",
+                    Country = "USA",
+                    Phone ="(222) 222-2222",
+                    Fax = "(333) 333-3333",
+                    ObjectState = ObjectState.Added,
+                };
+
+                customerRepository.Insert(customer);
+                unitOfWork.SaveChanges();
+            }
+
+            //  Query for newly created customer by ID from a new context, to ensure it's pulling from cache
+            using (IDataContextAsync context = new NorthwindContext())
+            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context, _repositoryProvider))
+            {
+                IRepositoryAsync<Customer> customerRepository = new Repository<Customer>(context, unitOfWork);
+                var customer = customerRepository.Find("LLE37");
+                Assert.AreEqual(customer.CustomerID, "LLE37"); 
+            }
+        }
+
+        [TestMethod]
+        public void CreateCustomerGraphTest()
+        {
+            // Create new customer
+            using (IDataContextAsync context = new NorthwindContext())
+            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context, _repositoryProvider))
+            {
+                IRepositoryAsync<Customer> customerRepository = new Repository<Customer>(context, unitOfWork);
+
+                var customer = new Customer
+                {
+                    CustomerID = "LLE38",
+                    CompanyName = "CBRE",
+                    ContactName = "Long Le",
+                    ContactTitle = "App/Dev Architect",
+                    Address = "11111 Sky Ranch",
+                    City = "Dallas",
+                    PostalCode = "75042",
+                    Country = "USA",
+                    Phone = "(222) 222-2222",
+                    Fax = "(333) 333-3333",
+                    ObjectState = ObjectState.Added,
+                    Orders = new[]
+                    {
+                        new Order()
+                        {
+                            CustomerID = "LLE38",
+                            EmployeeID = 1,
+                            OrderDate = DateTime.Now,
+                            ObjectState = ObjectState.Added
+                        }, 
+                    }
+                };
+
+                customerRepository.InsertGraph(customer);
+                unitOfWork.SaveChanges();
+            }
+
+            //  Query for newly created customer by ID from a new context, to ensure it's pulling from cache
+            using (IDataContextAsync context = new NorthwindContext())
+            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context, _repositoryProvider))
+            {
+                IRepositoryAsync<Customer> customerRepository = new Repository<Customer>(context, unitOfWork);
+                
+                var customer = customerRepository
+                    .Query(x => x.CustomerID == "LLE38")
+                    .Include(x => x.Orders)
+                    .Select()
+                    .SingleOrDefault();
+
+                Assert.AreEqual(customer.CustomerID, "LLE38");
+                Assert.IsTrue(customer.Orders.Any());
             }
         }
 

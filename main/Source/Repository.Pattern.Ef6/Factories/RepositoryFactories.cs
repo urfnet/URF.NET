@@ -35,6 +35,7 @@ namespace Repository.Pattern.Ef6.Factories
         {
             return new Dictionary<Type, Func<IDataContextAsync, IUnitOfWorkAsync, dynamic>>
             {
+                // DO NOT USE, THIS FEATURE, NOT COMPLETE
                 //{typeof(IArticleRepository), dbContext => new ArticleRepository(dbContext)},
                 //{typeof(IUrlRepository), dbContext => new UrlRepository(dbContext)},
             };
