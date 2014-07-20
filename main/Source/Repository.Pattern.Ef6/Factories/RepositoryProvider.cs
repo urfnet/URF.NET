@@ -29,10 +29,34 @@ namespace Repository.Pattern.Ef6.Factories
             Repositories = new Dictionary<Type, dynamic>();
         }
 
+        public dynamic GetCustomRepository<T>()
+        {
+            return GetFactory(typeof(T))(); // get factory and invoke it in 1 fell swoop
+        }
+
+        public dynamic GetCustomRepository(Type type)
+        {
+            return GetFactory(type)();  // get factory and invoke it in 1 fell swoop
+        }
+
+        private Func<dynamic> GetFactory(Type type)
+        {
+            if (type == null) throw new ArgumentNullException("type");
+
+            Func<dynamic> repository;
+
+            if (_repositoryFactories.CustomRepositoryFactories.TryGetValue(type, out repository))
+            {
+                return repository;
+            }
+
+            throw new NotSupportedException(string.Format("There is no custom repository for the type {0}", type));            
+        }
+
         /// <summary>
-        /// Get and set the <see cref="Ef6.DataContext"/> with which to initialize a repository if one must be created.
+        /// Get and set the <see cref="DataContext"/> with which to initialize a repository if one must be created.
         /// </summary>
-        public IDataContextAsync DataContext { get; set; }
+        public IDataContextAsync DbContext { get; set; }
         public IUnitOfWorkAsync UnitOfWork { get; set; }
 
         /// <summary>
@@ -43,7 +67,7 @@ namespace Repository.Pattern.Ef6.Factories
         /// <p>This is an extension point. You can register fully made repositories here
         /// and they will be used instead of the ones this provider would otherwise create.</p>
         /// </remarks>
-        protected Dictionary<Type, object> Repositories { get; private set; }
+        protected Dictionary<Type, dynamic> Repositories { get; private set; }
 
         /// <summary>
         /// Get or create-and-cache the default <see cref="IRepository{T}"/> for an entity of type T.
@@ -86,16 +110,16 @@ namespace Repository.Pattern.Ef6.Factories
             }
 
             // Not found or null; make one, add to dictionary cache, and return it.
-            return MakeRepository<T>(factory, DataContext, UnitOfWork);
+            return MakeRepository<T>(factory, DbContext, UnitOfWork);
         }
 
         /// <summary>Make a repository of type T.</summary>
         /// <typeparam name="T">Type of repository to make.</typeparam>
         /// <param name="dbContext">
-        /// The <see cref="Ef6.DataContext"/> with which to initialize the repository.
+        /// The <see cref="DataContext"/> with which to initialize the repository.
         /// </param>        
         /// <param name="factory">
-        /// Factory with <see cref="Ef6.DataContext"/> argument. Used to make the repository.
+        /// Factory with <see cref="DataContext"/> argument. Used to make the repository.
         /// If null, gets factory from <see cref="_repositoryFactories"/>.
         /// </param>
         /// <param name="unitOfWorkAsync">

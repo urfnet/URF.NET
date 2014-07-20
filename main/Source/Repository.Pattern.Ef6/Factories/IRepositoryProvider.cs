@@ -18,6 +18,10 @@ namespace Repository.Pattern.Ef6.Factories
     /// </remarks>
     public interface IRepositoryProvider
     {
+        dynamic GetCustomRepository<T>();
+        dynamic GetCustomRepository(Type type);
+
+
         /// <summary>
         /// Get and set the <see cref="DataContext"/> with which to initialize a repository
         /// if one must be created.
@@ -49,7 +53,7 @@ namespace Repository.Pattern.Ef6.Factories
         /// If not found, tries to make one with the factory, fallingback to 
         /// a default factory if the factory parameter is null.
         /// </remarks>
-        T GetRepository<T>(Func<IDataContextAsync, IUnitOfWorkAsync, object> factory = null) where T : class;
+        T GetRepository<T>(Func<IDataContextAsync, IUnitOfWorkAsync, dynamic> factory = null) where T : class;
 
 
         /// <summary>
