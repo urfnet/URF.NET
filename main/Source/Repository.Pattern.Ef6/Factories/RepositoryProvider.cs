@@ -50,7 +50,7 @@ namespace Repository.Pattern.Ef6.Factories
         /// </summary>
         /// <typeparam name="T">
         /// Root entity type of the <see cref="IRepository{T}"/>.
-        /// </typeparam>
+        /// </typeparam> 
         /// <remarks>
         /// If can't find repository in cache, use a factory to create one.
         /// </remarks>
