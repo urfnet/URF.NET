@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading;
 using System.Threading.Tasks;
@@ -130,6 +131,31 @@ namespace Repository.Pattern.Ef6
                 ((IObjectState)dbEntityEntry.Entity).ObjectState = StateHelper.ConvertState(dbEntityEntry.State);
             }
         }
+
+        private void SyncObjectGraph(DbSet dbSet, object entity)
+        {
+            // Set tracking state for child collections
+            foreach (var prop in entity.GetType().GetProperties())
+            {
+                // Apply changes to 1-1 and M-1 properties
+                var trackableRef = prop.GetValue(entity, null) as IObjectState;
+                if (trackableRef != null && trackableRef.ObjectState == ObjectState.Added)
+                {
+                    dbSet.Attach(entity);
+                    SyncObjectState((IObjectState)entity);
+                }
+
+                // Apply changes to 1-M properties
+                var items = prop.GetValue(entity, null) as IList<IObjectState>;
+                if (items == null) continue;
+
+                foreach (var item in items)
+                {
+                    SyncObjectGraph(dbSet, item);
+                }
+            }
+        }
+
 
         protected override void Dispose(bool disposing)
         {
