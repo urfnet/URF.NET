@@ -24,21 +24,18 @@ namespace Repository.Pattern.Ef6.Factories
     /// </remarks>
     public class RepositoryFactories
     {
+        public Dictionary<Type, Func<dynamic>> CustomRepositoryFactories { get; set; }
+
         /// <summary>
         /// Return the runtime repository factory functions,
         /// each one is a factory for a repository of a particular type.
         /// </summary>
         /// <remarks>
-        /// **DO NOT MODIFY, THE FEATURE TO ADD CUSTOM REPOSITORIES IS NOT COMPLETE**
+        /// MODIFY THIS METHOD TO ADD CUSTOM FACTORY FUNCTIONS
         /// </remarks>
         private IDictionary<Type, Func<IDataContextAsync, IUnitOfWorkAsync, dynamic>> GetFactories()
         {
-            return new Dictionary<Type, Func<IDataContextAsync, IUnitOfWorkAsync, dynamic>>
-            {
-                // DO NOT USE, THIS FEATURE, NOT COMPLETE
-                //{typeof(IArticleRepository), dbContext => new ArticleRepository(dbContext)},
-                //{typeof(IUrlRepository), dbContext => new UrlRepository(dbContext)},
-            };
+            return new Dictionary<Type, Func<IDataContextAsync, IUnitOfWorkAsync, dynamic>>();
         }
 
         /// <summary>
@@ -47,6 +44,13 @@ namespace Repository.Pattern.Ef6.Factories
         public RepositoryFactories()
         {
             _repositoryFactories = GetFactories();
+            CustomRepositoryFactories = new Dictionary<Type, Func<dynamic>>();
+        }
+
+        public RepositoryFactories(Dictionary<Type, Func<dynamic>> customRepositoryFactories)
+        {
+            _repositoryFactories = GetFactories();
+            CustomRepositoryFactories = customRepositoryFactories;
         }
 
         /// <summary>
@@ -61,6 +65,7 @@ namespace Repository.Pattern.Ef6.Factories
         public RepositoryFactories(IDictionary<Type, Func<IDataContextAsync, IUnitOfWorkAsync, dynamic>> factories)
         {
             _repositoryFactories = factories;
+            CustomRepositoryFactories = new Dictionary<Type, Func<dynamic>>();
         }
 
         /// <summary>
@@ -74,6 +79,7 @@ namespace Repository.Pattern.Ef6.Factories
         /// </remarks>
         public Func<IDataContextAsync, IUnitOfWorkAsync, dynamic> GetRepositoryFactory<T>()
         {
+
             Func<IDataContextAsync, IUnitOfWorkAsync, dynamic> factory;
             _repositoryFactories.TryGetValue(typeof(T), out factory);
             return factory;

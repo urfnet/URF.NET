@@ -7,6 +7,8 @@ namespace Repository.Pattern.UnitOfWork
 {
     public interface IUnitOfWork : IDisposable
     {
+        dynamic GetCustomRepository<T>();
+        dynamic GetCustomRepository(Type type);
         int SaveChanges();
         void Dispose(bool disposing);
         IRepository<TEntity> Repository<TEntity>() where TEntity : class, IObjectState;

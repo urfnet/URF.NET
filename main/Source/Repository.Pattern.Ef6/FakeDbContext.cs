@@ -31,7 +31,7 @@ namespace Repository.Pattern.Ef6
         public int SaveChanges() { return default(int); }
 
         public void SyncObjectState<TEntity>(TEntity entity) where TEntity : class, IObjectState
-        {
+        { 
             // no implentation needed, unit tests which uses FakeDbContext since there is no actual database for unit tests, 
             // there is no actual DbContext to sync with, please look at the Integration Tests for test that will run against an actual database.
         }

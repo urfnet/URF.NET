@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -18,11 +19,12 @@ namespace Northwind.Test.Repository
     [TestClass]
     public class ProductRepositoryTest
     {
-        readonly IRepositoryProvider _repositoryProvider = new RepositoryProvider(new RepositoryFactories());
-
         [TestInitialize]
         public void TestInitialize()
         {
+            //todo: setup actual NorthwindFake.mdf
+            // copy ProductRepositoryTests.cs and run all tests against actual NorthwindContct instead of NorthwindFakeContext.cs
+            // run all testes with actual NorthwindTest.mdf (LocalDb) NOT the NorthwindFakeContext.cs
         }
 
         [TestCleanup]
@@ -36,9 +38,9 @@ namespace Northwind.Test.Repository
         public void DeleteProductById()
         {
             using (IDataContextAsync northwindFakeContext = new NorthwindFakeContext())
-            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(northwindFakeContext, _repositoryProvider))
+            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(northwindFakeContext, new RepositoryProvider(new RepositoryFactories())))
             {
-                unitOfWork.Repository<Product>().Insert(new Product { ProductID = 2, Discontinued = true, ObjectState = ObjectState.Added });
+                unitOfWork.Repository<Product>().Insert(new Product {ProductID = 2, Discontinued = true, ObjectState = ObjectState.Added});
 
                 unitOfWork.SaveChanges();
 
@@ -56,10 +58,10 @@ namespace Northwind.Test.Repository
         public void DeepLoadProductWithSupplier()
         {
             using (IDataContextAsync northwindFakeContext = new NorthwindFakeContext())
-            using (IUnitOfWork unitOfWork = new UnitOfWork(northwindFakeContext, _repositoryProvider))
+            using (IUnitOfWork unitOfWork = new UnitOfWork(northwindFakeContext, new RepositoryProvider(new RepositoryFactories())))
             {
-                unitOfWork.Repository<Supplier>().Insert(new Supplier { SupplierID = 1, CompanyName = "Nokia", City = "Tampere", Country = "Finland", ContactName = "Stephen Elop", ContactTitle = "CEO" });
-                unitOfWork.Repository<Product>().Insert(new Product { ProductID = 2, Discontinued = true, ProductName = "Nokia Lumia 1520", SupplierID = 1, ObjectState = ObjectState.Added });
+                unitOfWork.Repository<Supplier>().Insert(new Supplier {SupplierID = 1, CompanyName = "Nokia", City = "Tampere", Country = "Finland", ContactName = "Stephen Elop", ContactTitle = "CEO"});
+                unitOfWork.Repository<Product>().Insert(new Product {ProductID = 2, Discontinued = true, ProductName = "Nokia Lumia 1520", SupplierID = 1, ObjectState = ObjectState.Added});
 
                 unitOfWork.SaveChanges();
 
@@ -73,9 +75,9 @@ namespace Northwind.Test.Repository
         public void DeleteProductByProduct()
         {
             using (IDataContextAsync northwindFakeContext = new NorthwindFakeContext())
-            using (IUnitOfWork unitOfWork = new UnitOfWork(northwindFakeContext, _repositoryProvider))
+            using (IUnitOfWork unitOfWork = new UnitOfWork(northwindFakeContext, new RepositoryProvider(new RepositoryFactories())))
             {
-                unitOfWork.Repository<Product>().Insert(new Product { ProductID = 2, Discontinued = true, ObjectState = ObjectState.Added });
+                unitOfWork.Repository<Product>().Insert(new Product {ProductID = 2, Discontinued = true, ObjectState = ObjectState.Added});
 
                 unitOfWork.SaveChanges();
 
@@ -97,11 +99,11 @@ namespace Northwind.Test.Repository
         public void FindProductById()
         {
             using (IDataContextAsync northwindFakeContext = new NorthwindFakeContext())
-            using (IUnitOfWork unitOfWork = new UnitOfWork(northwindFakeContext, _repositoryProvider))
+            using (IUnitOfWork unitOfWork = new UnitOfWork(northwindFakeContext, new RepositoryProvider(new RepositoryFactories())))
             {
-                unitOfWork.Repository<Product>().Insert(new Product { ProductID = 1, Discontinued = false });
-                unitOfWork.Repository<Product>().Insert(new Product { ProductID = 2, Discontinued = true });
-                unitOfWork.Repository<Product>().Insert(new Product { ProductID = 3, Discontinued = true });
+                unitOfWork.Repository<Product>().Insert(new Product {ProductID = 1, Discontinued = false});
+                unitOfWork.Repository<Product>().Insert(new Product {ProductID = 2, Discontinued = true});
+                unitOfWork.Repository<Product>().Insert(new Product {ProductID = 3, Discontinued = true});
 
                 unitOfWork.SaveChanges();
 
@@ -116,10 +118,10 @@ namespace Northwind.Test.Repository
         public void GetProductsExecutesQuery()
         {
             using (IDataContextAsync context = new NorthwindFakeContext())
-            using (IUnitOfWork unitOfWork = new UnitOfWork(context, _repositoryProvider))
+            using (IUnitOfWork unitOfWork = new UnitOfWork(context, new RepositoryProvider(new RepositoryFactories())))
             {
                 var products = unitOfWork.Repository<Product>().Query().Select().ToList();
-                Assert.IsInstanceOfType(products, typeof(List<Product>));
+                Assert.IsInstanceOfType(products, typeof (List<Product>));
             }
         }
 
@@ -127,11 +129,11 @@ namespace Northwind.Test.Repository
         public void GetProductsThatHaveBeenDiscontinued()
         {
             using (IDataContextAsync northwindFakeContext = new NorthwindFakeContext())
-            using (IUnitOfWork unitOfWork = new UnitOfWork(northwindFakeContext, _repositoryProvider))
+            using (IUnitOfWork unitOfWork = new UnitOfWork(northwindFakeContext, new RepositoryProvider(new RepositoryFactories())))
             {
-                unitOfWork.Repository<Product>().Insert(new Product { ProductID = 1, Discontinued = false, ObjectState = ObjectState.Added });
-                unitOfWork.Repository<Product>().Insert(new Product { ProductID = 2, Discontinued = true, ObjectState = ObjectState.Added });
-                unitOfWork.Repository<Product>().Insert(new Product { ProductID = 3, Discontinued = true, ObjectState = ObjectState.Added });
+                unitOfWork.Repository<Product>().Insert(new Product {ProductID = 1, Discontinued = false, ObjectState = ObjectState.Added});
+                unitOfWork.Repository<Product>().Insert(new Product {ProductID = 2, Discontinued = true, ObjectState = ObjectState.Added});
+                unitOfWork.Repository<Product>().Insert(new Product {ProductID = 3, Discontinued = true, ObjectState = ObjectState.Added});
 
                 unitOfWork.SaveChanges();
 
@@ -145,11 +147,11 @@ namespace Northwind.Test.Repository
         public void InsertProduct()
         {
             using (IDataContextAsync northwindFakeContext = new NorthwindFakeContext())
-            using (IUnitOfWork unitOfWork = new UnitOfWork(northwindFakeContext, _repositoryProvider))
+            using (IUnitOfWork unitOfWork = new UnitOfWork(northwindFakeContext, new RepositoryProvider(new RepositoryFactories())))
             {
-                unitOfWork.Repository<Product>().Insert(new Product { ProductID = 1, Discontinued = false, ObjectState = ObjectState.Added });
-                unitOfWork.Repository<Product>().Insert(new Product { ProductID = 2, Discontinued = true, ObjectState = ObjectState.Added });
-                unitOfWork.Repository<Product>().Insert(new Product { ProductID = 3, Discontinued = true, ObjectState = ObjectState.Added });
+                unitOfWork.Repository<Product>().Insert(new Product {ProductID = 1, Discontinued = false, ObjectState = ObjectState.Added});
+                unitOfWork.Repository<Product>().Insert(new Product {ProductID = 2, Discontinued = true, ObjectState = ObjectState.Added});
+                unitOfWork.Repository<Product>().Insert(new Product {ProductID = 3, Discontinued = true, ObjectState = ObjectState.Added});
 
                 unitOfWork.SaveChanges();
 
@@ -164,7 +166,7 @@ namespace Northwind.Test.Repository
         public void InsertRangeOfProducts()
         {
             using (IDataContextAsync northwindFakeContext = new NorthwindFakeContext())
-            using (IUnitOfWork unitOfWork = new UnitOfWork(northwindFakeContext, _repositoryProvider))
+            using (IUnitOfWork unitOfWork = new UnitOfWork(northwindFakeContext, new RepositoryProvider(new RepositoryFactories())))
             {
                 var newProducts = new[]
                 {
@@ -185,9 +187,9 @@ namespace Northwind.Test.Repository
         public void UpdateProduct()
         {
             using (IDataContextAsync northwindFakeContext = new NorthwindFakeContext())
-            using (IUnitOfWork unitOfWork = new UnitOfWork(northwindFakeContext, _repositoryProvider))
+            using (IUnitOfWork unitOfWork = new UnitOfWork(northwindFakeContext, new RepositoryProvider(new RepositoryFactories())))
             {
-                unitOfWork.Repository<Product>().Insert(new Product { ProductID = 2, Discontinued = true });
+                unitOfWork.Repository<Product>().Insert(new Product {ProductID = 2, Discontinued = true});
 
                 unitOfWork.SaveChanges();
 
@@ -209,9 +211,9 @@ namespace Northwind.Test.Repository
         public async void FindProductKeyAsync()
         {
             using (IDataContextAsync northwindFakeContext = new NorthwindFakeContext())
-            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(northwindFakeContext, _repositoryProvider))
+            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(northwindFakeContext, new RepositoryProvider(new RepositoryFactories())))
             {
-                unitOfWork.Repository<Product>().Insert(new Product { ProductID = 2, Discontinued = true });
+                unitOfWork.Repository<Product>().Insert(new Product {ProductID = 2, Discontinued = true});
 
                 unitOfWork.SaveChanges();
 
@@ -220,5 +222,61 @@ namespace Northwind.Test.Repository
                 Assert.AreEqual(product.ProductID, 2);
             }
         }
+
+        [TestMethod]
+        public void GetCustomRepositoryReturnsCustomRepository()
+        {
+
+            //  Arrange
+            var customRepositoryFactories = new Dictionary<Type, Func<dynamic>> { { typeof(IAzureBlobRepository<Blob>), () => new MyCustomRepository<Blob>() } };
+            var repositoryFactories = new RepositoryFactories(customRepositoryFactories);
+            
+
+            using (IDataContextAsync northwindFakeContext = new NorthwindFakeContext())
+            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(northwindFakeContext, new RepositoryProvider(repositoryFactories)))
+            {
+                //  Act
+                var azureBlobRepository = unitOfWork.GetCustomRepository(typeof(IAzureBlobRepository<Blob>));
+
+                //  Assert                        
+                Assert.AreEqual(azureBlobRepository.SayHello(), "Hello all");
+            }            
+        }
+
+        [TestMethod]
+        public void GetCustomRepositoryGenericVersionReturnsCustomRepository()
+        {
+            //  Arrange
+            var customRepositoryFactories = new Dictionary<Type, Func<dynamic>> { { typeof(IAzureBlobRepository<Blob>), () => new MyCustomRepository<Blob>() } };
+            var repositoryFactories = new RepositoryFactories(customRepositoryFactories);
+
+            using (IDataContextAsync northwindFakeContext = new NorthwindFakeContext())
+            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(northwindFakeContext, new RepositoryProvider(repositoryFactories)))
+            {
+                //  Act
+                var azureBlobRepository = unitOfWork.GetCustomRepository<IAzureBlobRepository<Blob>>();
+
+                //  Assert                        
+                Assert.AreEqual(azureBlobRepository.SayHello(), "Hello all");
+            }            
+        }
+
+        class MyCustomRepository<T> : IAzureBlobRepository<T>
+        {
+            public string SayHello()
+            {
+                return "Hello all";
+            }
+        }
+
+        class Blob
+        {
+             
+        }
+    }
+
+    internal interface IAzureBlobRepository<T>
+    {
+        string SayHello();
     }
 }

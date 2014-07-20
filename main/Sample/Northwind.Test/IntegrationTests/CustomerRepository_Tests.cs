@@ -109,7 +109,7 @@ namespace Northwind.Test.IntegrationTests
         }
 
         [TestMethod]
-        public void CreateAndUpdateAndDeleteCustomerGraphTest()
+        public void CreateCustomerGraphTest()
         {
             // Create new customer
             using (IDataContextAsync context = new NorthwindContext())
@@ -117,7 +117,7 @@ namespace Northwind.Test.IntegrationTests
             {
                 IRepositoryAsync<Customer> customerRepository = new Repository<Customer>(context, unitOfWork);
 
-                var customerForInsertGraphTest = new Customer
+                var customer = new Customer
                 {
                     CustomerID = "LLE38",
                     CompanyName = "CBRE",
@@ -137,23 +137,14 @@ namespace Northwind.Test.IntegrationTests
                             CustomerID = "LLE38",
                             EmployeeID = 1,
                             OrderDate = DateTime.Now,
-                            ObjectState = ObjectState.Added,
-                        }, 
-                        new Order()
-                        {
-                            CustomerID = "LLE39",
-                            EmployeeID = 1,
-                            OrderDate = DateTime.Now,
                             ObjectState = ObjectState.Added
                         }, 
                     }
                 };
 
-                customerRepository.InsertOrUpdateGraph(customerForInsertGraphTest);
+                customerRepository.InsertGraph(customer);
                 unitOfWork.SaveChanges();
             }
-
-            Customer customerForUpdateDeleteGraphTest = null;
 
             //  Query for newly created customer by ID from a new context, to ensure it's not pulling from cache
             using (IDataContextAsync context = new NorthwindContext())
@@ -161,63 +152,14 @@ namespace Northwind.Test.IntegrationTests
             {
                 IRepositoryAsync<Customer> customerRepository = new Repository<Customer>(context, unitOfWork);
                 
-                 customerForUpdateDeleteGraphTest = customerRepository
+                var customer = customerRepository
                     .Query(x => x.CustomerID == "LLE38")
                     .Include(x => x.Orders)
                     .Select()
                     .SingleOrDefault();
 
-                // Testing that customer was created
-                Assert.AreEqual(customerForUpdateDeleteGraphTest.CustomerID, "LLE38");
-
-                // Testing that orders in customer graph were created
-                Assert.IsTrue(customerForUpdateDeleteGraphTest.Orders.Count == 2);
-
-                // Make changes to the object graph while in this context, will save these 
-                // changes in another context, testing managing states between and/or while disconnected
-                // from the orginal DataContext
-
-                // Updating the customer in the graph
-                customerForUpdateDeleteGraphTest.City = "Houston";
-                customerForUpdateDeleteGraphTest.ObjectState = ObjectState.Modified;
-
-                // Updating the order in the graph
-                var firstOrder = customerForUpdateDeleteGraphTest.Orders.Take(1).Single();
-                firstOrder.ShipCity = "Houston";
-                firstOrder.ObjectState = ObjectState.Modified;
-
-                // Deleting one of the orders from the graph
-                var secondOrder = customerForUpdateDeleteGraphTest.Orders.Skip(1).Take(1).Single();
-                secondOrder.ObjectState = ObjectState.Deleted;
-            }
-
-            //  Query for newly created customer by ID from a new context, to ensure it's not pulling from cache
-            using (IDataContextAsync context = new NorthwindContext())
-            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context, _repositoryProvider))
-            {
-                IRepositoryAsync<Customer> customerRepository = new Repository<Customer>(context, unitOfWork);
-
-                // Testing changes to graph while disconncted from it's orginal DataContext
-                // Saving changes while graph was previous DataContext that was already disposed
-                customerRepository.InsertOrUpdateGraph(customerForUpdateDeleteGraphTest);
-                unitOfWork.SaveChanges();
-
-                customerForUpdateDeleteGraphTest = customerRepository
-                    .Query(x => x.CustomerID == "LLE38")
-                    .Include(x => x.Orders)
-                    .Select()
-                    .SingleOrDefault();
-
-                Assert.AreEqual(customerForUpdateDeleteGraphTest.CustomerID, "LLE38");
-
-                // Testing for order(2) was deleted from the graph
-                Assert.IsTrue(customerForUpdateDeleteGraphTest.Orders.Count == 1);
-
-                // Testing that customer was updated in the graph
-                Assert.IsTrue(customerForUpdateDeleteGraphTest.City == "Houston");
-
-                // Testing that order was updated in the graph.
-                Assert.IsTrue(customerForUpdateDeleteGraphTest.Orders.ToArray()[0].ShipCity == "Houston");
+                Assert.AreEqual(customer.CustomerID, "LLE38");
+                Assert.IsTrue(customer.Orders.Any());
             }
         }
 
