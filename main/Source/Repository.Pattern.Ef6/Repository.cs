@@ -1,4 +1,7 @@
-﻿using System;
+﻿#region
+
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -12,14 +15,18 @@ using Repository.Pattern.Infrastructure;
 using Repository.Pattern.Repositories;
 using Repository.Pattern.UnitOfWork;
 
+#endregion
+
 namespace Repository.Pattern.Ef6
 {
     public class Repository<TEntity> : IRepositoryAsync<TEntity> where TEntity : class, IObjectState
     {
         #region Private Fields
+
         private readonly IDataContextAsync _context;
         private readonly DbSet<TEntity> _dbSet;
         private readonly IUnitOfWorkAsync _unitOfWork;
+
         #endregion Private Fields
 
         public Repository(IDataContextAsync context, IUnitOfWorkAsync unitOfWork)
@@ -45,9 +52,15 @@ namespace Repository.Pattern.Ef6
             }
         }
 
-        public virtual TEntity Find(params object[] keyValues) { return _dbSet.Find(keyValues); }
+        public virtual TEntity Find(params object[] keyValues)
+        {
+            return _dbSet.Find(keyValues);
+        }
 
-        public virtual IQueryable<TEntity> SelectQuery(string query, params object[] parameters) { return _dbSet.SqlQuery(query, parameters).AsQueryable(); }
+        public virtual IQueryable<TEntity> SelectQuery(string query, params object[] parameters)
+        {
+            return _dbSet.SqlQuery(query, parameters).AsQueryable();
+        }
 
         public virtual void Insert(TEntity entity)
         {
@@ -64,9 +77,16 @@ namespace Repository.Pattern.Ef6
             }
         }
 
-        public virtual void InsertGraph(TEntity entity) { _dbSet.Add(entity); }
+        public virtual void InsertOrUpdateGraph(TEntity entity)
+        {
+            SyncObjectGraph(entity);
+            _dbSet.Add(entity);
+        }
 
-        public virtual void InsertGraphRange(IEnumerable<TEntity> entities) { _dbSet.AddRange(entities); }
+        public virtual void InsertGraphRange(IEnumerable<TEntity> entities)
+        {
+            _dbSet.AddRange(entities);
+        }
 
         public virtual void Update(TEntity entity)
         {
@@ -88,22 +108,50 @@ namespace Repository.Pattern.Ef6
             _context.SyncObjectState(entity);
         }
 
-        public IQueryFluent<TEntity> Query() { return new QueryFluent<TEntity>(this); }
+        public IQueryFluent<TEntity> Query()
+        {
+            return new QueryFluent<TEntity>(this);
+        }
 
-        public virtual IQueryFluent<TEntity> Query(IQueryObject<TEntity> queryObject) { return new QueryFluent<TEntity>(this, queryObject); }
+        public virtual IQueryFluent<TEntity> Query(IQueryObject<TEntity> queryObject)
+        {
+            return new QueryFluent<TEntity>(this, queryObject);
+        }
 
-        public virtual IQueryFluent<TEntity> Query(Expression<Func<TEntity, bool>> query) { return new QueryFluent<TEntity>(this, query); }
-        public IQueryable Queryable(ODataQueryOptions<TEntity> oDataQueryOptions) { return oDataQueryOptions.ApplyTo(_dbSet); }
+        public virtual IQueryFluent<TEntity> Query(Expression<Func<TEntity, bool>> query)
+        {
+            return new QueryFluent<TEntity>(this, query);
+        }
 
-        public IQueryable<TEntity> Queryable() { return _dbSet; }
+        public IQueryable Queryable(ODataQueryOptions<TEntity> oDataQueryOptions)
+        {
+            return oDataQueryOptions.ApplyTo(_dbSet);
+        }
 
-        public IRepository<T> GetRepository<T>() where T : class, IObjectState { return _unitOfWork.Repository<T>(); }
+        public IQueryable<TEntity> Queryable()
+        {
+            return _dbSet;
+        }
 
-        public virtual async Task<TEntity> FindAsync(params object[] keyValues) { return await _dbSet.FindAsync(keyValues); }
+        public IRepository<T> GetRepository<T>() where T : class, IObjectState
+        {
+            return _unitOfWork.Repository<T>();
+        }
 
-        public virtual async Task<TEntity> FindAsync(CancellationToken cancellationToken, params object[] keyValues) { return await _dbSet.FindAsync(cancellationToken, keyValues); }
+        public virtual async Task<TEntity> FindAsync(params object[] keyValues)
+        {
+            return await _dbSet.FindAsync(keyValues);
+        }
 
-        public virtual async Task<bool> DeleteAsync(params object[] keyValues) { return await DeleteAsync(CancellationToken.None, keyValues); }
+        public virtual async Task<TEntity> FindAsync(CancellationToken cancellationToken, params object[] keyValues)
+        {
+            return await _dbSet.FindAsync(cancellationToken, keyValues);
+        }
+
+        public virtual async Task<bool> DeleteAsync(params object[] keyValues)
+        {
+            return await DeleteAsync(CancellationToken.None, keyValues);
+        }
 
         public virtual async Task<bool> DeleteAsync(CancellationToken cancellationToken, params object[] keyValues)
         {
@@ -143,7 +191,7 @@ namespace Repository.Pattern.Ef6
             }
             if (page != null && pageSize != null)
             {
-                query = query.Skip((page.Value - 1) * pageSize.Value).Take(pageSize.Value);
+                query = query.Skip((page.Value - 1)*pageSize.Value).Take(pageSize.Value);
             }
             return query;
         }
@@ -158,5 +206,28 @@ namespace Repository.Pattern.Ef6
             //See: Best Practices in Asynchronous Programming http://msdn.microsoft.com/en-us/magazine/jj991977.aspx
             return await Task.Run(() => Select(query, orderBy, includes, page, pageSize).AsEnumerable()).ConfigureAwait(false);
         }
+
+        private void SyncObjectGraph(object entity)
+        {
+            // Set tracking state for child collections
+            foreach (var prop in entity.GetType().GetProperties())
+            {
+                // Apply changes to 1-1 and M-1 properties
+                var trackableRef = prop.GetValue(entity, null) as IObjectState;
+                if (trackableRef != null && trackableRef.ObjectState == ObjectState.Added)
+                {
+                    _dbSet.Attach((TEntity)entity);
+                    _context.SyncObjectState((IObjectState)entity);
+                }
+
+                // Apply changes to 1-M properties
+                var items = prop.GetValue(entity, null) as IList<IObjectState>;
+                if (items == null) continue;
+
+                foreach (var item in items)
+                    SyncObjectGraph(item);
+            }
+        }
+
     }
 }
