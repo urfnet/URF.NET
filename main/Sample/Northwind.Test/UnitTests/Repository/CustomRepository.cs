@@ -22,10 +22,6 @@ namespace Northwind.Test.UnitTests.Repository
             var customRepositoryFactories = new Dictionary<Type, Func<dynamic>> {{typeof (IAzureBlobRepository<Blob>), () => new MyCustomRepository<Blob>()}};
             var repositoryFactories = new RepositoryFactories(customRepositoryFactories);
 
-            // Commenting out using block for IDataContext, IUnitOfWorkAsync, want to drive the point that we can 
-            // use the framework beyond  for any repositories, even ones that are ignorant of EF, DbContext, etc.
-            //using (IDataContextAsync northwindFakeContext = new NorthwindFakeContext())
-            //using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(northwindFakeContext, new RepositoryProvider(repositoryFactories)))
             using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(null, new RepositoryProvider(repositoryFactories)))
             {
                 //  Act
@@ -44,10 +40,6 @@ namespace Northwind.Test.UnitTests.Repository
             var customRepositoryFactories = new Dictionary<Type, Func<dynamic>> {{typeof (IAzureBlobRepository<Blob>), () => new MyCustomRepository<Blob>()}};
             var repositoryFactories = new RepositoryFactories(customRepositoryFactories);
 
-            // Commenting out using block for IDataContext, IUnitOfWorkAsync, want to drive the point that we can 
-            // use the framework beyond  for any repositories, even ones that are ignorant of EF, DbContext, etc.
-            //using (IDataContextAsync northwindFakeContext = new NorthwindFakeContext())
-            //using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(northwindFakeContext, new RepositoryProvider(repositoryFactories)))
             using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(null, new RepositoryProvider(repositoryFactories)))
             {
                 //  Act
