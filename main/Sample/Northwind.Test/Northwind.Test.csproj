@@ -51,6 +51,7 @@
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Build.Framework" />
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Assemblies\Microsoft.SqlServer.ConnectionInfo.dll</HintPath>
@@ -87,6 +88,7 @@
     <Compile Include="UnitTests\Fake\NorthwindFakeDbSets.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTests\Repository\ProductRepositoryTest.cs" />
+    <Compile Include="UnitTests\Repository\CustomRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Source\Service.Pattern\Service.Pattern.csproj">

@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Data;
 using System.Data.Common;
 using System.Data.Entity.Core.Objects;
@@ -10,6 +12,8 @@ using Repository.Pattern.Ef6.Factories;
 using Repository.Pattern.Infrastructure;
 using Repository.Pattern.Repositories;
 using Repository.Pattern.UnitOfWork;
+
+#endregion
 
 namespace Repository.Pattern.Ef6
 {
@@ -49,8 +53,6 @@ namespace Repository.Pattern.Ef6
                 // free other managed objects that implement
                 // IDisposable only
 
-                // closing connection  before calling _dataContext.Dispose();
-
                 try
                 {
                     if (_objectContext != null && _objectContext.Connection.State == ConnectionState.Open)
@@ -63,8 +65,11 @@ namespace Repository.Pattern.Ef6
                     // do nothing, the objectContext has already been disposed
                 }
 
-                _dataContext.Dispose();
-                _dataContext = null;
+                if (_dataContext != null)
+                {
+                    _dataContext.Dispose();
+                    _dataContext = null;
+                }
             }
 
             // release any unmanaged objects
@@ -81,6 +86,7 @@ namespace Repository.Pattern.Ef6
         {
             return _dataContext.SaveChanges();
         }
+
 
         public IRepository<TEntity> Repository<TEntity>() where TEntity : class, IObjectState
         {
@@ -100,6 +106,16 @@ namespace Repository.Pattern.Ef6
         public IRepositoryAsync<TEntity> RepositoryAsync<TEntity>() where TEntity : class, IObjectState
         {
             return RepositoryProvider.GetRepositoryForEntityType<TEntity>();
+        }
+
+        public dynamic GetCustomRepository(Type type)
+        {
+            return RepositoryProvider.GetCustomRepository(type);
+        }
+
+        public dynamic GetCustomRepository<T>()
+        {
+            return RepositoryProvider.GetCustomRepository<T>();
         }
 
         #region Unit of Work Transactions
