@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{94E81D48-74B2-42EB-B389-F25C8C23F9C4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Northwind.Entities</RootNamespace>
+    <AssemblyName>Northwind.Entities</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\AlphabeticalListOfProduct.cs" />
+    <Compile Include="Models\Alphabetical_list_of_product.cs" />
+    <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\CurrentProductList.cs" />
+    <Compile Include="Models\Current_Product_List.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\CustomerAndSuppliersByCity.cs" />
+    <Compile Include="Models\CustomerDemographic.cs" />
+    <Compile Include="Models\Customer_and_Suppliers_by_City.cs" />
+    <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\Mapping\AlphabeticalListOfProductMap.cs" />
+    <Compile Include="Models\Mapping\Alphabetical_list_of_productMap.cs" />
+    <Compile Include="Models\Mapping\CategoryMap.cs" />
+    <Compile Include="Models\Mapping\CurrentProductListMap.cs" />
+    <Compile Include="Models\Mapping\Current_Product_ListMap.cs" />
+    <Compile Include="Models\Mapping\CustomerAndSuppliersByCityMap.cs" />
+    <Compile Include="Models\Mapping\CustomerDemographicMap.cs" />
+    <Compile Include="Models\Mapping\CustomerMap.cs" />
+    <Compile Include="Models\Mapping\Customer_and_Suppliers_by_CityMap.cs" />
+    <Compile Include="Models\Mapping\EmployeeMap.cs" />
+    <Compile Include="Models\Mapping\OrderDetailMap.cs" />
+    <Compile Include="Models\Mapping\OrderDetailsExtendedMap.cs" />
+    <Compile Include="Models\Mapping\OrderMap.cs" />
+    <Compile Include="Models\Mapping\OrdersQryMap.cs" />
+    <Compile Include="Models\Mapping\OrderSubtotalMap.cs" />
+    <Compile Include="Models\Mapping\Orders_QryMap.cs" />
+    <Compile Include="Models\Mapping\ProductMap.cs" />
+    <Compile Include="Models\Mapping\ProductsAboveAveragePriceMap.cs" />
+    <Compile Include="Models\Mapping\ProductSalesFor1997Map.cs" />
+    <Compile Include="Models\Mapping\ProductsByCategoryMap.cs" />
+    <Compile Include="Models\Mapping\Products_Above_Average_PriceMap.cs" />
+    <Compile Include="Models\Mapping\Products_by_CategoryMap.cs" />
+    <Compile Include="Models\Mapping\RegionMap.cs" />
+    <Compile Include="Models\Mapping\SalesTotalsByAmountMap.cs" />
+    <Compile Include="Models\Mapping\ShipperMap.cs" />
+    <Compile Include="Models\Mapping\SummaryOfSalesByQuarterMap.cs" />
+    <Compile Include="Models\Mapping\SummaryOfSalesByYearMap.cs" />
+    <Compile Include="Models\Mapping\SupplierMap.cs" />
+    <Compile Include="Models\Mapping\sysdiagramMap.cs" />
+    <Compile Include="Models\Mapping\TerritoryMap.cs" />
+    <Compile Include="Models\NorthwindContext.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderDetail.cs" />
+    <Compile Include="Models\OrderDetailsExtended.cs" />
+    <Compile Include="Models\OrdersQry.cs" />
+    <Compile Include="Models\OrderSubtotal.cs" />
+    <Compile Include="Models\Orders_Qry.cs" />
+    <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\ProductsAboveAveragePrice.cs" />
+    <Compile Include="Models\ProductSalesFor1997.cs" />
+    <Compile Include="Models\ProductsByCategory.cs" />
+    <Compile Include="Models\Products_Above_Average_Price.cs" />
+    <Compile Include="Models\Products_by_Category.cs" />
+    <Compile Include="Models\Region.cs" />
+    <Compile Include="Models\SalesTotalsByAmount.cs" />
+    <Compile Include="Models\Shipper.cs" />
+    <Compile Include="Models\SummaryOfSalesByQuarter.cs" />
+    <Compile Include="Models\SummaryOfSalesByYear.cs" />
+    <Compile Include="Models\Supplier.cs" />
+    <Compile Include="Models\sysdiagram.cs" />
+    <Compile Include="Models\Territory.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StoredProcedures\INorthwindStoredProcedures.cs" />
+    <Compile Include="StoredProcedures\Models\CustomerOrderHistory.cs" />
+    <Compile Include="StoredProcedures\Models\CustomerOrderDetail.cs" />
+    <Compile Include="StoredProcedures\NorthwindContext.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Source\Repository.Pattern.Ef6\Repository.Pattern.Ef6.csproj">
+      <Project>{F68A1D19-93FB-47C1-A22B-42BEA3E4FD8C}</Project>
+      <Name>Repository.Pattern.Ef6</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Repository.Pattern\Repository.Pattern.csproj">
+      <Project>{6E682A14-C872-4813-B620-76E108DEA683}</Project>
+      <Name>Repository.Pattern</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

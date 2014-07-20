@@ -1,0 +1,17 @@
+﻿body { padding-top: 50px; padding-bottom: 20px; }
+
+/* Set padding to keep content from hitting the edges */
+.body-content { padding-left: 15px; padding-right: 15px; position: relative; }
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea { max-width: 280px; }
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak { display: none !important; }
+
+.ng-enter, .ng-leave { -webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) .5s; transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) .5s; display: block; width: 1170px; padding-left: 15px; padding-right: 15px; position: absolute; left: 0; right: 0; }
+.ng-enter { left: 100%; }
+    .ng-enter.ng-enter-active { left: 0; }
+
+.ng-leave.ng-leave-active { left: -200%; }

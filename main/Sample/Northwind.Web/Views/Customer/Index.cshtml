@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<div>
+    <h2 ng-cloak>{{title}}</h2>
+    <div>
+        <div class="demo-section">
+            <div class="k-content" style="width: 100%">
+                <div kendo-grid="grid"
+                     k-sortable="true"
+                     k-pageable="true"
+                     k-filterable="true"
+                     k-editable="'inline'"
+                     k-selectable="true"
+                     k-toolbar='[ { template: toolbarTemplate } ]'
+                     k-columns='[
+                        { field: "CustomerID", title: "ID", width: "75px" },
+                        { field: "CompanyName", title: "Company"},
+                        { field: "ContactName", title: "Contact" },
+                        { field: "ContactTitle", title: "Title" },
+                        { field: "Address" },
+                        { field: "City" },
+                        { field: "PostalCode" },
+                        { field: "Country" },
+                        { field: "Phone" },
+                        { field: "Fax" }]'
+                     k-data-source="dataSource"
+                     k-on-data-bound="onDataBound(kendoEvent)"
+                     k-on-change="onChange(kendoEvent)">
+                </div>
+                <style scoped>
+                    .toolbar { padding: 15px; float: right; }
+                </style>
+            </div>
+        </div>
+
+        <script type="text/x-kendo-template" id="toolbar">
+            <div>
+                <div class="toolbar">
+                    <button kendo-button ng-click="edit(this)"><span class="k-icon k-i-tick"></span>Edit</button>
+                    <button kendo-button ng-click="destroy(this)"><span class="k-icon k-i-tick"></span>Delete</button>
+                    <button kendo-button ng-click="details(this)"><span class="k-icon k-i-tick"></span>Edit Details</button>
+                </div>
+                <div class="toolbar" style="display:none">
+                    <button kendo-button ng-click="save(this)"><span class="k-icon k-i-tick"></span>Save</button>
+                    <button kendo-button ng-click="cancel(this)"><span class="k-icon k-i-tick"></span>Cancel</button>
+                </div>
+            </div>
+        </script>
+    </div>
+</div>

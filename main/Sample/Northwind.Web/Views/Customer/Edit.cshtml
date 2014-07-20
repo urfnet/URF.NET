@@ -1,0 +1,79 @@
+﻿@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="demo-section">
+    <div class="k-block" style="padding: 20px">
+        <div class="k-block k-info-colored">
+            <strong>Note: </strong>Please fill out all of the fields in this form.
+        </div>
+        <div>
+            <dl>
+                <dt>
+                    <label for="companyName">Company Name:</label>
+                </dt>
+                <dd>
+                    <input id="companyName" type="text" ng-model="customer.CompanyName" class="k-textbox" />
+                </dd>
+                <dt>
+                    <label for="contactName">Contact:</label>
+                </dt>
+                <dd>
+                    <input id="contactName" type="text" ng-model="customer.ContactName" class="k-textbox" />
+                </dd>
+                <dt>
+                    <label for="title">Title:</label>
+                </dt>
+                <dd>
+                    <input id="title" type="text" ng-model="customer.ContactTitle" class="k-textbox" />
+                </dd>
+                <dt>
+                    <label for="address">Address:</label>
+                </dt>
+                <dd>
+                    <input id="address" type="text" ng-model="customer.Address" class="k-textbox" />
+                </dd>
+                <dt>
+                    <label for="city">City:</label>
+                </dt>
+                <dd>
+                    <input id="city" type="text" ng-model="customer.City" class="k-textbox" />
+                </dd>
+                <dt>
+                    <label for="zip">Zip:</label>
+                </dt>
+                <dd>
+                    <input id="zip" type="text" ng-model="customer.PostalCode" class="k-textbox" />
+                </dd>
+                <dt>
+                    <label for="country">Country:</label>
+                </dt>
+                <dd>
+                    <input id="country" type="text" ng-model="customer.Country" class="k-textbox" />
+                </dd>
+                <dt>
+                    <label for="phone">Phone:</label>
+                </dt>
+                <dd>
+                    <input id="phone" type="text" ng-model="customer.Phone" class="k-textbox" />
+                </dd>
+                <dt>
+                    <label for="fax">Fax:</label>
+                </dt>
+                <dd>
+                    <input id="fax" type="text" ng-model="customer.Fax" class="k-textbox" />
+                </dd>
+            </dl>
+
+            <button kendo-button ng-click="save()" data-sprite-css-class="k-icon k-i-tick">Save</button>
+            <button kendo-button ng-click="cancel()">Cancel</button>
+
+            <style scoped>
+                dd { margin: 0px 0px 20px 0px; width: 100%; }
+                label { font-size: small; font-weight: normal; }
+                .k-textbox { width: 100%; }
+                .k-info-colored { margin: 10px; padding: 10px; }
+            </style>
+        </div>
+    </div>
+</div>
