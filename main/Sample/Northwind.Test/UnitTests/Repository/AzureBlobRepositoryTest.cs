@@ -93,17 +93,25 @@ namespace Northwind.Test.UnitTests.Repository
                 }
             };
 
-            var provider = new RepositoryProvider(new RepositoryFactories(factories));
-            IRepositoryProvider repositoryProvider = provider;
+            IRepositoryProvider repositoryProvider = 
+                new RepositoryProvider(new RepositoryFactories(factories));
 
             using (IDataContextAsync context = new NorthwindFakeContext())
             using (IUnitOfWorkAsync uow = new UnitOfWork(context, repositoryProvider))
             {
-                IRepositoryAsync<Product> productRepository = new Repository<Product>(context, uow);
+                IRepositoryAsync<Product> productRepository = 
+                    new Repository<Product>(context, uow);
 
-                var blobRepository = productRepository.GetCustomRepository<IAzureBlobRepository<MyBlob>>();
+                // Retrieving custom repository from UnitOfWork instance
+                var blobRepository1 = 
+                    uow.GetCustomRepository<IAzureBlobRepository<MyBlob>>();
 
-                Assert.AreEqual(blobRepository.SayHello(), "Hello World!");
+                // Retrieving custom repository from another repository
+                var blobRepository2 = 
+                    productRepository.GetCustomRepository<IAzureBlobRepository<MyBlob>>();
+
+                Assert.AreEqual(blobRepository1.SayHello(), "Hello World!");
+                Assert.AreEqual(blobRepository2.SayHello(), "Hello World!");
             }
         }
 
