@@ -17,13 +17,13 @@ using Repository.Pattern.UnitOfWork;
 namespace Northwind.Test.UnitTests.Repository
 {
     /// <summary>
-    /// Unit test for "custom" repositories support with psuedo AzureBlobRepository
-    /// </summary>    
+    ///     Unit test for "custom" repositories support with psuedo AzureBlobRepository
+    /// </summary>
     [TestClass]
     public class AzureBlobRepositoryTest
     {
         /// <summary>
-        /// Least preferred way of retrieving a custom repository
+        ///     Least preferred way of retrieving a custom repository
         /// </summary>
         [TestMethod]
         public void GetCustomRepositoryReturnsCustomRepository()
@@ -51,7 +51,7 @@ namespace Northwind.Test.UnitTests.Repository
         }
 
         /// <summary>
-        /// Preferred way of retrieving custom repository
+        ///     Preferred way of retrieving custom repository
         /// </summary>
         [TestMethod]
         public void GetCustomRepositoryGenericVersionReturnsCustomRepository()
@@ -79,13 +79,12 @@ namespace Northwind.Test.UnitTests.Repository
         }
 
         /// <summary>
-        /// Retrieving custom repository from another repository, this is useful for when creating a custom
-        /// query and needing access to other repositories.
+        ///     Retrieving custom repository from another repository, this is useful for when creating a custom
+        ///     query and needing access to other repositories.
         /// </summary>
         [TestMethod]
         public void GetCustomRepositoryFromOtherRepository()
         {
-            //  Arrange
             var factories = new Dictionary<Type, Func<dynamic>>
             {
                 {
@@ -94,15 +93,17 @@ namespace Northwind.Test.UnitTests.Repository
                 }
             };
 
-            IRepositoryProvider repositoryProvider = new RepositoryProvider(new RepositoryFactories(factories));
+            var provider = new RepositoryProvider(new RepositoryFactories(factories));
+            IRepositoryProvider repositoryProvider = provider;
 
             using (IDataContextAsync context = new NorthwindFakeContext())
-            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context, repositoryProvider))
+            using (IUnitOfWorkAsync uow = new UnitOfWork(context, repositoryProvider))
             {
-                IRepositoryAsync<Product> productRepository = new Repository<Product>(context, unitOfWork);
-                var azureBlobRepository = productRepository.GetCustomRepository<IAzureBlobRepository<MyBlob>>();
+                IRepositoryAsync<Product> productRepository = new Repository<Product>(context, uow);
 
-                Assert.AreEqual(azureBlobRepository.SayHello(), "Hello World!");
+                var blobRepository = productRepository.GetCustomRepository<IAzureBlobRepository<MyBlob>>();
+
+                Assert.AreEqual(blobRepository.SayHello(), "Hello World!");
             }
         }
 
@@ -117,7 +118,7 @@ namespace Northwind.Test.UnitTests.Repository
             public ObjectState ObjectState { get; set; }
         }
 
-        internal interface IAzureBlobRepository<T>: IObjectState
+        internal interface IAzureBlobRepository<T> : IObjectState
         {
             string SayHello();
         }
