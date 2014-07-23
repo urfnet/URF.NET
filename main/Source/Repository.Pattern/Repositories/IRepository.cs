@@ -7,7 +7,7 @@ using Repository.Pattern.Infrastructure;
 
 namespace Repository.Pattern.Repositories
 {
-    public interface IRepository<TEntity> where TEntity : IObjectState
+    public interface IRepository<TEntity> where TEntity : class, IObjectState
     {
         TEntity Find(params object[] keyValues);
         IQueryable<TEntity> SelectQuery(string query, params object[] parameters);
@@ -24,5 +24,6 @@ namespace Repository.Pattern.Repositories
         IQueryable Queryable(ODataQueryOptions<TEntity> oDataQueryOptions);
         IQueryable<TEntity> Queryable();
         IRepository<T> GetRepository<T>() where T : class, IObjectState;
+        dynamic GetCustomRepository<T>() where T : class, IObjectState;
     }
 }

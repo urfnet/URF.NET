@@ -13,7 +13,7 @@ using Repository.Pattern.UnitOfWork;
 
 #endregion
 
-namespace Northwind.Test.Repository
+namespace Northwind.Test.UnitTests.Repository
 {
     [TestClass]
     public class ProductRepositoryTest

@@ -4,7 +4,7 @@ using Repository.Pattern.Infrastructure;
 
 namespace Repository.Pattern.Repositories
 {
-    public interface IRepositoryAsync<TEntity> : IRepository<TEntity> where TEntity : IObjectState
+    public interface IRepositoryAsync<TEntity> : IRepository<TEntity> where TEntity : class, IObjectState
     {
         Task<TEntity> FindAsync(params object[] keyValues);
         Task<TEntity> FindAsync(CancellationToken cancellationToken, params object[] keyValues);

@@ -11,7 +11,7 @@ using Repository.Pattern.Repositories;
 
 namespace Service.Pattern
 {
-    public abstract class Service<TEntity> : IService<TEntity> where TEntity : IObjectState
+    public abstract class Service<TEntity> : IService<TEntity> where TEntity : class, IObjectState
     {
         #region Private Fields
         private readonly IRepositoryAsync<TEntity> _repository;
