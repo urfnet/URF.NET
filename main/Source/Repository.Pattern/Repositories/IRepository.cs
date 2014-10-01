@@ -24,6 +24,5 @@ namespace Repository.Pattern.Repositories
         IQueryable Queryable(ODataQueryOptions<TEntity> oDataQueryOptions);
         IQueryable<TEntity> Queryable();
         IRepository<T> GetRepository<T>() where T : class, IObjectState;
-        dynamic GetCustomRepository<T>() where T : class, IObjectState;
     }
 }

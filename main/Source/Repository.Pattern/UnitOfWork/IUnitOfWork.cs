@@ -13,7 +13,5 @@ namespace Repository.Pattern.UnitOfWork
         void BeginTransaction(IsolationLevel isolationLevel = IsolationLevel.Unspecified);
         bool Commit();
         void Rollback();
-        dynamic GetCustomRepository<T>();
-        dynamic GetCustomRepository(Type type);
     }
 }

@@ -45,16 +45,12 @@ namespace Repository.Pattern.Ef6.Factories
         public RepositoryFactories()
         {
             _repositoryFactories = GetFactories();
-            CustomRepositoryFactories = new Dictionary<Type, Func<dynamic>>();
         }
 
         public RepositoryFactories(Dictionary<Type, Func<dynamic>> customRepositoryFactories)
         {
             _repositoryFactories = GetFactories();
-            CustomRepositoryFactories = customRepositoryFactories;
         }
-
-        public Dictionary<Type, Func<dynamic>> CustomRepositoryFactories { get; set; }
 
         /// <summary>
         ///     Return the runtime repository factory functions,

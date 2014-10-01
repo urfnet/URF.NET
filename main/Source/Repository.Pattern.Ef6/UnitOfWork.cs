@@ -108,16 +108,6 @@ namespace Repository.Pattern.Ef6
             return RepositoryProvider.GetRepositoryForEntityType<TEntity>();
         }
 
-        public dynamic GetCustomRepository(Type type)
-        {
-            return RepositoryProvider.GetCustomRepository(type);
-        }
-
-        public dynamic GetCustomRepository<T>()
-        {
-            return RepositoryProvider.GetCustomRepository<T>();
-        }
-
         #region Unit of Work Transactions
 
         //IF 04/09/2014 Add IsolationLevel

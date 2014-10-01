@@ -138,11 +138,6 @@ namespace Repository.Pattern.Ef6
             return _unitOfWork.Repository<T>();
         }
 
-        public dynamic GetCustomRepository<T>() where T : class, IObjectState
-        {
-            return _unitOfWork.GetCustomRepository<T>();
-        }
-
         public virtual async Task<TEntity> FindAsync(params object[] keyValues)
         {
             return await _dbSet.FindAsync(keyValues);

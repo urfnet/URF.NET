@@ -89,7 +89,6 @@
     <Compile Include="UnitTests\Fake\NorthwindFakeDbSets.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTests\Repository\ProductRepositoryTest.cs" />
-    <Compile Include="UnitTests\Repository\AzureBlobRepositoryTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Source\Service.Pattern\Service.Pattern.csproj">

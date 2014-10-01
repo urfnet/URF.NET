@@ -28,8 +28,6 @@ namespace Repository.Pattern.Ef6.Factories
         IDataContextAsync DataContext { get; set; }
 
         IUnitOfWorkAsync UnitOfWork { get; set; }
-        dynamic GetCustomRepository<T>();
-        dynamic GetCustomRepository(Type type);
 
         /// <summary>
         ///     Get an <see cref="IRepository{T}" /> for entity type, T.
