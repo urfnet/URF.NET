@@ -82,8 +82,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="IntegrationTests\CustomerRepository_Tests.cs" />
-    <Compile Include="IntegrationTests\UnitOfWork_Tests.cs" />
+    <Compile Include="IntegrationTests\CustomerRepositoryTests.cs" />
+    <Compile Include="IntegrationTests\UnitOfWorkTests.cs" />
+    <Compile Include="IntegrationTests\ProductRepositoryTest.cs" />
     <Compile Include="UnitTests\Fake\NorthwindFakeContext.cs" />
     <Compile Include="UnitTests\Fake\NorthwindFakeDbSets.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

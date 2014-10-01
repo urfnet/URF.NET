@@ -30,21 +30,25 @@ namespace Northwind.Test.IntegrationTests
         private static readonly string MasterConnectionString = ConfigurationManager.ConnectionStrings["MasterDbConnection"].ConnectionString;
         private readonly IRepositoryProvider _repositoryProvider = new RepositoryProvider(new RepositoryFactories());
 
+        readonly bool _databaseCreated;
         public TestContext TestContext { get; set; }
-
-        [TestInitialize]
-        public void SettingUpNorthwindTestDatabase()
+        
+        public CustomerRepositoryTests()
         {
-            TestContext.WriteLine("Please ensure Northwind.Test/Sql/instnwnd.sql is copied to C:\\temp\\instnwnd.sql for test to run succesfully");
-            TestContext.WriteLine("Please verify the the Northwind.Test/app.config connection strings are correct for your environment");
-
-            TestContext.WriteLine("TestFixture executing, creating NorthwindTest Db for integration  tests");
-            TestContext.WriteLine("Loading and parsing create NorthwindTest database Sql script");
-
+            if (_databaseCreated) return;
             var file = new FileInfo("C:\\temp\\instnwnd.sql");
             var script = file.OpenText().ReadToEnd();
             RunSqlOnMaster(script);
-            TestContext.WriteLine("NorthwindTest Db created for integration tests");
+            _databaseCreated = true;
+        }
+
+        [TestInitialize]
+        public void Initialize()
+        {
+            TestContext.WriteLine("Please ensure Northwind.Test/Sql/instnwnd.sql is copied to C:\\temp\\instnwnd.sql for test to run succesfully");
+            TestContext.WriteLine("Please verify the the Northwind.Test/app.config connection strings are correct for your environment");
+            TestContext.WriteLine("TestFixture executing, creating NorthwindTest Db for integration  tests");
+            TestContext.WriteLine("Loading and parsing create NorthwindTest database Sql script");
         }
 
         [TestCleanup]

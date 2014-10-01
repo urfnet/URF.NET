@@ -14,7 +14,7 @@ using Service.Pattern;
 namespace Northwind.Test.IntegrationTests
 {
     [TestClass]
-    public class UnitOfWork_Tests
+    public class UnitOfWorkTests
     {
         [TestMethod]
         public void UnitOfWork_Transaction_Test()
