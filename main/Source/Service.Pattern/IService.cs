@@ -19,7 +19,7 @@ namespace Service.Pattern
         IQueryable<TEntity> SelectQuery(string query, params object[] parameters);
         void Insert(TEntity entity);
         void InsertRange(IEnumerable<TEntity> entities);
-        void InsertGraph(TEntity entity);
+        void InsertOrUpdateGraph(TEntity entity);
         void InsertGraphRange(IEnumerable<TEntity> entities);
         void Update(TEntity entity);
         void Delete(object id);
