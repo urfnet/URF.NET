@@ -29,14 +29,14 @@ namespace Northwind.Web.Api
         [Queryable]
         public IQueryable<Customer> GetCustomer()
         {
-            return _customerService.ODataQueryable();
+            return _customerService.Queryable();
         }
 
         // GET: odata/Customers(5)
         [Queryable]
         public SingleResult<Customer> GetCustomer([FromODataUri] string key)
         {
-            return SingleResult.Create(_customerService.ODataQueryable().Where(t => t.CustomerID == key));
+            return SingleResult.Create(_customerService.Queryable().Where(t => t.CustomerID == key));
         }
 
         // PUT: odata/Customers(5)
@@ -156,7 +156,7 @@ namespace Northwind.Web.Api
         public IQueryable<CustomerDemographic> GetCustomerDemographics([FromODataUri] string key)
         {
             return
-                _customerService.ODataQueryable()
+                _customerService.Queryable()
                     .Where(m => m.CustomerID == key)
                     .SelectMany(m => m.CustomerDemographics);
         }
@@ -165,7 +165,7 @@ namespace Northwind.Web.Api
         [Queryable]
         public IQueryable<Order> GetOrders([FromODataUri] string key)
         {
-            return _customerService.ODataQueryable().Where(m => m.CustomerID == key).SelectMany(m => m.Orders);
+            return _customerService.Queryable().Where(m => m.CustomerID == key).SelectMany(m => m.Orders);
         }
 
         protected override void Dispose(bool disposing)

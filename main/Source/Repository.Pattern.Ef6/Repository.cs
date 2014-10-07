@@ -1,14 +1,12 @@
 ﻿#region
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web.Http.OData.Query;
 using LinqKit;
 using Repository.Pattern.DataContext;
 using Repository.Pattern.Infrastructure;
@@ -121,11 +119,6 @@ namespace Repository.Pattern.Ef6
         public virtual IQueryFluent<TEntity> Query(Expression<Func<TEntity, bool>> query)
         {
             return new QueryFluent<TEntity>(this, query);
-        }
-
-        public IQueryable Queryable(ODataQueryOptions<TEntity> oDataQueryOptions)
-        {
-            return oDataQueryOptions.ApplyTo(_dbSet);
         }
 
         public IQueryable<TEntity> Queryable()

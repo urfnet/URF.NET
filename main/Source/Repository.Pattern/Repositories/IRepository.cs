@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Web.Http.OData.Query;
 using Repository.Pattern.Infrastructure;
 
 namespace Repository.Pattern.Repositories
@@ -21,7 +20,6 @@ namespace Repository.Pattern.Repositories
         IQueryFluent<TEntity> Query(IQueryObject<TEntity> queryObject);
         IQueryFluent<TEntity> Query(Expression<Func<TEntity, bool>> query);
         IQueryFluent<TEntity> Query();
-        IQueryable Queryable(ODataQueryOptions<TEntity> oDataQueryOptions);
         IQueryable<TEntity> Queryable();
         IRepository<T> GetRepository<T>() where T : class, IObjectState;
     }
