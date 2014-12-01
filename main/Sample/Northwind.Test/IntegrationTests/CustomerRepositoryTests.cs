@@ -228,5 +228,31 @@ namespace Northwind.Test.IntegrationTests
                 Assert.AreEqual(customerOrderTotalByYear, (decimal)2302.2000);
             }
         }
+
+        [TestMethod]
+        public void GetCustomersAsync()
+        {
+            using (IDataContextAsync context = new NorthwindContext())
+            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context, _repositoryProvider))
+            {
+                IRepositoryAsync<Customer> customerRepository = new Repository<Customer>(context, unitOfWork);
+                ICustomerService customerService = new CustomerService(customerRepository);
+
+                var asyncTask = customerService
+                    .Query(x => x.Country == "USA")
+                    .Include(x => x
+                        .Orders
+                        .Select(y => y.OrderDetails))
+                    .OrderBy(x => x
+                        .OrderBy(y => y.ContactName)
+                        .ThenBy(z => z.ContactName))
+                    .SelectAsync();
+
+                var customers = asyncTask.Result;
+
+                Assert.IsTrue(customers.Count() > 1);
+                Assert.IsFalse(customers.Count(x => x.Country == "USA") == 0);
+            }
+        }
     }
 }

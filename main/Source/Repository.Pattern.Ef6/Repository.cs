@@ -190,14 +190,13 @@ namespace Repository.Pattern.Ef6
         }
 
         internal async Task<IEnumerable<TEntity>> SelectAsync(
-            Expression<Func<TEntity, bool>> query = null,
+            Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             List<Expression<Func<TEntity, object>>> includes = null,
             int? page = null,
             int? pageSize = null)
         {
-            //See: Best Practices in Asynchronous Programming http://msdn.microsoft.com/en-us/magazine/jj991977.aspx
-            return await Task.Run(() => Select(query, orderBy, includes, page, pageSize).AsEnumerable()).ConfigureAwait(false);
+            return await Select(filter, orderBy, includes, page, pageSize).ToListAsync();
         }
 
         private void SyncObjectGraph(object entity)
