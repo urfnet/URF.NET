@@ -1,13 +1,10 @@
-﻿using System;
-using System.Configuration;
+﻿#region
+
+using System;
 using System.Data.Entity.Validation;
-using System.Data.SqlClient;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Text;
-using Microsoft.SqlServer.Management.Common;
-using Microsoft.SqlServer.Management.Smo;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Northwind.Entities.Models;
 using Repository.Pattern.DataContext;
@@ -17,39 +14,21 @@ using Repository.Pattern.Infrastructure;
 using Repository.Pattern.Repositories;
 using Repository.Pattern.UnitOfWork;
 
+#endregion
+
 namespace Northwind.Test.IntegrationTests
 {
     [TestClass]
     public class ProductRepositoryTest
     {
-
-        private static readonly string MasterConnectionString = ConfigurationManager.ConnectionStrings["MasterDbConnection"].ConnectionString;
         private readonly IRepositoryProvider _repositoryProvider = new RepositoryProvider(new RepositoryFactories());
 
         public TestContext TestContext { get; set; }
 
         [TestInitialize]
-        public void SettingUpNorthwindTestDatabase()
+        public void Initialize()
         {
-            TestContext.WriteLine("Please ensure Northwind.Test/Sql/instnwnd.sql is copied to C:\\temp\\instnwnd.sql for test to run succesfully");
-            TestContext.WriteLine("Please verify the the Northwind.Test/app.config connection strings are correct for your environment");
-
-            TestContext.WriteLine("TestFixture executing, creating NorthwindTest Db for integration  tests");
-            TestContext.WriteLine("Loading and parsing create NorthwindTest database Sql script");
-
-            var file = new FileInfo("C:\\temp\\instnwnd.sql");
-            var script = file.OpenText().ReadToEnd();
-            RunSqlOnMaster(script);
-            TestContext.WriteLine("NorthwindTest Db created for integration tests");
-        }
-
-        private static void RunSqlOnMaster(string script)
-        {
-            using (var connection = new SqlConnection(MasterConnectionString))
-            {
-                var server = new Server(new ServerConnection(connection));
-                server.ConnectionContext.ExecuteNonQuery(script);
-            }
+            Utility.CreateSeededTestDatabase();
         }
 
         [TestCleanup]
