@@ -244,7 +244,7 @@ namespace Northwind.Test.IntegrationTests
                         .Orders
                         .Select(y => y.OrderDetails))
                     .OrderBy(x => x
-                        .OrderBy(y => y.ContactName)
+                        .OrderBy(y => y.CompanyName)
                         .ThenBy(z => z.ContactName))
                     .SelectAsync();
 
