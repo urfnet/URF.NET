@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -73,12 +74,6 @@ namespace Repository.Pattern.Ef6
             {
                 Insert(entity);
             }
-        }
-
-        public virtual void InsertOrUpdateGraph(TEntity entity)
-        {
-            SyncObjectGraph(entity);
-            _dbSet.Add(entity);
         }
 
         public virtual void InsertGraphRange(IEnumerable<TEntity> entities)
@@ -199,21 +194,41 @@ namespace Repository.Pattern.Ef6
             return await Select(filter, orderBy, includes, page, pageSize).ToListAsync();
         }
 
+        readonly HashSet<object> _hashSet = new HashSet<object>();
+
+        public virtual void InsertOrUpdateGraph(TEntity entity)
+        {
+            SyncObjectGraph(entity);
+            _dbSet.Attach(entity);
+        }
+
         private void SyncObjectGraph(object entity)
         {
+            if (_hashSet.Contains(entity))
+                return;
+
+            _hashSet.Add(entity);
+
+            var objectState = entity as IObjectState;
+            
+            if (objectState != null && objectState.ObjectState == ObjectState.Added)
+                _context.SyncObjectState((IObjectState)entity);
+
             // Set tracking state for child collections
             foreach (var prop in entity.GetType().GetProperties())
             {
                 // Apply changes to 1-1 and M-1 properties
                 var trackableRef = prop.GetValue(entity, null) as IObjectState;
-                if (trackableRef != null && trackableRef.ObjectState == ObjectState.Added)
+                if (trackableRef != null)
                 {
-                    _dbSet.Attach((TEntity)entity);
-                    _context.SyncObjectState((IObjectState)entity);
+                    if(trackableRef.ObjectState == ObjectState.Added)
+                        _context.SyncObjectState((IObjectState) entity);
+
+                    SyncObjectGraph(prop.GetValue(entity, null));
                 }
 
                 // Apply changes to 1-M properties
-                var items = prop.GetValue(entity, null) as IList<IObjectState>;
+                var items = prop.GetValue(entity, null) as IEnumerable<IObjectState>;
                 if (items == null) continue;
 
                 foreach (var item in items)
