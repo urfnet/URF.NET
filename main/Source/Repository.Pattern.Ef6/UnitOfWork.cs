@@ -1,14 +1,16 @@
 ﻿#region
 
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Data;
 using System.Data.Common;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Practices.ServiceLocation;
 using Repository.Pattern.DataContext;
-using Repository.Pattern.Ef6.Factories;
 using Repository.Pattern.Infrastructure;
 using Repository.Pattern.Repositories;
 using Repository.Pattern.UnitOfWork;
@@ -25,16 +27,16 @@ namespace Repository.Pattern.Ef6
         private bool _disposed;
         private ObjectContext _objectContext;
         private DbTransaction _transaction;
+        private Dictionary<string, dynamic> _repositories;
 
         #endregion Private Fields
 
         #region Constuctor/Dispose
 
-        public UnitOfWork(IDataContextAsync dataContext, IRepositoryProvider repositoryProvider)
+        public UnitOfWork(IDataContextAsync dataContext)
         {
-            RepositoryProvider = repositoryProvider;
-            RepositoryProvider.DataContext = _dataContext = dataContext;
-            RepositoryProvider.UnitOfWork = this;
+            _dataContext = dataContext;
+            _repositories = new Dictionary<string, dynamic>();
         }
 
         public void Dispose()
@@ -80,17 +82,15 @@ namespace Repository.Pattern.Ef6
 
         #endregion Constuctor/Dispose
 
-        protected IRepositoryProvider RepositoryProvider { get; set; }
-
         public int SaveChanges()
         {
             return _dataContext.SaveChanges();
         }
 
-
         public IRepository<TEntity> Repository<TEntity>() where TEntity : class, IObjectState
         {
             return RepositoryAsync<TEntity>();
+            //return ServiceLocator.Current.GetInstance<IRepository<TEntity>>();
         }
 
         public Task<int> SaveChangesAsync()
@@ -105,7 +105,23 @@ namespace Repository.Pattern.Ef6
 
         public IRepositoryAsync<TEntity> RepositoryAsync<TEntity>() where TEntity : class, IObjectState
         {
-            return RepositoryProvider.GetRepositoryForEntityType<TEntity>();
+            if (_repositories == null)
+            {
+                _repositories = new Dictionary<string, dynamic>();
+            }
+
+            var type = typeof(TEntity).Name;
+
+            if (_repositories.ContainsKey(type))
+            {
+                return (IRepositoryAsync<TEntity>)_repositories[type];
+            }
+
+            var repositoryType = typeof(Repository<>);
+
+            _repositories.Add(type, Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)), _dataContext, this));
+
+            return _repositories[type];
         }
 
         #region Unit of Work Transactions

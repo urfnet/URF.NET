@@ -9,7 +9,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Northwind.Entities.Models;
 using Repository.Pattern.DataContext;
 using Repository.Pattern.Ef6;
-using Repository.Pattern.Ef6.Factories;
 using Repository.Pattern.Infrastructure;
 using Repository.Pattern.Repositories;
 using Repository.Pattern.UnitOfWork;
@@ -21,8 +20,6 @@ namespace Northwind.Test.IntegrationTests
     [TestClass]
     public class ProductRepositoryTest
     {
-        private readonly IRepositoryProvider _repositoryProvider = new RepositoryProvider(new RepositoryFactories());
-
         public TestContext TestContext { get; set; }
 
         [TestInitialize]
@@ -40,7 +37,7 @@ namespace Northwind.Test.IntegrationTests
         public void InsertProducts()
         {
             using (IDataContextAsync context = new NorthwindContext())
-            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context, _repositoryProvider))
+            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
             {
                 IRepositoryAsync<Product> productRepository = new Repository<Product>(context, unitOfWork);
 

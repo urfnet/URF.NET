@@ -85,6 +85,7 @@
     <Compile Include="IntegrationTests\CustomerRepositoryTests.cs" />
     <Compile Include="IntegrationTests\UnitOfWorkTests.cs" />
     <Compile Include="IntegrationTests\ProductRepositoryTest.cs" />
+    <Compile Include="IntegrationTests\OrderRepositoryTest.cs" />
     <Compile Include="IntegrationTests\Utility.cs" />
     <Compile Include="UnitTests\Fake\NorthwindFakeContext.cs" />
     <Compile Include="UnitTests\Fake\NorthwindFakeDbSets.cs" />
