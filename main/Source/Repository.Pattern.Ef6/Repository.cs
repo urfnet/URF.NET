@@ -196,6 +196,8 @@ namespace Repository.Pattern.Ef6
             return await Select(filter, orderBy, includes, page, pageSize).ToListAsync();
         }
 
+        // Insert or Updating an object graph
+        [Obsolete("Will be renamed to UpsertGraph(TEntity entity) in next version")]
         public virtual void InsertOrUpdateGraph(TEntity entity)
         {
             SyncObjectGraph(entity);
@@ -203,7 +205,8 @@ namespace Repository.Pattern.Ef6
             _dbSet.Attach(entity);
         }
 
-        HashSet<object> _entitesChecked; // tracking of all processed entities in the object graph when calling SyncObjectGraph
+        // tracking of all processed entities in the object graph when calling SyncObjectGraph
+        HashSet<object> _entitesChecked; 
 
         private void SyncObjectGraph(object entity) // scan object graph for all 
         {
