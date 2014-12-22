@@ -197,7 +197,7 @@ namespace Repository.Pattern.Ef6
         }
 
         // Insert or Updating an object graph
-        [Obsolete("Will be renamed to UpsertGraph(TEntity entity) in next version")]
+        [Obsolete("Will be renamed to UpsertGraph(TEntity entity) in next version.")]
         public virtual void InsertOrUpdateGraph(TEntity entity)
         {
             SyncObjectGraph(entity);
