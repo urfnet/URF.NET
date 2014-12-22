@@ -65,9 +65,7 @@ namespace Repository.Pattern.Ef6
 
         public virtual void Insert(TEntity entity)
         {
-            if(entity.ObjectState != ObjectState.Added)
-                throw new InvalidEnumArgumentException("ObjectState must be set to ObjectState.Added to perform an insert.");
-
+            entity.ObjectState = ObjectState.Added;;
             _dbSet.Attach(entity);
             _context.SyncObjectState(entity);
         }
@@ -87,9 +85,7 @@ namespace Repository.Pattern.Ef6
 
         public virtual void Update(TEntity entity)
         {
-            if (entity.ObjectState != ObjectState.Modified)
-                throw new InvalidEnumArgumentException("ObjectState must be set to ObjectState.Modified to perform an update.");
-
+            entity.ObjectState = ObjectState.Modified;
             _dbSet.Attach(entity);
             _context.SyncObjectState(entity);
         }
@@ -97,15 +93,12 @@ namespace Repository.Pattern.Ef6
         public virtual void Delete(object id)
         {
             var entity = _dbSet.Find(id);
-            entity.ObjectState = ObjectState.Deleted;
             Delete(entity);
         }
 
         public virtual void Delete(TEntity entity)
         {
-            if (entity.ObjectState != ObjectState.Deleted)
-                throw new InvalidEnumArgumentException("ObjectState must be set to ObjectState.Deleted to perform a delete.");
-
+            entity.ObjectState = ObjectState.Deleted;
             _dbSet.Attach(entity);
             _context.SyncObjectState(entity);
         }
@@ -210,7 +203,7 @@ namespace Repository.Pattern.Ef6
             _dbSet.Attach(entity);
         }
 
-        HashSet<object> _entitesChecked; // tracking of all processed entities in the object graph when calling SyncObjectGraph
+        HashSet<object> _entitesChecked; // tracking of all process entities in the object graph when calling SyncObjectGraph
 
         private void SyncObjectGraph(object entity) // scan object graph for all 
         {
@@ -223,7 +216,7 @@ namespace Repository.Pattern.Ef6
             _entitesChecked.Add(entity);
 
             var objectState = entity as IObjectState;
-            
+
             if (objectState != null && objectState.ObjectState == ObjectState.Added)
                 _context.SyncObjectState((IObjectState)entity);
 
