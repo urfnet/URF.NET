@@ -207,16 +207,20 @@ namespace Repository.Pattern.Ef6
 
         private void SyncObjectGraph(object entity) // scan object graph for all 
         {
-            if(_entitesChecked == null)
-                _entitesChecked = new HashSet<object>();
+            // instantiating _entitesChecked so we can keep track of all entities we have scanned, avoid any cyclical issues
+            if(_entitesChecked == null) 
+                _entitesChecked = new HashSet<object>(); 
 
+            // if already processed skip
             if (_entitesChecked.Contains(entity))
                 return;
 
+            // add entity to alreadyChecked collection
             _entitesChecked.Add(entity);
 
             var objectState = entity as IObjectState;
 
+            // discovered entity with ObjectState.Added, sync this with provider e.g. EF
             if (objectState != null && objectState.ObjectState == ObjectState.Added)
                 _context.SyncObjectState((IObjectState)entity);
 
@@ -225,20 +229,23 @@ namespace Repository.Pattern.Ef6
             {
                 // Apply changes to 1-1 and M-1 properties
                 var trackableRef = prop.GetValue(entity, null) as IObjectState;
-                if (trackableRef != null)
+                if (trackableRef != null)                
                 {
+                    // discovered entity with ObjectState.Added, sync this with provider e.g. EF
                     if(trackableRef.ObjectState == ObjectState.Added)
                         _context.SyncObjectState((IObjectState) entity);
 
+                    // recursively process the next property
                     SyncObjectGraph(prop.GetValue(entity, null));
                 }
 
                 // Apply changes to 1-M properties
                 var items = prop.GetValue(entity, null) as IEnumerable<IObjectState>;
+
+                // collection was empty, nothing to process, continue
                 if (items == null) continue;
 
-                Debug.WriteLine("Checking collection: " + prop.Name);
-
+                // collection isn't empty, continue to recursively scan the elements of this collection
                 foreach (var item in items)
                     SyncObjectGraph(item);
             }
