@@ -3,7 +3,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
@@ -63,7 +65,9 @@ namespace Repository.Pattern.Ef6
 
         public virtual void Insert(TEntity entity)
         {
-            entity.ObjectState = ObjectState.Added;
+            if(entity.ObjectState != ObjectState.Added)
+                throw new InvalidEnumArgumentException("ObjectState must be set to ObjectState.Added to perform an insert.");
+
             _dbSet.Attach(entity);
             _context.SyncObjectState(entity);
         }
@@ -83,7 +87,9 @@ namespace Repository.Pattern.Ef6
 
         public virtual void Update(TEntity entity)
         {
-            entity.ObjectState = ObjectState.Modified;
+            if (entity.ObjectState != ObjectState.Modified)
+                throw new InvalidEnumArgumentException("ObjectState must be set to ObjectState.Modified to perform an update.");
+
             _dbSet.Attach(entity);
             _context.SyncObjectState(entity);
         }
@@ -91,12 +97,15 @@ namespace Repository.Pattern.Ef6
         public virtual void Delete(object id)
         {
             var entity = _dbSet.Find(id);
+            entity.ObjectState = ObjectState.Deleted;
             Delete(entity);
         }
 
         public virtual void Delete(TEntity entity)
         {
-            entity.ObjectState = ObjectState.Deleted;
+            if (entity.ObjectState != ObjectState.Deleted)
+                throw new InvalidEnumArgumentException("ObjectState must be set to ObjectState.Deleted to perform a delete.");
+
             _dbSet.Attach(entity);
             _context.SyncObjectState(entity);
         }
@@ -194,20 +203,24 @@ namespace Repository.Pattern.Ef6
             return await Select(filter, orderBy, includes, page, pageSize).ToListAsync();
         }
 
-        readonly HashSet<object> _hashSet = new HashSet<object>();
-
         public virtual void InsertOrUpdateGraph(TEntity entity)
         {
             SyncObjectGraph(entity);
+            _entitesChecked = null;
             _dbSet.Attach(entity);
         }
 
-        private void SyncObjectGraph(object entity)
+        HashSet<object> _entitesChecked; // tracking of all processed entities in the object graph when calling SyncObjectGraph
+
+        private void SyncObjectGraph(object entity) // scan object graph for all 
         {
-            if (_hashSet.Contains(entity))
+            if(_entitesChecked == null)
+                _entitesChecked = new HashSet<object>();
+
+            if (_entitesChecked.Contains(entity))
                 return;
 
-            _hashSet.Add(entity);
+            _entitesChecked.Add(entity);
 
             var objectState = entity as IObjectState;
             
@@ -231,10 +244,11 @@ namespace Repository.Pattern.Ef6
                 var items = prop.GetValue(entity, null) as IEnumerable<IObjectState>;
                 if (items == null) continue;
 
+                Debug.WriteLine("Checking collection: " + prop.Name);
+
                 foreach (var item in items)
                     SyncObjectGraph(item);
             }
         }
-
     }
 }
