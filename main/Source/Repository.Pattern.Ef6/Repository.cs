@@ -203,7 +203,7 @@ namespace Repository.Pattern.Ef6
             _dbSet.Attach(entity);
         }
 
-        HashSet<object> _entitesChecked; // tracking of all process entities in the object graph when calling SyncObjectGraph
+        HashSet<object> _entitesChecked; // tracking of all processed entities in the object graph when calling SyncObjectGraph
 
         private void SyncObjectGraph(object entity) // scan object graph for all 
         {
