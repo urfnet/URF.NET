@@ -89,8 +89,12 @@ namespace Repository.Pattern.Ef6
 
         public IRepository<TEntity> Repository<TEntity>() where TEntity : class, IObjectState
         {
+            if (ServiceLocator.IsLocationProviderSet)
+            {
+                return ServiceLocator.Current.GetInstance<IRepository<TEntity>>();
+            }
+
             return RepositoryAsync<TEntity>();
-            //return ServiceLocator.Current.GetInstance<IRepository<TEntity>>();
         }
 
         public Task<int> SaveChangesAsync()
@@ -105,6 +109,11 @@ namespace Repository.Pattern.Ef6
 
         public IRepositoryAsync<TEntity> RepositoryAsync<TEntity>() where TEntity : class, IObjectState
         {
+            if (ServiceLocator.IsLocationProviderSet)
+            {
+                return ServiceLocator.Current.GetInstance<IRepositoryAsync<TEntity>>();
+            }
+
             if (_repositories == null)
             {
                 _repositories = new Dictionary<string, dynamic>();
@@ -126,7 +135,6 @@ namespace Repository.Pattern.Ef6
 
         #region Unit of Work Transactions
 
-        //IF 04/09/2014 Add IsolationLevel
         public void BeginTransaction(IsolationLevel isolationLevel = IsolationLevel.Unspecified)
         {
             _objectContext = ((IObjectContextAdapter) _dataContext).ObjectContext;
@@ -151,11 +159,5 @@ namespace Repository.Pattern.Ef6
         }
 
         #endregion
-
-        // Uncomment, if rather have IRepositoryAsync<TEntity> IoC vs. Reflection Activation
-        //public IRepositoryAsync<TEntity> RepositoryAsync<TEntity>() where TEntity : EntityBase
-        //{
-        //    return ServiceLocator.Current.GetInstance<IRepositoryAsync<TEntity>>();
-        //}
     }
 }
