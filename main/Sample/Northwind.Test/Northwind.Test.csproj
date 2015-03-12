@@ -82,6 +82,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="IntegrationTests\ChangeTrackerEntries.cs" />
     <Compile Include="IntegrationTests\CustomerRepositoryTests.cs" />
     <Compile Include="IntegrationTests\UnitOfWorkTests.cs" />
     <Compile Include="IntegrationTests\ProductRepositoryTest.cs" />

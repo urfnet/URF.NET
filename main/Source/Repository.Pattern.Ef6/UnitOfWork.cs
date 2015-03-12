@@ -31,7 +31,7 @@ namespace Repository.Pattern.Ef6
 
         #endregion Private Fields
 
-        #region Constuctor/Dispose
+        #region Constuctor
 
         public UnitOfWork(IDataContextAsync dataContext)
         {
@@ -39,48 +39,65 @@ namespace Repository.Pattern.Ef6
             _repositories = new Dictionary<string, dynamic>();
         }
 
+        #endregion Constuctor/Dispose
+
+        #region Dispose
+        //https://msdn.microsoft.com/library/ms244737.aspx
+
+        // Dispose() calls Dispose(true)
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-
-        public virtual void Dispose(bool disposing)
+        // NOTE: Leave out the finalizer altogether if this class doesn't 
+        // own unmanaged resources itself, but leave the other methods
+        // exactly as they are. 
+        ~UnitOfWork()
         {
-            if (_disposed)
-                return;
-
-            if (disposing)
+            // Finalizer calls Dispose(false)
+            Dispose(false);
+        }
+        // The bulk of the clean-up code is implemented in Dispose(bool)
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
             {
-                // free other managed objects that implement
-                // IDisposable only
-
-                try
+                if (disposing)
                 {
-                    if (_objectContext != null && _objectContext.Connection.State == ConnectionState.Open)
+                    // free other managed objects that implement
+                    // IDisposable only
+
+                    try
                     {
-                        _objectContext.Connection.Close();
+                        if (_objectContext != null)
+                        {
+                            if (_objectContext.Connection.State == ConnectionState.Open)
+                                _objectContext.Connection.Close();
+
+                            _objectContext.Dispose();
+                            _objectContext = null;
+                        }
+                        if (_dataContext != null)
+                        {
+                            _dataContext.Dispose();
+                            _dataContext = null;
+                        }
                     }
-                }
-                catch (ObjectDisposedException)
-                {
-                    // do nothing, the objectContext has already been disposed
+                    catch (ObjectDisposedException)
+                    {
+                        // do nothing, the objectContext has already been disposed
+                    }
+
+                    if (_repositories != null)
+                        _repositories = null;
                 }
 
-                if (_dataContext != null)
-                {
-                    _dataContext.Dispose();
-                    _dataContext = null;
-                }
-            }
-
-            // release any unmanaged objects
-            // set the object references to null
-
-            _disposed = true;
+                _disposed = true;
+            }            
         }
 
-        #endregion Constuctor/Dispose
+        #endregion
 
         public int SaveChanges()
         {
