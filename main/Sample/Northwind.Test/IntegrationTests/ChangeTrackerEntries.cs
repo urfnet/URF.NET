@@ -63,7 +63,7 @@ namespace Northwind.Test.IntegrationTests
                 using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
                 {
                     var northwindContext = (NorthwindContext)context;
-                    Assert.IsTrue(!northwindContext.ChangeTracker.Entries().Any());
+                    Assert.IsFalse(northwindContext.ChangeTracker.Entries().Any());
 
                     IRepositoryAsync<Product> productRepository =
                         new Repository<Product>(context, unitOfWork);
