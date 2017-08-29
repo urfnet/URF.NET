@@ -1,6 +1,4 @@
-﻿#region
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
@@ -9,11 +7,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Northwind.Entities.Models;
 using Repository.Pattern.DataContext;
 using Repository.Pattern.Ef6;
-using Repository.Pattern.Infrastructure;
 using Repository.Pattern.Repositories;
 using Repository.Pattern.UnitOfWork;
-
-#endregion
+using TrackableEntities;
 
 namespace Northwind.Test.IntegrationTests
 {
@@ -41,14 +37,14 @@ namespace Northwind.Test.IntegrationTests
                     CustomerID = "LLE39",
                     EmployeeID = 10,
                     OrderDate = DateTime.Now,
-                    ObjectState = ObjectState.Added,
+                    TrackingState = TrackingState.Added,
 
                     Employee = new Employee
                     {
                         EmployeeID = 10,
                         FirstName = "Test",
                         LastName = "Le",
-                        ObjectState = ObjectState.Added
+                        TrackingState = TrackingState.Added
                     },
 
                     OrderDetails = new List<OrderDetail>
@@ -57,13 +53,13 @@ namespace Northwind.Test.IntegrationTests
                         {
                             ProductID = 1,
                             Quantity = 5,
-                            ObjectState = ObjectState.Added
+                            TrackingState = TrackingState.Added
                         },
                         new OrderDetail
                         {
                             ProductID = 2,
                             Quantity = 5,
-                            ObjectState = ObjectState.Added
+                            TrackingState = TrackingState.Added
                         }
                     }
                 };

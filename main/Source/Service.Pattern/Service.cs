@@ -4,20 +4,16 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Repository.Pattern.Infrastructure;
 using Repository.Pattern.Repositories;
+using TrackableEntities;
 
 namespace Service.Pattern
 {
-    public abstract class Service<TEntity> : IService<TEntity> where TEntity : class, IObjectState
+    public abstract class Service<TEntity> : IService<TEntity> where TEntity : class, ITrackable
     {
-        #region Private Fields
         private readonly IRepositoryAsync<TEntity> _repository;
-        #endregion Private Fields
 
-        #region Constructor
         protected Service(IRepositoryAsync<TEntity> repository) { _repository = repository; }
-        #endregion Constructor
 
         public virtual TEntity Find(params object[] keyValues) { return _repository.Find(keyValues); }
 

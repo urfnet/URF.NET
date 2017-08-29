@@ -1,34 +1,23 @@
-﻿#region
-
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data.Entity;
-using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using LinqKit;
 using Repository.Pattern.DataContext;
-using Repository.Pattern.Infrastructure;
 using Repository.Pattern.Repositories;
 using Repository.Pattern.UnitOfWork;
-
-#endregion
+using TrackableEntities;
 
 namespace Repository.Pattern.Ef6
 {
-    public class Repository<TEntity> : IRepositoryAsync<TEntity> where TEntity : class, IObjectState
+    public class Repository<TEntity> : IRepositoryAsync<TEntity> where TEntity : class, ITrackable
     {
-        #region Private Fields
-
         private readonly IDataContextAsync _context;
         private readonly DbSet<TEntity> _dbSet;
         private readonly IUnitOfWorkAsync _unitOfWork;
-
-        #endregion Private Fields
 
         public Repository(IDataContextAsync context, IUnitOfWorkAsync unitOfWork)
         {
@@ -36,17 +25,13 @@ namespace Repository.Pattern.Ef6
             _unitOfWork = unitOfWork;
 
             // Temporarily for FakeDbContext, Unit Test and Fakes
-            var dbContext = context as DbContext;
-
-            if (dbContext != null)
+            if (context is DbContext dbContext)
             {
                 _dbSet = dbContext.Set<TEntity>();
             }
             else
             {
-                var fakeContext = context as FakeDbContext;
-
-                if (fakeContext != null)
+                if (context is FakeDbContext fakeContext)
                 {
                     _dbSet = fakeContext.Set<TEntity>();
                 }
@@ -65,7 +50,7 @@ namespace Repository.Pattern.Ef6
 
         public virtual void Insert(TEntity entity)
         {
-            entity.ObjectState = ObjectState.Added;;
+            entity.TrackingState = TrackingState.Added;;
             _dbSet.Attach(entity);
             _context.SyncObjectState(entity);
         }
@@ -85,7 +70,7 @@ namespace Repository.Pattern.Ef6
 
         public virtual void Update(TEntity entity)
         {
-            entity.ObjectState = ObjectState.Modified;
+            entity.TrackingState = TrackingState.Modified;
             _dbSet.Attach(entity);
             _context.SyncObjectState(entity);
         }
@@ -98,7 +83,7 @@ namespace Repository.Pattern.Ef6
 
         public virtual void Delete(TEntity entity)
         {
-            entity.ObjectState = ObjectState.Deleted;
+            entity.TrackingState = TrackingState.Deleted;
             _dbSet.Attach(entity);
             _context.SyncObjectState(entity);
         }
@@ -123,7 +108,7 @@ namespace Repository.Pattern.Ef6
             return _dbSet;
         }
 
-        public IRepository<T> GetRepository<T>() where T : class, IObjectState
+        public IRepository<T> GetRepository<T>() where T : class, ITrackable
         {
             return _unitOfWork.Repository<T>();
         }
@@ -152,7 +137,7 @@ namespace Repository.Pattern.Ef6
                 return false;
             }
 
-            entity.ObjectState = ObjectState.Deleted;
+            entity.TrackingState = TrackingState.Deleted;
             _dbSet.Attach(entity);
 
             return true;
@@ -221,29 +206,29 @@ namespace Repository.Pattern.Ef6
             // add entity to alreadyChecked collection
             _entitesChecked.Add(entity);
 
-            var objectState = entity as IObjectState;
+            var objectState = entity as ITrackable;
 
-            // discovered entity with ObjectState.Added, sync this with provider e.g. EF
-            if (objectState != null && objectState.ObjectState == ObjectState.Added)
-                _context.SyncObjectState((IObjectState)entity);
+            // discovered entity with TrackingState.Added, sync this with provider e.g. EF
+            if (objectState != null && objectState.TrackingState == TrackingState.Added)
+                _context.SyncObjectState((ITrackable)entity);
 
             // Set tracking state for child collections
             foreach (var prop in entity.GetType().GetProperties())
             {
                 // Apply changes to 1-1 and M-1 properties
-                var trackableRef = prop.GetValue(entity, null) as IObjectState;
+                var trackableRef = prop.GetValue(entity, null) as ITrackable;
                 if (trackableRef != null)                
                 {
-                    // discovered entity with ObjectState.Added, sync this with provider e.g. EF
-                    if(trackableRef.ObjectState == ObjectState.Added)
-                        _context.SyncObjectState((IObjectState) entity);
+                    // discovered entity with TrackingState.Added, sync this with provider e.g. EF
+                    if(trackableRef.TrackingState == TrackingState.Added)
+                        _context.SyncObjectState((ITrackable) entity);
 
                     // recursively process the next property
                     SyncObjectGraph(prop.GetValue(entity, null));
                 }
 
                 // Apply changes to 1-M properties
-                var items = prop.GetValue(entity, null) as IEnumerable<IObjectState>;
+                var items = prop.GetValue(entity, null) as IEnumerable<ITrackable>;
 
                 // collection was empty, nothing to process, continue
                 if (items == null) continue;

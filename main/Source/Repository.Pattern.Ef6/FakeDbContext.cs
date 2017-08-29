@@ -4,7 +4,7 @@ using System.Data.Entity;
 using System.Threading;
 using System.Threading.Tasks;
 using Repository.Pattern.DataContext;
-using Repository.Pattern.Infrastructure;
+using TrackableEntities;
 
 namespace Repository.Pattern.Ef6
 {
@@ -19,9 +19,7 @@ namespace Repository.Pattern.Ef6
 
     public abstract class FakeDbContext : IFakeDbContext
     {
-        #region Private Fields  
         private readonly Dictionary<Type, object> _fakeDbSets;
-        #endregion Private Fields
 
         protected FakeDbContext()
         {
@@ -30,7 +28,7 @@ namespace Repository.Pattern.Ef6
 
         public int SaveChanges() { return default(int); }
 
-        public void SyncObjectState<TEntity>(TEntity entity) where TEntity : class, IObjectState
+        public void SyncObjectState<TEntity>(TEntity entity) where TEntity : class, ITrackable
         {
             // no implentation needed, unit tests which uses FakeDbContext since there is no actual database for unit tests, 
             // there is no actual DbContext to sync with, please look at the Integration Tests for test that will run against an actual database.

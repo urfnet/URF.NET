@@ -1,8 +1,5 @@
-﻿#region
-
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Data;
 using System.Data.Common;
 using System.Data.Entity.Core.Objects;
@@ -11,27 +8,19 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Practices.ServiceLocation;
 using Repository.Pattern.DataContext;
-using Repository.Pattern.Infrastructure;
 using Repository.Pattern.Repositories;
 using Repository.Pattern.UnitOfWork;
-
-#endregion
+using TrackableEntities;
 
 namespace Repository.Pattern.Ef6
 {
     public class UnitOfWork : IUnitOfWorkAsync
     {
-        #region Private Fields
-
         private IDataContextAsync _dataContext;
         private bool _disposed;
         private ObjectContext _objectContext;
         private DbTransaction _transaction;
         private Dictionary<string, dynamic> _repositories;
-
-        #endregion Private Fields
-
-        #region Constuctor
 
         public UnitOfWork(IDataContextAsync dataContext)
         {
@@ -39,17 +28,12 @@ namespace Repository.Pattern.Ef6
             _repositories = new Dictionary<string, dynamic>();
         }
 
-        #endregion Constuctor/Dispose
-
-        #region Dispose
-        //https://msdn.microsoft.com/library/ms244737.aspx
-
-        // Dispose() calls Dispose(true)
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
         // NOTE: Leave out the finalizer altogether if this class doesn't 
         // own unmanaged resources itself, but leave the other methods
         // exactly as they are. 
@@ -58,6 +42,7 @@ namespace Repository.Pattern.Ef6
             // Finalizer calls Dispose(false)
             Dispose(false);
         }
+
         // The bulk of the clean-up code is implemented in Dispose(bool)
         protected virtual void Dispose(bool disposing)
         {
@@ -88,23 +73,19 @@ namespace Repository.Pattern.Ef6
                     {
                         // do nothing, the objectContext has already been disposed
                     }
-
-                    if (_repositories != null)
-                        _repositories = null;
+                    _repositories = null;
                 }
 
                 _disposed = true;
             }            
         }
 
-        #endregion
-
         public int SaveChanges()
         {
             return _dataContext.SaveChanges();
         }
 
-        public IRepository<TEntity> Repository<TEntity>() where TEntity : class, IObjectState
+        public IRepository<TEntity> Repository<TEntity>() where TEntity : class, ITrackable
         {
             if (ServiceLocator.IsLocationProviderSet)
             {
@@ -124,7 +105,7 @@ namespace Repository.Pattern.Ef6
             return _dataContext.SaveChangesAsync(cancellationToken);
         }
 
-        public IRepositoryAsync<TEntity> RepositoryAsync<TEntity>() where TEntity : class, IObjectState
+        public IRepositoryAsync<TEntity> RepositoryAsync<TEntity>() where TEntity : class, ITrackable
         {
             if (ServiceLocator.IsLocationProviderSet)
             {
@@ -150,8 +131,6 @@ namespace Repository.Pattern.Ef6
             return _repositories[type];
         }
 
-        #region Unit of Work Transactions
-
         public void BeginTransaction(IsolationLevel isolationLevel = IsolationLevel.Unspecified)
         {
             _objectContext = ((IObjectContextAdapter) _dataContext).ObjectContext;
@@ -174,7 +153,5 @@ namespace Repository.Pattern.Ef6
             _transaction.Rollback();
             _dataContext.SyncObjectsStatePostCommit();
         }
-
-        #endregion
     }
 }

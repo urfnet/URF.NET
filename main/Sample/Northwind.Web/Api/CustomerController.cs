@@ -6,8 +6,8 @@ using System.Web.Http;
 using System.Web.Http.OData;
 using Northwind.Entities.Models;
 using Northwind.Service;
-using Repository.Pattern.Infrastructure;
 using Repository.Pattern.UnitOfWork;
+using TrackableEntities;
 
 namespace Northwind.Web.Api
 {
@@ -52,7 +52,7 @@ namespace Northwind.Web.Api
                 return BadRequest();
             }
 
-            customer.ObjectState = ObjectState.Modified;
+            customer.TrackingState = TrackingState.Modified;
             _customerService.Update(customer);
 
             try
@@ -79,7 +79,7 @@ namespace Northwind.Web.Api
                 return BadRequest(ModelState);
             }
 
-            customer.ObjectState = ObjectState.Added;
+            customer.TrackingState = TrackingState.Added;
             _customerService.Insert(customer);
 
             try
@@ -115,7 +115,7 @@ namespace Northwind.Web.Api
             }
 
             patch.Patch(customer);
-            customer.ObjectState = ObjectState.Modified;
+            customer.TrackingState = TrackingState.Modified;
 
             try
             {
@@ -143,7 +143,7 @@ namespace Northwind.Web.Api
                 return NotFound();
             }
 
-            customer.ObjectState = ObjectState.Deleted;
+            customer.TrackingState = TrackingState.Deleted;
 
             _customerService.Delete(customer);
             await _unitOfWorkAsync.SaveChangesAsync();

@@ -1,19 +1,16 @@
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading;
 using System.Threading.Tasks;
 using Repository.Pattern.DataContext;
-using Repository.Pattern.Infrastructure;
+using TrackableEntities;
 
 namespace Repository.Pattern.Ef6
 {
     public class DataContext : DbContext, IDataContextAsync
     {
-        #region Private Fields
-        private readonly Guid _instanceId;
         bool _disposed;
-        #endregion Private Fields
+        private readonly Guid _instanceId;
 
         public DataContext(string nameOrConnectionString) : base(nameOrConnectionString)
         {
@@ -22,7 +19,7 @@ namespace Repository.Pattern.Ef6
             Configuration.ProxyCreationEnabled = false;
         }
 
-        public Guid InstanceId { get { return _instanceId; } }
+        public Guid InstanceId => _instanceId;
 
         /// <summary>
         ///     Saves all changes made in this context to the underlying database.
@@ -111,16 +108,16 @@ namespace Repository.Pattern.Ef6
             return changesAsync;
         }
 
-        public void SyncObjectState<TEntity>(TEntity entity) where TEntity : class, IObjectState
+        public void SyncObjectState<TEntity>(TEntity entity) where TEntity : class, ITrackable
         {
-            Entry(entity).State = StateHelper.ConvertState(entity.ObjectState);
+            Entry(entity).State = StateHelper.ConvertState(entity.TrackingState);
         }
 
         private void SyncObjectsStatePreCommit()
         {
             foreach (var dbEntityEntry in ChangeTracker.Entries())
             {
-                dbEntityEntry.State = StateHelper.ConvertState(((IObjectState)dbEntityEntry.Entity).ObjectState);
+                dbEntityEntry.State = StateHelper.ConvertState(((ITrackable)dbEntityEntry.Entity).TrackingState);
             }
         }
 
@@ -128,7 +125,7 @@ namespace Repository.Pattern.Ef6
         {
             foreach (var dbEntityEntry in ChangeTracker.Entries())
             {
-                ((IObjectState)dbEntityEntry.Entity).ObjectState = StateHelper.ConvertState(dbEntityEntry.State);
+                ((ITrackable)dbEntityEntry.Entity).TrackingState = StateHelper.ConvertState(dbEntityEntry.State);
             }
         }
 

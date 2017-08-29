@@ -4,12 +4,12 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Repository.Pattern.Infrastructure;
 using Repository.Pattern.Repositories;
+using TrackableEntities;
 
 namespace Service.Pattern
 {
-    public interface IService<TEntity> where TEntity : IObjectState
+    public interface IService<TEntity> where TEntity : ITrackable
     {
         TEntity Find(params object[] keyValues);
         IQueryable<TEntity> SelectQuery(string query, params object[] parameters);
