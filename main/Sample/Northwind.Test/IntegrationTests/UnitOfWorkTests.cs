@@ -92,9 +92,6 @@ namespace Northwind.Test.IntegrationTests
             // calling dispose 1st time
             context.Dispose();
 
-            var isDisposed = (bool) GetInstanceField(typeof (DataContext), context, "_disposed");
-            Assert.IsTrue(isDisposed);
-
             // calling dispose 2nd time, should not throw any excpetions
             unitOfWork.Dispose();
             context.Dispose();

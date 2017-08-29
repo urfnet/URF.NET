@@ -104,7 +104,7 @@ namespace Northwind.Test.IntegrationTests
                     }
                 };
 
-                customerRepository.InsertOrUpdateGraph(customerForInsertGraphTest);
+                customerRepository.UpsertGraph(customerForInsertGraphTest);
                 unitOfWork.SaveChanges();
             }
 
@@ -154,7 +154,7 @@ namespace Northwind.Test.IntegrationTests
 
                 // Testing changes to graph while disconncted from it's orginal DataContext
                 // Saving changes while graph was previous DataContext that was already disposed
-                customerRepository.InsertOrUpdateGraph(customerForUpdateDeleteGraphTest);
+                customerRepository.UpsertGraph(customerForUpdateDeleteGraphTest);
                 unitOfWork.SaveChanges();
 
                 customerForUpdateDeleteGraphTest = customerRepository

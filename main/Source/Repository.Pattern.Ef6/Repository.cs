@@ -182,61 +182,9 @@ namespace Repository.Pattern.Ef6
         }
 
         // Insert or Updating an object graph
-        [Obsolete("Will be renamed to UpsertGraph(TEntity entity) in next version.")]
-        public virtual void InsertOrUpdateGraph(TEntity entity)
+        public virtual void UpsertGraph(TEntity entity)
         {
-            SyncObjectGraph(entity);
-            _entitesChecked = null;
-            _dbSet.Attach(entity);
-        }
-
-        // tracking of all processed entities in the object graph when calling SyncObjectGraph
-        HashSet<object> _entitesChecked; 
-
-        private void SyncObjectGraph(object entity) // scan object graph for all 
-        {
-            // instantiating _entitesChecked so we can keep track of all entities we have scanned, avoid any cyclical issues
-            if(_entitesChecked == null) 
-                _entitesChecked = new HashSet<object>(); 
-
-            // if already processed skip
-            if (_entitesChecked.Contains(entity))
-                return;
-
-            // add entity to alreadyChecked collection
-            _entitesChecked.Add(entity);
-
-            var objectState = entity as ITrackable;
-
-            // discovered entity with TrackingState.Added, sync this with provider e.g. EF
-            if (objectState != null && objectState.TrackingState == TrackingState.Added)
-                _context.SyncObjectState((ITrackable)entity);
-
-            // Set tracking state for child collections
-            foreach (var prop in entity.GetType().GetProperties())
-            {
-                // Apply changes to 1-1 and M-1 properties
-                var trackableRef = prop.GetValue(entity, null) as ITrackable;
-                if (trackableRef != null)                
-                {
-                    // discovered entity with TrackingState.Added, sync this with provider e.g. EF
-                    if(trackableRef.TrackingState == TrackingState.Added)
-                        _context.SyncObjectState((ITrackable) entity);
-
-                    // recursively process the next property
-                    SyncObjectGraph(prop.GetValue(entity, null));
-                }
-
-                // Apply changes to 1-M properties
-                var items = prop.GetValue(entity, null) as IEnumerable<ITrackable>;
-
-                // collection was empty, nothing to process, continue
-                if (items == null) continue;
-
-                // collection isn't empty, continue to recursively scan the elements of this collection
-                foreach (var item in items)
-                    SyncObjectGraph(item);
-            }
+            _context.SyncObjectState(entity);
         }
     }
 }

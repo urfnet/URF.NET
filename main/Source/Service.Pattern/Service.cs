@@ -23,7 +23,7 @@ namespace Service.Pattern
 
         public virtual void InsertRange(IEnumerable<TEntity> entities) { _repository.InsertRange(entities); }
 
-        public virtual void InsertOrUpdateGraph(TEntity entity) { _repository.InsertOrUpdateGraph(entity); }
+        public virtual void UpsertGraph(TEntity entity) { _repository.UpsertGraph(entity); }
 
         public virtual void InsertGraphRange(IEnumerable<TEntity> entities) { _repository.InsertGraphRange(entities); }
 

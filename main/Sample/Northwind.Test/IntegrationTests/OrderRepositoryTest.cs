@@ -64,7 +64,7 @@ namespace Northwind.Test.IntegrationTests
                     }
                 };
 
-                orderRepository.InsertOrUpdateGraph(orderTest);
+                orderRepository.UpsertGraph(orderTest);
 
                 try
                 {
