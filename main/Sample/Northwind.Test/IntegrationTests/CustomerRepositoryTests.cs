@@ -1,12 +1,5 @@
-﻿#region
-
-using System;
-using System.Configuration;
-using System.Data.SqlClient;
-using System.IO;
+﻿using System;
 using System.Linq;
-using Microsoft.SqlServer.Management.Common;
-using Microsoft.SqlServer.Management.Smo;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Northwind.Entities.Models;
 using Northwind.Repository.Models;
@@ -14,12 +7,10 @@ using Northwind.Repository.Repositories;
 using Northwind.Service;
 using Repository.Pattern.DataContext;
 using Repository.Pattern.Ef6;
-using Repository.Pattern.Infrastructure;
 using Repository.Pattern.Repositories;
 using Repository.Pattern.UnitOfWork;
 using Service.Pattern;
-
-#endregion
+using TrackableEntities;
 
 namespace Northwind.Test.IntegrationTests
 {
@@ -55,7 +46,7 @@ namespace Northwind.Test.IntegrationTests
                     Country = "USA",
                     Phone ="(222) 222-2222",
                     Fax = "(333) 333-3333",
-                    ObjectState = ObjectState.Added,
+                    TrackingState = TrackingState.Added,
                 };
 
                 customerRepository.Insert(customer);
@@ -93,7 +84,7 @@ namespace Northwind.Test.IntegrationTests
                     Country = "USA",
                     Phone = "(222) 222-2222",
                     Fax = "(333) 333-3333",
-                    ObjectState = ObjectState.Added,
+                    TrackingState = TrackingState.Added,
                     Orders = new[]
                     {
                         new Order()
@@ -101,19 +92,19 @@ namespace Northwind.Test.IntegrationTests
                             CustomerID = "LLE38",
                             EmployeeID = 1,
                             OrderDate = DateTime.Now,
-                            ObjectState = ObjectState.Added,
+                            TrackingState = TrackingState.Added,
                         }, 
                         new Order()
                         {
                             CustomerID = "LLE39",
                             EmployeeID = 1,
                             OrderDate = DateTime.Now,
-                            ObjectState = ObjectState.Added
+                            TrackingState = TrackingState.Added
                         }, 
                     }
                 };
 
-                customerRepository.InsertOrUpdateGraph(customerForInsertGraphTest);
+                customerRepository.UpsertGraph(customerForInsertGraphTest);
                 unitOfWork.SaveChanges();
             }
 
@@ -132,10 +123,10 @@ namespace Northwind.Test.IntegrationTests
                     .SingleOrDefault();
 
                 // Testing that customer was created
-                Assert.AreEqual(customerForUpdateDeleteGraphTest.CustomerID, "LLE38");
+                Assert.AreEqual(customerForUpdateDeleteGraphTest?.CustomerID, "LLE38");
 
                 // Testing that orders in customer graph were created
-                Assert.IsTrue(customerForUpdateDeleteGraphTest.Orders.Count == 2);
+                Assert.IsTrue(customerForUpdateDeleteGraphTest?.Orders.Count == 2);
 
                 // Make changes to the object graph while in this context, will save these 
                 // changes in another context, testing managing states between and/or while disconnected
@@ -143,16 +134,16 @@ namespace Northwind.Test.IntegrationTests
 
                 // Updating the customer in the graph
                 customerForUpdateDeleteGraphTest.City = "Houston";
-                customerForUpdateDeleteGraphTest.ObjectState = ObjectState.Modified;
+                customerForUpdateDeleteGraphTest.TrackingState = TrackingState.Modified;
 
                 // Updating the order in the graph
                 var firstOrder = customerForUpdateDeleteGraphTest.Orders.Take(1).Single();
                 firstOrder.ShipCity = "Houston";
-                firstOrder.ObjectState = ObjectState.Modified;
+                firstOrder.TrackingState = TrackingState.Modified;
 
                 // Deleting one of the orders from the graph
                 var secondOrder = customerForUpdateDeleteGraphTest.Orders.Skip(1).Take(1).Single();
-                secondOrder.ObjectState = ObjectState.Deleted;
+                secondOrder.TrackingState = TrackingState.Deleted;
             }
 
             //  Query for newly created customer by ID from a new context, to ensure it's not pulling from cache
@@ -163,7 +154,7 @@ namespace Northwind.Test.IntegrationTests
 
                 // Testing changes to graph while disconncted from it's orginal DataContext
                 // Saving changes while graph was previous DataContext that was already disposed
-                customerRepository.InsertOrUpdateGraph(customerForUpdateDeleteGraphTest);
+                customerRepository.UpsertGraph(customerForUpdateDeleteGraphTest);
                 unitOfWork.SaveChanges();
 
                 customerForUpdateDeleteGraphTest = customerRepository
@@ -172,10 +163,10 @@ namespace Northwind.Test.IntegrationTests
                     .Select()
                     .SingleOrDefault();
 
-                Assert.AreEqual(customerForUpdateDeleteGraphTest.CustomerID, "LLE38");
+                Assert.AreEqual(customerForUpdateDeleteGraphTest?.CustomerID, "LLE38");
 
                 // Testing for order(2) was deleted from the graph
-                Assert.IsTrue(customerForUpdateDeleteGraphTest.Orders.Count == 1);
+                Assert.IsTrue(customerForUpdateDeleteGraphTest?.Orders.Count == 1);
 
                 // Testing that customer was updated in the graph
                 Assert.IsTrue(customerForUpdateDeleteGraphTest.City == "Houston");

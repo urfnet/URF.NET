@@ -5,10 +5,10 @@ using Northwind.Entities.Models;
 using Northwind.Service;
 using Repository.Pattern.DataContext;
 using Repository.Pattern.Ef6;
-using Repository.Pattern.Infrastructure;
 using Repository.Pattern.Repositories;
 using Repository.Pattern.UnitOfWork;
 using Service.Pattern;
+using TrackableEntities;
 
 namespace Northwind.Test.IntegrationTests
 {
@@ -28,8 +28,8 @@ namespace Northwind.Test.IntegrationTests
                 {
                     unitOfWork.BeginTransaction();
                 
-                    customerService.Insert(new Customer { CustomerID = "YODA", CompanyName = "SkyRanch", ObjectState = ObjectState.Added});
-                    customerService.Insert(new Customer { CustomerID = "JEDI", CompanyName = "SkyRanch", ObjectState = ObjectState.Added});
+                    customerService.Insert(new Customer { CustomerID = "YODA", CompanyName = "SkyRanch", TrackingState = TrackingState.Added});
+                    customerService.Insert(new Customer { CustomerID = "JEDI", CompanyName = "SkyRanch", TrackingState = TrackingState.Added});
 
                     var customer = customerService.Find("YODA");
                     Assert.AreSame(customer.CustomerID, "YODA");
@@ -42,13 +42,13 @@ namespace Northwind.Test.IntegrationTests
                     //Assert.AreSame(saveChangesAsync, 2);
 
                     // Will cause an exception, cannot insert customer with the same CustomerId (primary key constraint)
-                    customerService.Insert(new Customer { CustomerID = "JEDI", CompanyName = "SkyRanch", ObjectState = ObjectState.Added });
+                    customerService.Insert(new Customer { CustomerID = "JEDI", CompanyName = "SkyRanch", TrackingState = TrackingState.Added });
                     //save 
                     unitOfWork.SaveChanges();
 
                     unitOfWork.Commit();
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     unitOfWork.Rollback();
                 }
@@ -91,9 +91,6 @@ namespace Northwind.Test.IntegrationTests
 
             // calling dispose 1st time
             context.Dispose();
-
-            var isDisposed = (bool) GetInstanceField(typeof (DataContext), context, "_disposed");
-            Assert.IsTrue(isDisposed);
 
             // calling dispose 2nd time, should not throw any excpetions
             unitOfWork.Dispose();

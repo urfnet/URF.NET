@@ -1,14 +1,9 @@
-﻿#region
-
-using System;
+﻿using System;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.IO;
 using Microsoft.SqlServer.Management.Common;
 using Microsoft.SqlServer.Management.Smo;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-#endregion
 
 namespace Northwind.Test.IntegrationTests
 {

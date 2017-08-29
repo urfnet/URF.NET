@@ -1,19 +1,17 @@
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Repository.Pattern.DataContext;
-using Repository.Pattern.Infrastructure;
+using TrackableEntities;
+using TrackableEntities.EF6;
 
 namespace Repository.Pattern.Ef6
 {
     public class DataContext : DbContext, IDataContextAsync
     {
-        #region Private Fields
         private readonly Guid _instanceId;
-        bool _disposed;
-        #endregion Private Fields
 
         public DataContext(string nameOrConnectionString) : base(nameOrConnectionString)
         {
@@ -22,7 +20,7 @@ namespace Repository.Pattern.Ef6
             Configuration.ProxyCreationEnabled = false;
         }
 
-        public Guid InstanceId { get { return _instanceId; } }
+        public Guid InstanceId => _instanceId;
 
         /// <summary>
         ///     Saves all changes made in this context to the underlying database.
@@ -78,7 +76,7 @@ namespace Repository.Pattern.Ef6
         ///     objects written to the underlying database.</returns>
         public override async Task<int> SaveChangesAsync()
         {
-            return await this.SaveChangesAsync(CancellationToken.None);
+            return await SaveChangesAsync(CancellationToken.None);
         }
         /// <summary>
         ///     Asynchronously saves all changes made in this context to the underlying database.
@@ -111,44 +109,23 @@ namespace Repository.Pattern.Ef6
             return changesAsync;
         }
 
-        public void SyncObjectState<TEntity>(TEntity entity) where TEntity : class, IObjectState
+        public void SyncObjectState<TEntity>(TEntity entity) where TEntity : class, ITrackable
         {
-            Entry(entity).State = StateHelper.ConvertState(entity.ObjectState);
+            this.ApplyChanges(entity);
         }
 
         private void SyncObjectsStatePreCommit()
         {
-            foreach (var dbEntityEntry in ChangeTracker.Entries())
-            {
-                dbEntityEntry.State = StateHelper.ConvertState(((IObjectState)dbEntityEntry.Entity).ObjectState);
-            }
+            var entities = ChangeTracker.Entries().Select(x => x.Entity).OfType<ITrackable>();
+            this.ApplyChanges(entities);
         }
 
         public void SyncObjectsStatePostCommit()
         {
             foreach (var dbEntityEntry in ChangeTracker.Entries())
             {
-                ((IObjectState)dbEntityEntry.Entity).ObjectState = StateHelper.ConvertState(dbEntityEntry.State);
+                ((ITrackable)dbEntityEntry.Entity).TrackingState = StateHelper.ConvertState(dbEntityEntry.State);
             }
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (!_disposed)
-            {
-                if (disposing)
-                {
-                    // free other managed objects that implement
-                    // IDisposable only
-                }
-
-                // release any unmanaged objects
-                // set object references to null
-
-                _disposed = true;
-            }
-
-            base.Dispose(disposing);
         }
     }
 }

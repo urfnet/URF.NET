@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using Northwind.Entities.Models;
 using Northwind.Repository.Models;

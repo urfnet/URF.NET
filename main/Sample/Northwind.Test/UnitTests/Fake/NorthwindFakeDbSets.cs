@@ -1,12 +1,8 @@
-﻿#region
-
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Northwind.Entities.Models;
 using Repository.Pattern.Ef6;
-
-#endregion
 
 namespace Northwind.Test.Fake
 {
