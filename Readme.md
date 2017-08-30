@@ -34,4 +34,4 @@ Roadmap:
 - URF v5 Beta ETA: 10/2017
 - URF v5 RC1 ETA: 11/2017
 
-URF v5 major feature will include (self) Trackable Entities across physical boundaries without DbConext/DataConext, coming soon...!
+URF v5 major feature will include (self) Trackable Entities across physical boundaries without DbConext/DataConext, coming soon...! Tony Sneed from the [Trackable Entities Team](https://github.com/TrackableEntities/trackable-entities) will be leading this effort and collaboration..! 
