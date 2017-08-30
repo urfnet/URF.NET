@@ -13,6 +13,8 @@ namespace Repository.Pattern.Repositories
         void Insert(TEntity entity);
         void InsertRange(IEnumerable<TEntity> entities);
         void UpsertGraph(TEntity entity);
+        [Obsolete("InsertOrUpdateGraph has been deprecated. Use UpsertGraph(TEntity entity) instead.")]
+        void InsertOrUpdateGraph(TEntity entity);
         void InsertGraphRange(IEnumerable<TEntity> entities);
         void Update(TEntity entity);
         void Delete(object id);

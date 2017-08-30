@@ -186,5 +186,11 @@ namespace Repository.Pattern.Ef6
         {
             _context.SyncObjectState(entity);
         }
+
+        [Obsolete("InsertOrUpdateGraph has been deprecated. Use UpsertGraph(TEntity entity) instead.")]
+        public virtual void InsertOrUpdateGraph(TEntity entity)
+        {
+            _context.SyncObjectState(entity);
+        }
     }
 }
