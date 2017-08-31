@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+    <metadata>
+        <id>Urf.Service.Pattern</id>
+    	  <version>4.2</version>
+        <title>URF - Unit of Work &amp; Repositories Framework (Official): Service Pattern</title>
+        <authors>Long Le</authors>
+        <owners>Long Le</owners>
+        <licenseUrl>https://github.com/lelong37/urf/blob/master/LICENSE</licenseUrl>
+        <projectUrl>https://github.com/lelong37/urf</projectUrl>
+        <iconUrl>https://user-images.githubusercontent.com/2836367/29935566-cfc09d70-8e44-11e7-9d5b-f26e8341967c.jpg</iconUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>This official URF framework minimizes the surface area of your ORM technlogy from disseminating in your application. Framework provides an elegant way to implement a reusable and extensible Unit of Work and Repository pattern.</description>
+        <copyright>Copyright 2017</copyright>
+        <language>en-US</language>
+        <releaseNotes>Release notes: https://github.com/lelong37/urf/releases/tag/v4.2</releaseNotes>
+        <tags>repository unitofwork patterns</tags>
+        <dependencies>
+          <dependency id="Urf.Repository.Pattern" version="4.2" />
+        </dependencies>
+    </metadata>
+</package>
