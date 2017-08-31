@@ -1,5 +1,5 @@
 ## URF - Unit of Work & (extensible/generic) Repositories Framework ##
-### Official URF Team & Repo ###
+### The Official URF Team & Repository ###
 
 This framework (over 45K+ downloads) minimizes the surface area of your ORM technology from disseminating in your application. This framework was deliberately designed to be lightweight, small in footprint size, and non-intimidating to extend and maintain. **When we say lightweight we really mean lightweight, when using this framework with the Entity Framework provider there are only 10 classes.** This lightweight framework will allow you to elegantly, unobtrusively, and easily patternize your applications and systems with Repository, Unit of Work, and Domain Driven Design. To use Generic Repositories or not? The framework allows the freedom of both, generic repositories and the ability to add in your own domain specific repository methods.
 
