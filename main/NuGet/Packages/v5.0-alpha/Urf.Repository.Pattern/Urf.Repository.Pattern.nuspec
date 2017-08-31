@@ -13,7 +13,7 @@
         <description>This official URF framework minimizes the surface area of your ORM technlogy from disseminating in your application. Framework provides an elegant way to implement a reusable and extensible Unit of Work and Repository pattern.</description>
         <copyright>Copyright 2017</copyright>
         <language>en-US</language>
-        <releaseNotes>Release notes: https://github.com/lelong37/urf/releases/tag/v4.2</releaseNotes>
+        <releaseNotes>Release notes: https://github.com/lelong37/urf/releases/tag/v5.0-alpha</releaseNotes>
         <tags>repository unitofwork patterns</tags>
         <dependencies>
           <dependency id="TrackableEntities.Common" version="2.5.6" />
