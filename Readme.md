@@ -33,6 +33,13 @@ Subscribe to updates: [@lelong37](http://twitter.com/lelong37)
 
 ### Roadmap ###
 
+URF v5 will have fully Trackable Entites with Trackable Entites and Observable Entities both for server-side and client-side e.g Angular, React, Vue.js, etc.
+
+Status: Currently updating Sample Northind application.
+
+https://github.com/TrackableEntities/trackable-entities-js
+https://github.com/TrackableEntities/observable-entities-js
+
 - URF v5 Alpha ETA: 9/2017 - https://github.com/lelong37/URF/releases/tag/v5.0-alpha
 - URF v5 Beta ETA: 10/2017 - https://github.com/lelong37/URF/releases/tag/v5.0-alpha
 - URF v5 RC1 ETA: 10/2017 - https://github.com/lelong37/URF/releases/tag/v5.0-alpha
