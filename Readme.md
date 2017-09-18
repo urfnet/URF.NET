@@ -37,7 +37,7 @@ URF v5 will have fully Trackable Entites with Trackable Entites and Observable E
 
 Status: Currently updating Sample Northind application.
 
-https://github.com/TrackableEntities/trackable-entities-js
+https://github.com/TrackableEntities/trackable-entities-js  
 https://github.com/TrackableEntities/observable-entities-js
 
 - URF v5 Alpha ETA: 9/2017 - https://github.com/lelong37/URF/releases/tag/v5.0-alpha
