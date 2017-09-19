@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Urf.Repository.Pattern.Ef6</name>
+    </assembly>
+    <members>
+        <member name="M:Repository.Pattern.Ef6.DataContext.SaveChanges">
+            <summary>
+                Saves all changes made in this context to the underlying database.
+            </summary>
+            <exception cref="T:System.Data.Entity.Infrastructure.DbUpdateException">
+                An error occurred sending updates to the database.</exception>
+            <exception cref="T:System.Data.Entity.Infrastructure.DbUpdateConcurrencyException">
+                A database command did not affect the expected number of rows. This usually
+                indicates an optimistic concurrency violation; that is, a row has been changed
+                in the database since it was queried.</exception>
+            <exception cref="T:System.Data.Entity.Validation.DbEntityValidationException">
+                The save was aborted because validation of entity property values failed.</exception>
+            <exception cref="T:System.NotSupportedException">
+                An attempt was made to use unsupported behavior such as executing multiple
+                asynchronous commands concurrently on the same context instance.</exception>
+            <exception cref="T:System.ObjectDisposedException">
+                The context or connection have been disposed.</exception>
+            <exception cref="T:System.InvalidOperationException">
+                Some error occurred attempting to process entities in the context either
+                before or after sending commands to the database.</exception>
+            <seealso cref="M:System.Data.Entity.DbContext.SaveChanges"/>
+            <returns>The number of objects written to the underlying database.</returns>
+        </member>
+        <member name="M:Repository.Pattern.Ef6.DataContext.SaveChangesAsync">
+            <summary>
+                Asynchronously saves all changes made in this context to the underlying database.
+            </summary>
+            <exception cref="T:System.Data.Entity.Infrastructure.DbUpdateException">
+                An error occurred sending updates to the database.</exception>
+            <exception cref="T:System.Data.Entity.Infrastructure.DbUpdateConcurrencyException">
+                A database command did not affect the expected number of rows. This usually
+                indicates an optimistic concurrency violation; that is, a row has been changed
+                in the database since it was queried.</exception>
+            <exception cref="T:System.Data.Entity.Validation.DbEntityValidationException">
+                The save was aborted because validation of entity property values failed.</exception>
+            <exception cref="T:System.NotSupportedException">
+                An attempt was made to use unsupported behavior such as executing multiple
+                asynchronous commands concurrently on the same context instance.</exception>
+            <exception cref="T:System.ObjectDisposedException">
+                The context or connection have been disposed.</exception>
+            <exception cref="T:System.InvalidOperationException">
+                Some error occurred attempting to process entities in the context either
+                before or after sending commands to the database.</exception>
+            <seealso cref="M:System.Data.Entity.DbContext.SaveChangesAsync"/>
+            <returns>A task that represents the asynchronous save operation.  The 
+                <see cref="!:Task.Result">Task.Result</see> contains the number of 
+                objects written to the underlying database.</returns>
+        </member>
+        <member name="M:Repository.Pattern.Ef6.DataContext.SaveChangesAsync(System.Threading.CancellationToken)">
+            <summary>
+                Asynchronously saves all changes made in this context to the underlying database.
+            </summary>
+            <exception cref="T:System.Data.Entity.Infrastructure.DbUpdateException">
+                An error occurred sending updates to the database.</exception>
+            <exception cref="T:System.Data.Entity.Infrastructure.DbUpdateConcurrencyException">
+                A database command did not affect the expected number of rows. This usually
+                indicates an optimistic concurrency violation; that is, a row has been changed
+                in the database since it was queried.</exception>
+            <exception cref="T:System.Data.Entity.Validation.DbEntityValidationException">
+                The save was aborted because validation of entity property values failed.</exception>
+            <exception cref="T:System.NotSupportedException">
+                An attempt was made to use unsupported behavior such as executing multiple
+                asynchronous commands concurrently on the same context instance.</exception>
+            <exception cref="T:System.ObjectDisposedException">
+                The context or connection have been disposed.</exception>
+            <exception cref="T:System.InvalidOperationException">
+                Some error occurred attempting to process entities in the context either
+                before or after sending commands to the database.</exception>
+            <seealso cref="M:System.Data.Entity.DbContext.SaveChangesAsync"/>
+            <returns>A task that represents the asynchronous save operation.  The 
+                <see cref="!:Task.Result">Task.Result</see> contains the number of 
+                objects written to the underlying database.</returns>
+        </member>
+    </members>
+</doc>
