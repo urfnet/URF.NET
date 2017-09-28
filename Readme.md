@@ -182,10 +182,10 @@ public class CustomerController : ODataController
 ```
 
 #### Implementing Domain Logic with URF Service Pattern ###
-All methods that are exposed from Repository<TEntity> in Service<TEntity> are overridable to add any pre or post domain/business logic. Domain business logic should be in the Service layer and not in Controllers or Repositories for separation of concerns.
+All methods that are exposed from `Repository<TEntity>` in `Service<TEntity>` are overridable to add any pre or post domain/business logic. Domain business logic should be in the Service layer and not in Controllers or Repositories for separation of concerns.
 
-1. Create an Interface e.g. ICustomerService, which should always inherit IService<TEnttiy> e.g. IService<Customer>
-2. Implement the concrete implementation for your Interface e.g. CustomerService which implements ICustomerService
+1. Create an Interface e.g. `ICustomerService`, which should always inherit `IService<TEnttiy>` e.g. `IService<Customer>`
+2. Implement the concrete implementation for your Interface e.g. `CustomerService` which implements `ICustomerService`
 3. If using DI & IoC, don't forget to wire up the binding of your Interface and Implementation e.g. `container.RegisterType<ICustomerService, CustomerService>()`, see next example for more details on wiring up DI & IoC.
 
 ```csharp
