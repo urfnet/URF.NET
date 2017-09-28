@@ -9,7 +9,7 @@ Live demo: [longle.azurewebsites.net](http://longle.azurewebsites.net)
 
 #### URF sample and usage in ASP.NET Web API ####
 
-```#
+```csharp
 public class CustomerController : ODataController
 {
     private readonly ICustomerService _customerService;
