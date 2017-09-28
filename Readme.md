@@ -189,7 +189,6 @@ public class CustomerController : ODataController
 ```csharp
 public class UnityConfig
 {
-    #region Unity Container
     private static Lazy<IUnityContainer> container = new Lazy<IUnityContainer>(() =>
     {
         var container = new UnityContainer();
@@ -197,24 +196,13 @@ public class UnityConfig
         return container;
     });
 
-    /// <summary>
-    /// Gets the configured Unity container.
-    /// </summary>
     public static IUnityContainer GetConfiguredContainer()
     {
         return container.Value;
     }
-    #endregion
 
-    /// <summary>Registers the type mappings with the Unity container.</summary>
-    /// <param name="container">The unity container to configure.</param>
-    /// <remarks>There is no need to register concrete types such as controllers or API controllers (unless you want to 
-    /// change the defaults), as Unity allows resolving a concrete type even if it was not previously registered.</remarks>
     public static void RegisterTypes(IUnityContainer container)
     {
-        // NOTE: To load from web.config uncomment the line below. Make sure to add a Microsoft.Practices.Unity.Configuration to the using statements.
-        // container.LoadConfiguration();
-
         container
             .RegisterType<IDataContextAsync, NorthwindContext>(new PerRequestLifetimeManager())
             .RegisterType<IUnitOfWorkAsync, UnitOfWork>(new PerRequestLifetimeManager())
@@ -242,4 +230,3 @@ https://github.com/TrackableEntities/observable-entities-js
 - URF v5 RC1 ETA: 10/2017 - https://github.com/lelong37/URF/releases/tag/v5.0-alpha
 
 URF v5 major feature will include (self) Trackable Entities across physical boundaries without DbConext/DataConext, coming soon...! [Tony Sneed](https://twitter.com/tonysneed) from the [Trackable Entities Team](https://github.com/TrackableEntities/trackable-entities) will be leading this effort and collaboration..! Please tweet us [@tonysneed](https://twitter.com/tonysneed), [@lelong37](https://twitter.com/lelong37) for any questions or comments. Special thanks [@reddy6ue](https://github.com/reddy6ue) for helping out with migrating our docs from CodePlex.
-
