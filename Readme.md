@@ -1,5 +1,6 @@
 ## URF - Unit of Work & (extensible/generic) Repositories Framework ##
 ### The Official URF Team & Repo | URF Docs: https://github.com/lelong37/URF/wiki ###
+### Subscribe to URF updates: [@lelong37](http://twitter.com/lelong37) ###
 
 This framework ([over 60K+ downloads](https://genericunitofworkandrepositories.codeplex.com)) minimizes the surface area of your ORM technology from disseminating in your application. This framework was deliberately designed to be lightweight, small in footprint size, and non-intimidating to extend and maintain. **When we say lightweight we really mean lightweight, when using this framework with the Entity Framework provider there are only 10 classes.** This lightweight framework will allow you to elegantly, unobtrusively, and easily patternize your applications and systems with Repository, Unit of Work, and Domain Driven Design. To use Generic Repositories or not? The framework allows the freedom of both, generic repositories and the ability to add in your own domain specific repository methods.
 
@@ -7,25 +8,181 @@ Live demo: [longle.azurewebsites.net](http://longle.azurewebsites.net)
 
 ![Architecture Overview (Sample Northwind Application & Framework)](https://lelong37.files.wordpress.com/2015/01/2015-01-03_19-15-001.png)
 
-1. UI (Presentation) Layer 
+URF sample and usage in ASP.NET Web API
 
-          >>ASP.NET MVC - (Sample app: Northwind.Web) 
-          >>Kendo UI - (Sample app: Northwind.Web) 
-          >>AngularJS - (Sample app: Northwind.Web) 
-  
-2. Service and Data Layer 
+```csharp
+public class CustomerController : ODataController
+{
+    private readonly ICustomerService _customerService;
+    private readonly IUnitOfWorkAsync _unitOfWorkAsync;
 
-          >>Repository Pattern - Framework (Repository.Pattern, Repository.Pattern.Ef6, Northwind.Repository)   
-          >>Unit of Work Pattern - Framework (Repository.Pattern, Repository.Pattern.EF6, Northwind.Repository)   
-          >>Entity Framework   
-          >>Service Pattern - Framework (Service.Pattern, Northwind.Service) 
-  
-3. Domain Driven Design (*slated for release v4.0.0) 
+    public CustomerController(
+        IUnitOfWorkAsync unitOfWorkAsync,
+        ICustomerService customerService)
+    {
+        _unitOfWorkAsync = unitOfWorkAsync;
+        _customerService = customerService;
+    }
 
-          >>Domain Events   
-          >>*more to come 
-          
-Subscribe to updates: [@lelong37](http://twitter.com/lelong37)
+    // GET: odata/Customers
+    [HttpGet]
+    [Queryable]
+    public IQueryable<Customer> GetCustomer()
+    {
+        return _customerService.Queryable();
+    }
+
+    // GET: odata/Customers(5)
+    [Queryable]
+    public SingleResult<Customer> GetCustomer([FromODataUri] string key)
+    {
+        return SingleResult.Create(_customerService.Queryable().Where(t => t.CustomerID == key));
+    }
+
+    // PUT: odata/Customers(5)
+    public async Task<IHttpActionResult> Put(string key, Customer customer)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        if (key != customer.CustomerID)
+        {
+            return BadRequest();
+        }
+
+        customer.TrackingState = TrackingState.Modified;
+        _customerService.Update(customer);
+
+        try
+        {
+            await _unitOfWorkAsync.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!CustomerExists(key))
+            {
+                return NotFound();
+            }
+            throw;
+        }
+
+        return Updated(customer);
+    }
+
+    // POST: odata/Customers
+    public async Task<IHttpActionResult> Post(Customer customer)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        customer.TrackingState = TrackingState.Added;
+        _customerService.Insert(customer);
+
+        try
+        {
+            await _unitOfWorkAsync.SaveChangesAsync();
+        }
+        catch (DbUpdateException)
+        {
+            if (CustomerExists(customer.CustomerID))
+            {
+                return Conflict();
+            }
+            throw;
+        }
+
+        return Created(customer);
+    }
+
+    //// PATCH: odata/Customers(5)
+    [AcceptVerbs("PATCH", "MERGE")]
+    public async Task<IHttpActionResult> Patch([FromODataUri] string key, Delta<Customer> patch)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        Customer customer = await _customerService.FindAsync(key);
+
+        if (customer == null)
+        {
+            return NotFound();
+        }
+
+        patch.Patch(customer);
+        customer.TrackingState = TrackingState.Modified;
+
+        try
+        {
+            await _unitOfWorkAsync.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!CustomerExists(key))
+            {
+                return NotFound();
+            }
+            throw;
+        }
+
+        return Updated(customer);
+    }
+
+    // DELETE: odata/Customers(5)
+    public async Task<IHttpActionResult> Delete(string key)
+    {
+        Customer customer = await _customerService.FindAsync(key);
+
+        if (customer == null)
+        {
+            return NotFound();
+        }
+
+        customer.TrackingState = TrackingState.Deleted;
+
+        _customerService.Delete(customer);
+        await _unitOfWorkAsync.SaveChangesAsync();
+
+        return StatusCode(HttpStatusCode.NoContent);
+    }
+
+    // GET: odata/Customers(5)/CustomerDemographics
+    [Queryable]
+    public IQueryable<CustomerDemographic> GetCustomerDemographics([FromODataUri] string key)
+    {
+        return
+            _customerService.Queryable()
+                .Where(m => m.CustomerID == key)
+                .SelectMany(m => m.CustomerDemographics);
+    }
+
+    // GET: odata/Customers(5)/Orders
+    [Queryable]
+    public IQueryable<Order> GetOrders([FromODataUri] string key)
+    {
+        return _customerService.Queryable().Where(m => m.CustomerID == key).SelectMany(m => m.Orders);
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            _unitOfWorkAsync.Dispose();
+        }
+        base.Dispose(disposing);
+    }
+
+    private bool CustomerExists(string key)
+    {
+        return _customerService.Query(e => e.CustomerID == key).Select().Any();
+    }
+}
+```
 
 ### Roadmap ###
 
