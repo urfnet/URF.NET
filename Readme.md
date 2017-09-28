@@ -5,6 +5,9 @@ This framework ([over 60K+ downloads](https://genericunitofworkandrepositories.c
 
 Live demo: [longle.azurewebsites.net](http://longle.azurewebsites.net)
 
+### Architecture Overview (Sample Northwind Application with URF Framework) ###
+![Architecture Overview (Sample Northwind Application & Framework)](https://lelong37.files.wordpress.com/2015/01/2015-01-03_19-15-001.png)
+
 #### URF sample and usage in ASP.NET Web API ####
 
 ```csharp
@@ -285,6 +288,3 @@ https://github.com/TrackableEntities/observable-entities-js
 - URF v5 RC1 ETA: 10/2017 - https://github.com/lelong37/URF/releases/tag/v5.0-alpha
 
 URF v5 major feature will include (self) Trackable Entities across physical boundaries without DbConext/DataConext, coming soon...! [Tony Sneed](https://twitter.com/tonysneed) from the [Trackable Entities Team](https://github.com/TrackableEntities/trackable-entities) will be leading this effort and collaboration..! Please tweet us [@tonysneed](https://twitter.com/tonysneed), [@lelong37](https://twitter.com/lelong37) for any questions or comments. Special thanks [@reddy6ue](https://github.com/reddy6ue) for helping out with migrating our docs from CodePlex.
-
-### Architecture Overview (Sample Northwind Application with URF Framework) ###
-![Architecture Overview (Sample Northwind Application & Framework)](https://lelong37.files.wordpress.com/2015/01/2015-01-03_19-15-001.png)
