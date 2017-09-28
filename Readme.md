@@ -1,6 +1,5 @@
 ## URF - Unit of Work & (extensible/generic) Repositories Framework ##
-### The Official URF Team & Repository ###
-**URF Docs**: https://github.com/lelong37/URF/wiki - thanks [@reddy6ue](https://github.com/reddy6ue)  
+### The Official URF Team & Repository | Docs: https://github.com/lelong37/URF/wiki###
 
 This framework ([over 60K+ downloads](https://genericunitofworkandrepositories.codeplex.com)) minimizes the surface area of your ORM technology from disseminating in your application. This framework was deliberately designed to be lightweight, small in footprint size, and non-intimidating to extend and maintain. **When we say lightweight we really mean lightweight, when using this framework with the Entity Framework provider there are only 10 classes.** This lightweight framework will allow you to elegantly, unobtrusively, and easily patternize your applications and systems with Repository, Unit of Work, and Domain Driven Design. To use Generic Repositories or not? The framework allows the freedom of both, generic repositories and the ability to add in your own domain specific repository methods.
 
@@ -41,4 +40,5 @@ https://github.com/TrackableEntities/observable-entities-js
 - URF v5 Beta ETA: 10/2017 - https://github.com/lelong37/URF/releases/tag/v5.0-alpha
 - URF v5 RC1 ETA: 10/2017 - https://github.com/lelong37/URF/releases/tag/v5.0-alpha
 
-URF v5 major feature will include (self) Trackable Entities across physical boundaries without DbConext/DataConext, coming soon...! [Tony Sneed](https://twitter.com/tonysneed) from the [Trackable Entities Team](https://github.com/TrackableEntities/trackable-entities) will be leading this effort and collaboration..! Please tweet us [@tonysneed](https://twitter.com/tonysneed), [@lelong37](https://twitter.com/lelong37) for any questions or comments.
+URF v5 major feature will include (self) Trackable Entities across physical boundaries without DbConext/DataConext, coming soon...! [Tony Sneed](https://twitter.com/tonysneed) from the [Trackable Entities Team](https://github.com/TrackableEntities/trackable-entities) will be leading this effort and collaboration..! Please tweet us [@tonysneed](https://twitter.com/tonysneed), [@lelong37](https://twitter.com/lelong37) for any questions or comments. Special thanks [@reddy6ue](https://github.com/reddy6ue) for helping out with migrating our docs from CodePlex.
+
