@@ -50,7 +50,7 @@ namespace Repository.Pattern.Ef6
 
         public virtual void Insert(TEntity entity)
         {
-            entity.TrackingState = TrackingState.Added;;
+            entity.TrackingState = TrackingState.Added;
             _dbSet.Attach(entity);
             _context.SyncObjectState(entity);
         }
