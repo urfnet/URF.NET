@@ -75,9 +75,9 @@ namespace Repository.Pattern.Ef6
             _context.SyncObjectState(entity);
         }
 
-        public virtual void Delete(object id)
+        public virtual void Delete(params object[] keyValues)
         {
-            var entity = _dbSet.Find(id);
+            var entity = _dbSet.Find(keyValues);
             Delete(entity);
         }
 
