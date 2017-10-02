@@ -17,7 +17,7 @@ namespace Repository.Pattern.Repositories
         void InsertOrUpdateGraph(TEntity entity);
         void InsertGraphRange(IEnumerable<TEntity> entities);
         void Update(TEntity entity);
-        void Delete(object id);
+        void Delete(params object[] keyValues);
         void Delete(TEntity entity);
         IQueryFluent<TEntity> Query(IQueryObject<TEntity> queryObject);
         IQueryFluent<TEntity> Query(Expression<Func<TEntity, bool>> query);
