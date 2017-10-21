@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Northwind.Entities.Models;
-using Repository.Pattern.DataContext;
 using Repository.Pattern.Ef6;
 using Repository.Pattern.Repositories;
 using Repository.Pattern.UnitOfWork;
@@ -64,7 +63,7 @@ namespace Northwind.Test.IntegrationTests
                     }
                 };
 
-                orderRepository.UpsertGraph(orderTest);
+                //orderRepository.UpsertGraph(orderTest);
 
                 try
                 {

@@ -9,39 +9,42 @@ using LinqKit;
 using Repository.Pattern.Repositories;
 using Repository.Pattern.UnitOfWork;
 using TrackableEntities;
+using TrackableEntities.EF6;
 
 namespace Repository.Pattern.Ef6
 {
     public class Repository<TEntity> : IRepositoryAsync<TEntity> where TEntity : class, ITrackable
     {
-        private readonly DbContext _context;
-        private readonly DbSet<TEntity> _dbSet;
-        private readonly IUnitOfWorkAsync _unitOfWork;
+        protected readonly DbContext Context;
+        protected readonly DbSet<TEntity> Set;
+        protected readonly IUnitOfWorkAsync UnitOfWork;
 
         public Repository(DbContext context, IUnitOfWorkAsync unitOfWork)
         {
-            _context = context;
-            _unitOfWork = unitOfWork;
-
-            if (context is DbContext dbContext)
-            {
-                _dbSet = dbContext.Set<TEntity>();
-            }
+            UnitOfWork = unitOfWork;
+            Context = context;
+            Set = context.Set<TEntity>();
         }
 
         public virtual TEntity Find(params object[] keyValues)
         {
-            return _dbSet.Find(keyValues);
+            return Set.Find(keyValues);
         }
 
         public virtual IQueryable<TEntity> SelectQuery(string query, params object[] parameters)
         {
-            return _dbSet.SqlQuery(query, parameters).AsQueryable();
+            return Set.SqlQuery(query, parameters).AsQueryable();
         }
 
         public virtual void Insert(TEntity entity)
         {
             entity.TrackingState = TrackingState.Added;
+            Context.ApplyChanges(entity);
+        }
+
+        public void ApplyChanges(TEntity entity)
+        {
+            Context.ApplyChanges(entity);
         }
 
         public virtual void InsertRange(IEnumerable<TEntity> entities)
@@ -52,68 +55,45 @@ namespace Repository.Pattern.Ef6
             }
         }
 
-        public virtual void InsertGraphRange(IEnumerable<TEntity> entities)
-        {
-            foreach (var entity in entities)
-            {
-                Insert(entity);
-            }
-        }
+        [Obsolete("InsertGraphRange has been deprecated. Instead call Insert to set TrackingState on enttites in a graph.")]
+        public virtual void InsertGraphRange(IEnumerable<TEntity> entities) => InsertRange(entities);
 
         public virtual void Update(TEntity entity)
         {
             entity.TrackingState = TrackingState.Modified;
-        }
-
-        public virtual void Delete(object id)
-        {
-            var entity = _dbSet.Find(id);
-            Delete(entity);
+            Context.ApplyChanges(entity);
         }
 
         public virtual void Delete(TEntity entity)
         {
             entity.TrackingState = TrackingState.Deleted;
+            Context.ApplyChanges(entity);
         }
 
-        public IQueryFluent<TEntity> Query()
+        public virtual void Delete(object id)
         {
-            return new QueryFluent<TEntity>(this);
+            var entity = Set.Find(id);
+            Delete(entity);
         }
 
-        public virtual IQueryFluent<TEntity> Query(IQueryObject<TEntity> queryObject)
-        {
-            return new QueryFluent<TEntity>(this, queryObject);
-        }
+        public IQueryFluent<TEntity> Query() => new QueryFluent<TEntity>(this);
 
-        public virtual IQueryFluent<TEntity> Query(Expression<Func<TEntity, bool>> query)
-        {
-            return new QueryFluent<TEntity>(this, query);
-        }
+        public virtual IQueryFluent<TEntity> Query(IQueryObject<TEntity> queryObject) => new QueryFluent<TEntity>(this, queryObject);
 
-        public IQueryable<TEntity> Queryable()
-        {
-            return _dbSet;
-        }
+        public virtual IQueryFluent<TEntity> Query(Expression<Func<TEntity, bool>> query) => new QueryFluent<TEntity>(this, query);
 
-        public IRepository<T> GetRepository<T>() where T : class, ITrackable
-        {
-            return _unitOfWork.Repository<T>();
-        }
+        public IQueryable<TEntity> Queryable() => Set;
 
-        public virtual async Task<TEntity> FindAsync(params object[] keyValues)
-        {
-            return await _dbSet.FindAsync(keyValues);
-        }
+        public IRepository<T> GetRepository<T>() where T : class, ITrackable => UnitOfWork.Repository<T>();
 
-        public virtual async Task<TEntity> FindAsync(CancellationToken cancellationToken, params object[] keyValues)
-        {
-            return await _dbSet.FindAsync(cancellationToken, keyValues);
-        }
+        public virtual async Task<TEntity> FindAsync(params object[] keyValues) => await Set.FindAsync(keyValues);
+
+        public virtual async Task<TEntity> FindAsync(CancellationToken cancellationToken, params object[] keyValues) => await Set.FindAsync(cancellationToken, keyValues);
 
         public virtual async Task<bool> DeleteAsync(params object[] keyValues)
         {
-            return await DeleteAsync(CancellationToken.None, keyValues);
+            if (await DeleteAsync(CancellationToken.None, keyValues)) return true;
+            return false;
         }
 
         public virtual async Task<bool> DeleteAsync(CancellationToken cancellationToken, params object[] keyValues)
@@ -136,7 +116,7 @@ namespace Repository.Pattern.Ef6
             int? page = null,
             int? pageSize = null)
         {
-            IQueryable<TEntity> query = _dbSet;
+            IQueryable<TEntity> query = Set;
 
             if (includes != null)
             {
@@ -167,14 +147,10 @@ namespace Repository.Pattern.Ef6
             return await Select(filter, orderBy, includes, page, pageSize).ToListAsync();
         }
 
-        [Obsolete("InsertOrUpdateGraph has been deprecated. Instead set TrackingState on enttites in a graph.")]
-        public virtual void UpsertGraph(TEntity entity)
-        {
-        }
-
-        [Obsolete("InsertOrUpdateGraph has been deprecated. Instead set TrackingState on enttites in a graph.")]
+        [Obsolete("InsertOrUpdateGraph has been deprecated.  Instead set TrackingState to Added or Modified and call ApplyChanges.")]
         public virtual void InsertOrUpdateGraph(TEntity entity)
         {
+            ApplyChanges(entity);
         }
     }
 }

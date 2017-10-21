@@ -15,22 +15,17 @@ namespace Repository.Pattern.Ef6
 {
     public class UnitOfWork : IUnitOfWorkAsync
     {
-        private readonly DbContext _dbContext;
-        private DbTransaction _transaction;
-        private Dictionary<string, dynamic> _repositories;
+        private readonly DbContext _context;
+        protected DbTransaction Transaction;
+        protected Dictionary<string, dynamic> Repositories;
 
-        public UnitOfWork(DbContext dataContext)
+        public UnitOfWork(DbContext context)
         {
-            _dbContext = dataContext;
-            _repositories = new Dictionary<string, dynamic>();
+            _context = context;
+            Repositories = new Dictionary<string, dynamic>();
         }
 
-        public int SaveChanges()
-        {
-            return _dbContext.SaveChanges();
-        }
-
-        public IRepository<TEntity> Repository<TEntity>() where TEntity : class, ITrackable
+        public virtual IRepository<TEntity> Repository<TEntity>() where TEntity : class, ITrackable
         {
             if (ServiceLocator.IsLocationProviderSet)
             {
@@ -40,61 +35,63 @@ namespace Repository.Pattern.Ef6
             return RepositoryAsync<TEntity>();
         }
 
+        public virtual int SaveChanges() => _context.SaveChanges();
+
         public Task<int> SaveChangesAsync()
         {
-            return _dbContext.SaveChangesAsync();
+            return _context.SaveChangesAsync();
         }
 
-        public Task<int> SaveChangesAsync(CancellationToken cancellationToken)
+        public virtual Task<int> SaveChangesAsync(CancellationToken cancellationToken)
         {
-            return _dbContext.SaveChangesAsync(cancellationToken);
+            return _context.SaveChangesAsync(cancellationToken);
         }
 
-        public IRepositoryAsync<TEntity> RepositoryAsync<TEntity>() where TEntity : class, ITrackable
+        public virtual IRepositoryAsync<TEntity> RepositoryAsync<TEntity>() where TEntity : class, ITrackable
         {
             if (ServiceLocator.IsLocationProviderSet)
             {
                 return ServiceLocator.Current.GetInstance<IRepositoryAsync<TEntity>>();
             }
 
-            if (_repositories == null)
+            if (Repositories == null)
             {
-                _repositories = new Dictionary<string, dynamic>();
+                Repositories = new Dictionary<string, dynamic>();
             }
 
             var type = typeof(TEntity).Name;
 
-            if (_repositories.ContainsKey(type))
+            if (Repositories.ContainsKey(type))
             {
-                return (IRepositoryAsync<TEntity>)_repositories[type];
+                return (IRepositoryAsync<TEntity>)Repositories[type];
             }
 
             var repositoryType = typeof(Repository<>);
 
-            _repositories.Add(type, Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)), _dbContext, this));
+            Repositories.Add(type, Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)), _context, this));
 
-            return _repositories[type];
+            return Repositories[type];
         }
 
-        public void BeginTransaction(IsolationLevel isolationLevel = IsolationLevel.Unspecified)
+        public virtual void BeginTransaction(IsolationLevel isolationLevel = IsolationLevel.Unspecified)
         {
-            var objectContext = ((IObjectContextAdapter) _dbContext).ObjectContext;
+            var objectContext = ((IObjectContextAdapter) _context).ObjectContext;
             if (objectContext.Connection.State != ConnectionState.Open)
             {
                 objectContext.Connection.Open();
             }
-            _transaction = objectContext.Connection.BeginTransaction(isolationLevel);
+            Transaction = objectContext.Connection.BeginTransaction(isolationLevel);
         }
 
-        public bool Commit()
+        public virtual bool Commit()
         {
-            _transaction.Commit();
+            Transaction.Commit();
             return true;
         }
 
-        public void Rollback()
+        public virtual void Rollback()
         {
-            _transaction.Rollback();
+            Transaction.Rollback();
         }
     }
 }

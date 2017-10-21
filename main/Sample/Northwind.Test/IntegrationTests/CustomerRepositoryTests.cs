@@ -5,7 +5,6 @@ using Northwind.Entities.Models;
 using Northwind.Repository.Models;
 using Northwind.Repository.Repositories;
 using Northwind.Service;
-using Repository.Pattern.DataContext;
 using Repository.Pattern.Ef6;
 using Repository.Pattern.Repositories;
 using Repository.Pattern.UnitOfWork;
@@ -72,7 +71,7 @@ namespace Northwind.Test.IntegrationTests
                 IUnitOfWorkAsync unitOfWork = new UnitOfWork(context);
                 IRepositoryAsync<Customer> customerRepository = new Repository<Customer>(context, unitOfWork);
 
-                var customerForInsertGraphTest = new Customer
+                var customer = new Customer
                 {
                     CustomerID = "LLE38",
                     CompanyName = "CBRE",
@@ -104,7 +103,7 @@ namespace Northwind.Test.IntegrationTests
                     }
                 };
 
-                customerRepository.UpsertGraph(customerForInsertGraphTest);
+                unitOfWork.Repository<Customer>().ApplyChanges(customer);
                 unitOfWork.SaveChanges();
             }
 
@@ -154,7 +153,7 @@ namespace Northwind.Test.IntegrationTests
 
                 // Testing changes to graph while disconncted from it's orginal DataContext
                 // Saving changes while graph was previous DataContext that was already disposed
-                customerRepository.UpsertGraph(customerForUpdateDeleteGraphTest);
+                customerRepository.ApplyChanges(customerForUpdateDeleteGraphTest);
                 unitOfWork.SaveChanges();
 
                 customerForUpdateDeleteGraphTest = customerRepository

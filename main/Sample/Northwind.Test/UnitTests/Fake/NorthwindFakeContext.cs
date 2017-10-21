@@ -1,7 +1,6 @@
 ﻿using Northwind.Entities.Models;
-using Repository.Pattern.Ef6;
 
-namespace Northwind.Test.Fake
+namespace Northwind.Test.UnitTests.Fake
 {
     public class NorthwindFakeContext : FakeDbContext
     {

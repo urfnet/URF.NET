@@ -15,7 +15,9 @@ namespace Service.Pattern
         IQueryable<TEntity> SelectQuery(string query, params object[] parameters);
         void Insert(TEntity entity);
         void InsertRange(IEnumerable<TEntity> entities);
-        void UpsertGraph(TEntity entity);
+        void ApplyChanges(TEntity entity);
+        [Obsolete("InsertOrUpdateGraph has been deprecated.  Instead set TrackingState to Added or Modified and call ApplyChanges.")]
+        void InsertOrUpdateGraph(TEntity entity);
         void InsertGraphRange(IEnumerable<TEntity> entities);
         void Update(TEntity entity);
         void Delete(object id);

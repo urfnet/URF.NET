@@ -71,8 +71,6 @@
   <ItemGroup>
     <Compile Include="DataContext.cs" />
     <Compile Include="Entity.cs" />
-    <Compile Include="FakeDbContext.cs" />
-    <Compile Include="FakeDbSet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryFluent.cs" />
     <Compile Include="QueryObject.cs" />

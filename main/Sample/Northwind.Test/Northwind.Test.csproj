@@ -95,6 +95,10 @@
     <Compile Include="IntegrationTests\ProductRepositoryTest.cs" />
     <Compile Include="IntegrationTests\OrderRepositoryTest.cs" />
     <Compile Include="IntegrationTests\Utility.cs" />
+    <Compile Include="UnitTests\Fake\FakeDbContext.cs" />
+    <Compile Include="UnitTests\Fake\FakeDbSet.cs" />
+    <Compile Include="UnitTests\Fake\FakeRepository.cs" />
+    <Compile Include="UnitTests\Fake\FakeUnitofWork.cs" />
     <Compile Include="UnitTests\Fake\NorthwindFakeContext.cs" />
     <Compile Include="UnitTests\Fake\NorthwindFakeDbSets.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

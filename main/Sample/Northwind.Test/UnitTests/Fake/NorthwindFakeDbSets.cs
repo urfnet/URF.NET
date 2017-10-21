@@ -2,9 +2,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Northwind.Entities.Models;
-using Repository.Pattern.Ef6;
 
-namespace Northwind.Test.Fake
+namespace Northwind.Test.UnitTests.Fake
 {
     public class CategoryDbSet : FakeDbSet<Category>
     {
@@ -98,7 +97,7 @@ namespace Northwind.Test.Fake
 
         public override Task<Product> FindAsync(CancellationToken cancellationToken, params object[] keyValues)
         {
-            return new Task<Product>(() => this.SingleOrDefault(t => t.ProductID == (int) keyValues.FirstOrDefault()));
+            return Task.FromResult(Find(keyValues));
         }
     }
 
