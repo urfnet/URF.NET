@@ -32,15 +32,20 @@ namespace Northwind.Test.IntegrationTests
         [TestMethod]
         public void InsertProducts()
         {
-            using (IDataContextAsync context = new NorthwindContext())
-            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+            using (var context = new NorthwindContext())
             {
+                IUnitOfWorkAsync unitOfWork = new UnitOfWork(context);
                 IRepositoryAsync<Product> productRepository = new Repository<Product>(context, unitOfWork);
 
                 var newProducts = new[]
                 {
                     new Product {ProductName = "One", Discontinued = false, TrackingState = TrackingState.Added},
-                    new Product {ProductName = "12345678901234567890123456789012345678901234567890", Discontinued = true, TrackingState = TrackingState.Added},
+                    new Product
+                    {
+                        ProductName = "12345678901234567890123456789012345678901234567890",
+                        Discontinued = true,
+                        TrackingState = TrackingState.Added
+                    },
                     new Product {ProductName = "Three", Discontinued = true, TrackingState = TrackingState.Added},
                     new Product {ProductName = "Four", Discontinued = true, TrackingState = TrackingState.Added},
                     new Product {ProductName = "Five", Discontinued = true, TrackingState = TrackingState.Added}

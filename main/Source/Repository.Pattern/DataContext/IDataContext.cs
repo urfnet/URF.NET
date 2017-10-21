@@ -3,6 +3,7 @@ using TrackableEntities;
 
 namespace Repository.Pattern.DataContext
 {
+    [Obsolete("IDataContext has been deprecated. Instead use UnitOfWork which uses DbContext.")]
     public interface IDataContext : IDisposable
     {
         int SaveChanges();

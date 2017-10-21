@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Data.Entity.Core.Objects;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Practices.ServiceLocation;
-using Repository.Pattern.DataContext;
 using Repository.Pattern.Repositories;
 using Repository.Pattern.UnitOfWork;
 using TrackableEntities;
@@ -16,73 +15,19 @@ namespace Repository.Pattern.Ef6
 {
     public class UnitOfWork : IUnitOfWorkAsync
     {
-        private IDataContextAsync _dataContext;
-        private bool _disposed;
-        private ObjectContext _objectContext;
+        private readonly DbContext _dbContext;
         private DbTransaction _transaction;
         private Dictionary<string, dynamic> _repositories;
 
-        public UnitOfWork(IDataContextAsync dataContext)
+        public UnitOfWork(DbContext dataContext)
         {
-            _dataContext = dataContext;
+            _dbContext = dataContext;
             _repositories = new Dictionary<string, dynamic>();
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        // NOTE: Leave out the finalizer altogether if this class doesn't 
-        // own unmanaged resources itself, but leave the other methods
-        // exactly as they are. 
-        ~UnitOfWork()
-        {
-            // Finalizer calls Dispose(false)
-            Dispose(false);
-        }
-
-        // The bulk of the clean-up code is implemented in Dispose(bool)
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_disposed)
-            {
-                if (disposing)
-                {
-                    // free other managed objects that implement
-                    // IDisposable only
-
-                    try
-                    {
-                        if (_objectContext != null)
-                        {
-                            if (_objectContext.Connection.State == ConnectionState.Open)
-                                _objectContext.Connection.Close();
-
-                            _objectContext.Dispose();
-                            _objectContext = null;
-                        }
-                        if (_dataContext != null)
-                        {
-                            _dataContext.Dispose();
-                            _dataContext = null;
-                        }
-                    }
-                    catch (ObjectDisposedException)
-                    {
-                        // do nothing, the objectContext has already been disposed
-                    }
-                    _repositories = null;
-                }
-
-                _disposed = true;
-            }            
         }
 
         public int SaveChanges()
         {
-            return _dataContext.SaveChanges();
+            return _dbContext.SaveChanges();
         }
 
         public IRepository<TEntity> Repository<TEntity>() where TEntity : class, ITrackable
@@ -97,12 +42,12 @@ namespace Repository.Pattern.Ef6
 
         public Task<int> SaveChangesAsync()
         {
-            return _dataContext.SaveChangesAsync();
+            return _dbContext.SaveChangesAsync();
         }
 
         public Task<int> SaveChangesAsync(CancellationToken cancellationToken)
         {
-            return _dataContext.SaveChangesAsync(cancellationToken);
+            return _dbContext.SaveChangesAsync(cancellationToken);
         }
 
         public IRepositoryAsync<TEntity> RepositoryAsync<TEntity>() where TEntity : class, ITrackable
@@ -126,20 +71,19 @@ namespace Repository.Pattern.Ef6
 
             var repositoryType = typeof(Repository<>);
 
-            _repositories.Add(type, Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)), _dataContext, this));
+            _repositories.Add(type, Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)), _dbContext, this));
 
             return _repositories[type];
         }
 
         public void BeginTransaction(IsolationLevel isolationLevel = IsolationLevel.Unspecified)
         {
-            _objectContext = ((IObjectContextAdapter) _dataContext).ObjectContext;
-            if (_objectContext.Connection.State != ConnectionState.Open)
+            var objectContext = ((IObjectContextAdapter) _dbContext).ObjectContext;
+            if (objectContext.Connection.State != ConnectionState.Open)
             {
-                _objectContext.Connection.Open();
+                objectContext.Connection.Open();
             }
-
-            _transaction = _objectContext.Connection.BeginTransaction(isolationLevel);
+            _transaction = objectContext.Connection.BeginTransaction(isolationLevel);
         }
 
         public bool Commit()
@@ -151,7 +95,6 @@ namespace Repository.Pattern.Ef6
         public void Rollback()
         {
             _transaction.Rollback();
-            _dataContext.SyncObjectsStatePostCommit();
         }
     }
 }

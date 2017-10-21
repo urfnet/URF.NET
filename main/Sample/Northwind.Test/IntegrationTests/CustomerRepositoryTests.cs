@@ -29,9 +29,9 @@ namespace Northwind.Test.IntegrationTests
         public void CreateCustomerTest()
         {
             // Create new customer
-            using (IDataContextAsync context = new NorthwindContext())
-            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+            using (var context = new NorthwindContext())
             {
+                IUnitOfWorkAsync unitOfWork = new UnitOfWork(context);
                 IRepositoryAsync<Customer> customerRepository = new Repository<Customer>(context, unitOfWork);
 
                 var customer = new Customer
@@ -44,7 +44,7 @@ namespace Northwind.Test.IntegrationTests
                     City = "Dallas",
                     PostalCode = "75042",
                     Country = "USA",
-                    Phone ="(222) 222-2222",
+                    Phone = "(222) 222-2222",
                     Fax = "(333) 333-3333",
                     TrackingState = TrackingState.Added,
                 };
@@ -54,12 +54,12 @@ namespace Northwind.Test.IntegrationTests
             }
 
             //  Query for newly created customer by ID from a new context, to ensure it's not pulling from cache
-            using (IDataContextAsync context = new NorthwindContext())
-            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+            using (var context = new NorthwindContext())
             {
+                IUnitOfWorkAsync unitOfWork = new UnitOfWork(context);
                 IRepositoryAsync<Customer> customerRepository = new Repository<Customer>(context, unitOfWork);
                 var customer = customerRepository.Find("LLE37");
-                Assert.AreEqual(customer.CustomerID, "LLE37"); 
+                Assert.AreEqual(customer.CustomerID, "LLE37");
             }
         }
 
@@ -67,9 +67,9 @@ namespace Northwind.Test.IntegrationTests
         public void CreateAndUpdateAndDeleteCustomerGraphTest()
         {
             // Create new customer
-            using (IDataContextAsync context = new NorthwindContext())
-            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+            using (var context = new NorthwindContext())
             {
+                IUnitOfWorkAsync unitOfWork = new UnitOfWork(context);
                 IRepositoryAsync<Customer> customerRepository = new Repository<Customer>(context, unitOfWork);
 
                 var customerForInsertGraphTest = new Customer
@@ -93,14 +93,14 @@ namespace Northwind.Test.IntegrationTests
                             EmployeeID = 1,
                             OrderDate = DateTime.Now,
                             TrackingState = TrackingState.Added,
-                        }, 
+                        },
                         new Order()
                         {
                             CustomerID = "LLE39",
                             EmployeeID = 1,
                             OrderDate = DateTime.Now,
                             TrackingState = TrackingState.Added
-                        }, 
+                        },
                     }
                 };
 
@@ -111,12 +111,12 @@ namespace Northwind.Test.IntegrationTests
             Customer customerForUpdateDeleteGraphTest = null;
 
             //  Query for newly created customer by ID from a new context, to ensure it's not pulling from cache
-            using (IDataContextAsync context = new NorthwindContext())
-            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+            using (var context = new NorthwindContext())
             {
+                IUnitOfWorkAsync unitOfWork = new UnitOfWork(context);
                 IRepositoryAsync<Customer> customerRepository = new Repository<Customer>(context, unitOfWork);
-                
-                 customerForUpdateDeleteGraphTest = customerRepository
+
+                customerForUpdateDeleteGraphTest = customerRepository
                     .Query(x => x.CustomerID == "LLE38")
                     .Include(x => x.Orders)
                     .Select()
@@ -147,9 +147,9 @@ namespace Northwind.Test.IntegrationTests
             }
 
             //  Query for newly created customer by ID from a new context, to ensure it's not pulling from cache
-            using (IDataContextAsync context = new NorthwindContext())
-            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+            using (var context = new NorthwindContext())
             {
+                IUnitOfWorkAsync unitOfWork = new UnitOfWork(context);
                 IRepositoryAsync<Customer> customerRepository = new Repository<Customer>(context, unitOfWork);
 
                 // Testing changes to graph while disconncted from it's orginal DataContext
@@ -179,9 +179,9 @@ namespace Northwind.Test.IntegrationTests
         [TestMethod]
         public void GetCustomerOrderTest()
         {
-            using (IDataContextAsync context = new NorthwindContext())
-            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+            using (var context = new NorthwindContext())
             {
+                IUnitOfWorkAsync unitOfWork = new UnitOfWork(context);
                 IRepositoryAsync<Customer> customerRepository = new Repository<Customer>(context, unitOfWork);
                 var customerOrders = customerRepository.GetCustomerOrder("USA");
                 var enumerable = customerOrders as CustomerOrder[] ?? customerOrders.ToArray();
@@ -193,9 +193,9 @@ namespace Northwind.Test.IntegrationTests
         [TestMethod]
         public void FindCustomerById_Test()
         {
-            using (IDataContextAsync context = new NorthwindContext())
-            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+            using (var context = new NorthwindContext())
             {
+                IUnitOfWorkAsync unitOfWork = new UnitOfWork(context);
                 IRepositoryAsync<Customer> customerRepository = new Repository<Customer>(context, unitOfWork);
                 IService<Customer> customerService = new CustomerService(customerRepository);
                 var customer = customerService.Find("ALFKI");
@@ -207,22 +207,22 @@ namespace Northwind.Test.IntegrationTests
         [TestMethod]
         public void CustomerOrderTotalByYear()
         {
-            using (IDataContextAsync context = new NorthwindContext())
-            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+            using (var context = new NorthwindContext())
             {
+                IUnitOfWorkAsync unitOfWork = new UnitOfWork(context);
                 IRepositoryAsync<Customer> customerRepository = new Repository<Customer>(context, unitOfWork);
                 ICustomerService customerService = new CustomerService(customerRepository);
                 var customerOrderTotalByYear = customerService.CustomerOrderTotalByYear("ALFKI", 1998);
-                Assert.AreEqual(customerOrderTotalByYear, (decimal)2302.2000);
+                Assert.AreEqual(customerOrderTotalByYear, (decimal) 2302.2000);
             }
         }
 
         [TestMethod]
         public void GetCustomersAsync()
         {
-            using (IDataContextAsync context = new NorthwindContext())
-            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+            using (var context = new NorthwindContext())
             {
+                IUnitOfWorkAsync unitOfWork = new UnitOfWork(context);
                 IRepositoryAsync<Customer> customerRepository = new Repository<Customer>(context, unitOfWork);
                 ICustomerService customerService = new CustomerService(customerRepository);
 

@@ -27,9 +27,9 @@ namespace Northwind.Test.IntegrationTests
         [TestMethod]
         public void CreateOrderObjectGraphTest()
         {
-            using (IDataContextAsync context = new NorthwindContext())
-            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+            using (var context = new NorthwindContext())
             {
+                IUnitOfWorkAsync unitOfWork = new UnitOfWork(context);
                 IRepositoryAsync<Order> orderRepository = new Repository<Order>(context, unitOfWork);
 
                 var orderTest = new Order

@@ -18,18 +18,28 @@ namespace Northwind.Test.IntegrationTests
         [TestMethod]
         public void UnitOfWork_Transaction_Test()
         {
-            using(IDataContextAsync context = new NorthwindContext())
-            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+            using(var context = new NorthwindContext())
             {
+                IUnitOfWorkAsync unitOfWork = new UnitOfWork(context);
                 IRepositoryAsync<Customer> customerRepository = new Repository<Customer>(context, unitOfWork);
                 IService<Customer> customerService = new CustomerService(customerRepository);
 
                 try
                 {
                     unitOfWork.BeginTransaction();
-                
-                    customerService.Insert(new Customer { CustomerID = "YODA", CompanyName = "SkyRanch", TrackingState = TrackingState.Added});
-                    customerService.Insert(new Customer { CustomerID = "JEDI", CompanyName = "SkyRanch", TrackingState = TrackingState.Added});
+
+                    customerService.Insert(new Customer
+                    {
+                        CustomerID = "YODA",
+                        CompanyName = "SkyRanch",
+                        TrackingState = TrackingState.Added
+                    });
+                    customerService.Insert(new Customer
+                    {
+                        CustomerID = "JEDI",
+                        CompanyName = "SkyRanch",
+                        TrackingState = TrackingState.Added
+                    });
 
                     var customer = customerService.Find("YODA");
                     Assert.AreSame(customer.CustomerID, "YODA");
@@ -42,7 +52,12 @@ namespace Northwind.Test.IntegrationTests
                     //Assert.AreSame(saveChangesAsync, 2);
 
                     // Will cause an exception, cannot insert customer with the same CustomerId (primary key constraint)
-                    customerService.Insert(new Customer { CustomerID = "JEDI", CompanyName = "SkyRanch", TrackingState = TrackingState.Added });
+                    customerService.Insert(new Customer
+                    {
+                        CustomerID = "JEDI",
+                        CompanyName = "SkyRanch",
+                        TrackingState = TrackingState.Added
+                    });
                     //save 
                     unitOfWork.SaveChanges();
 
@@ -58,7 +73,7 @@ namespace Northwind.Test.IntegrationTests
         [TestMethod]
         public void UnitOfWork_Dispose_Test()
         {
-            IDataContextAsync context = new NorthwindContext();
+            var context = new NorthwindContext();
             IUnitOfWorkAsync unitOfWork = new UnitOfWork(context);
 
             // opening connection
@@ -66,23 +81,23 @@ namespace Northwind.Test.IntegrationTests
             unitOfWork.Commit();
 
             // calling dispose 1st time
-            unitOfWork.Dispose();
+            //unitOfWork.Dispose();
             var isDisposed = (bool) GetInstanceField(typeof (UnitOfWork), unitOfWork, "_disposed");
             Assert.IsTrue(isDisposed);
 
             // calling dispose 2nd time, should not throw any excpetions
-            unitOfWork.Dispose();
+            //unitOfWork.Dispose();
             context.Dispose();
 
             // calling dispose 3rd time, should not throw any excpetions
             context.Dispose();
-            unitOfWork.Dispose();
+            //unitOfWork.Dispose();
         }
 
         [TestMethod]
         public void IDataContext_Dispose_Test()
         {
-            IDataContextAsync context = new NorthwindContext();
+            var context = new NorthwindContext();
             IUnitOfWorkAsync unitOfWork = new UnitOfWork(context);
 
             // opening connection
@@ -93,11 +108,11 @@ namespace Northwind.Test.IntegrationTests
             context.Dispose();
 
             // calling dispose 2nd time, should not throw any excpetions
-            unitOfWork.Dispose();
+            //unitOfWork.Dispose();
             context.Dispose();
 
             // calling dispose 3rd time, should not throw any excpetions
-            unitOfWork.Dispose();
+            //unitOfWork.Dispose();
             context.Dispose();
         }
 

@@ -46,10 +46,10 @@ namespace Northwind.Test.IntegrationTests
                     });
                 }
 
-                using (IDataContextAsync context = new NorthwindContext())
-                using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+                using (var context = new NorthwindContext())
                 {
-                    var northwindContext = (NorthwindContext)context;
+                    IUnitOfWorkAsync unitOfWork = new UnitOfWork(context);
+                    var northwindContext = (NorthwindContext) context;
                     Assert.IsFalse(northwindContext.ChangeTracker.Entries().Any());
 
                     IRepositoryAsync<Product> productRepository =

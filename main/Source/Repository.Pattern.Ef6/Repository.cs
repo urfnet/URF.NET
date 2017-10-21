@@ -6,7 +6,6 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using LinqKit;
-using Repository.Pattern.DataContext;
 using Repository.Pattern.Repositories;
 using Repository.Pattern.UnitOfWork;
 using TrackableEntities;
@@ -15,26 +14,18 @@ namespace Repository.Pattern.Ef6
 {
     public class Repository<TEntity> : IRepositoryAsync<TEntity> where TEntity : class, ITrackable
     {
-        private readonly IDataContextAsync _context;
+        private readonly DbContext _context;
         private readonly DbSet<TEntity> _dbSet;
         private readonly IUnitOfWorkAsync _unitOfWork;
 
-        public Repository(IDataContextAsync context, IUnitOfWorkAsync unitOfWork)
+        public Repository(DbContext context, IUnitOfWorkAsync unitOfWork)
         {
             _context = context;
             _unitOfWork = unitOfWork;
 
-            // Temporarily for FakeDbContext, Unit Test and Fakes
             if (context is DbContext dbContext)
             {
                 _dbSet = dbContext.Set<TEntity>();
-            }
-            else
-            {
-                if (context is FakeDbContext fakeContext)
-                {
-                    _dbSet = fakeContext.Set<TEntity>();
-                }
             }
         }
 
@@ -50,9 +41,7 @@ namespace Repository.Pattern.Ef6
 
         public virtual void Insert(TEntity entity)
         {
-            entity.TrackingState = TrackingState.Added;;
-            _dbSet.Attach(entity);
-            _context.SyncObjectState(entity);
+            entity.TrackingState = TrackingState.Added;
         }
 
         public virtual void InsertRange(IEnumerable<TEntity> entities)
@@ -65,14 +54,15 @@ namespace Repository.Pattern.Ef6
 
         public virtual void InsertGraphRange(IEnumerable<TEntity> entities)
         {
-            _dbSet.AddRange(entities);
+            foreach (var entity in entities)
+            {
+                Insert(entity);
+            }
         }
 
         public virtual void Update(TEntity entity)
         {
             entity.TrackingState = TrackingState.Modified;
-            _dbSet.Attach(entity);
-            _context.SyncObjectState(entity);
         }
 
         public virtual void Delete(object id)
@@ -84,8 +74,6 @@ namespace Repository.Pattern.Ef6
         public virtual void Delete(TEntity entity)
         {
             entity.TrackingState = TrackingState.Deleted;
-            _dbSet.Attach(entity);
-            _context.SyncObjectState(entity);
         }
 
         public IQueryFluent<TEntity> Query()
@@ -138,8 +126,6 @@ namespace Repository.Pattern.Ef6
             }
 
             entity.TrackingState = TrackingState.Deleted;
-            _dbSet.Attach(entity);
-
             return true;
         }
 
@@ -181,16 +167,14 @@ namespace Repository.Pattern.Ef6
             return await Select(filter, orderBy, includes, page, pageSize).ToListAsync();
         }
 
-        // Insert or Updating an object graph
+        [Obsolete("InsertOrUpdateGraph has been deprecated. Instead set TrackingState on enttites in a graph.")]
         public virtual void UpsertGraph(TEntity entity)
         {
-            _context.SyncObjectState(entity);
         }
 
-        [Obsolete("InsertOrUpdateGraph has been deprecated. Use UpsertGraph(TEntity entity) instead.")]
+        [Obsolete("InsertOrUpdateGraph has been deprecated. Instead set TrackingState on enttites in a graph.")]
         public virtual void InsertOrUpdateGraph(TEntity entity)
         {
-            _context.SyncObjectState(entity);
         }
     }
 }

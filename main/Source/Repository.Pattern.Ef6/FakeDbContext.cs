@@ -17,7 +17,7 @@ namespace Repository.Pattern.Ef6
             where TFakeDbSet : FakeDbSet<TEntity>, IDbSet<TEntity>, new();
     }
 
-    public abstract class FakeDbContext : IFakeDbContext
+    public abstract class FakeDbContext : DbContext, IFakeDbContext
     {
         private readonly Dictionary<Type, object> _fakeDbSets;
 

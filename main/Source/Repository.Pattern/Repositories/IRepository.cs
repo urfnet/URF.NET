@@ -12,8 +12,9 @@ namespace Repository.Pattern.Repositories
         IQueryable<TEntity> SelectQuery(string query, params object[] parameters);
         void Insert(TEntity entity);
         void InsertRange(IEnumerable<TEntity> entities);
+        [Obsolete("UpsertGraph has been deprecated. Instead set TrackingState on enttites in a graph.")]
         void UpsertGraph(TEntity entity);
-        [Obsolete("InsertOrUpdateGraph has been deprecated. Use UpsertGraph(TEntity entity) instead.")]
+        [Obsolete("InsertOrUpdateGraph has been deprecated. Instead set TrackingState on enttites in a graph.")]
         void InsertOrUpdateGraph(TEntity entity);
         void InsertGraphRange(IEnumerable<TEntity> entities);
         void Update(TEntity entity);
