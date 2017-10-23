@@ -54,7 +54,7 @@ namespace Northwind.Test.IntegrationTests
                     IRepositoryAsync<Product> productRepository =
                         new Repository<Product>(context, unitOfWork);
 
-                    productRepository.InsertGraphRange(products);
+                    productRepository.InsertRange(products);
                     products.Clear();
                     unitOfWork.SaveChanges();
 

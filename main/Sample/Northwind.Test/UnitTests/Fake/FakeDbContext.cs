@@ -25,9 +25,9 @@ namespace Northwind.Test.UnitTests.Fake
             // there is no actual DbContext to sync with, please look at the Integration Tests for test that will run against an actual database.
         }
 
-        public Task<int> SaveChangesAsync(CancellationToken cancellationToken) => new Task<int>(() => default(int));
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken) => new Task<int>(() => default(int));
 
-        public Task<int> SaveChangesAsync() => new Task<int>(() => default(int));
+        public override Task<int> SaveChangesAsync() => new Task<int>(() => default(int));
 
         public override DbSet<TEntity> Set<TEntity>() => (DbSet<TEntity>)_fakeDbSets[typeof(TEntity)];
 

@@ -1,4 +1,5 @@
 using System;
+using System.Data.Entity;
 using Microsoft.Practices.Unity;
 using Northwind.Entities.Models;
 using Northwind.Service;
@@ -41,7 +42,9 @@ namespace Northwind.Web
             // container.LoadConfiguration();
 
             container
-                .RegisterType<IDataContextAsync, NorthwindContext>(new PerRequestLifetimeManager())
+                // Register DbContext instead of IDataDataContext, which is now obsolete.
+                //.RegisterType<IDataContextAsync, NorthwindContext>(new PerRequestLifetimeManager())
+                .RegisterType<DbContext, NorthwindContext>(new PerRequestLifetimeManager())
                 .RegisterType<IUnitOfWorkAsync, UnitOfWork>(new PerRequestLifetimeManager())
                 .RegisterType<IRepositoryAsync<Customer>, Repository<Customer>>()
                 .RegisterType<IRepositoryAsync<Product>, Repository<Product>>()
