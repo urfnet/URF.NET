@@ -17,7 +17,8 @@ namespace Northwind.Entities.Models
         public NorthwindContext()
             : base("Name=NorthwindContext")
         {
-        }        
+            Configuration.ProxyCreationEnabled = false;
+        }
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<CustomerDemographic> CustomerDemographics { get; set; }
