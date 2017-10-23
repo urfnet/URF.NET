@@ -64,6 +64,12 @@ namespace Repository.Pattern.Ef6
             Context.ApplyChanges(entity);
         }
 
+        public void Delete(params object[] keyValues)
+        {
+            var entity = Set.Find(keyValues);
+            Delete(entity);
+        }
+
         public virtual void Delete(TEntity entity)
         {
             entity.TrackingState = TrackingState.Deleted;
