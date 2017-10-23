@@ -168,15 +168,6 @@ namespace Northwind.Web.Api
             return _customerService.Queryable().Where(m => m.CustomerID == key).SelectMany(m => m.Orders);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _unitOfWorkAsync.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         private bool CustomerExists(string key)
         {
             return _customerService.Query(e => e.CustomerID == key).Select().Any();

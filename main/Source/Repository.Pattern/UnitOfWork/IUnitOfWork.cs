@@ -5,7 +5,7 @@ using TrackableEntities;
 
 namespace Repository.Pattern.UnitOfWork
 {
-    public interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork
     {
         int SaveChanges();
         IRepository<TEntity> Repository<TEntity>() where TEntity : class, ITrackable;

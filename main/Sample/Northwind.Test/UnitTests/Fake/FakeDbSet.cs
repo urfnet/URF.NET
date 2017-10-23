@@ -5,9 +5,10 @@ using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using Repository.Pattern.Ef6;
 using TrackableEntities;
 
-namespace Repository.Pattern.Ef6
+namespace Northwind.Test.UnitTests.Fake
 {
     public abstract class FakeDbSet<TEntity> : DbSet<TEntity>, IDbSet<TEntity> where TEntity : Entity, new()
     {
@@ -20,8 +21,9 @@ namespace Repository.Pattern.Ef6
             _query = _items.AsQueryable();
         }
 
-        IEnumerator IEnumerable.GetEnumerator() { return _items.GetEnumerator(); }
-        public IEnumerator<TEntity> GetEnumerator() { return _items.GetEnumerator(); }
+        IEnumerator IEnumerable.GetEnumerator() => _items.GetEnumerator();
+
+        public IEnumerator<TEntity> GetEnumerator() => _items.GetEnumerator();
 
         public Expression Expression => _query.Expression;
 
@@ -65,9 +67,9 @@ namespace Repository.Pattern.Ef6
             return entity;
         }
 
-        public override TEntity Create() { return new TEntity(); }
+        public override TEntity Create() => new TEntity();
 
-        public override TDerivedEntity Create<TDerivedEntity>() { return Activator.CreateInstance<TDerivedEntity>(); }
+        public override TDerivedEntity Create<TDerivedEntity>() => Activator.CreateInstance<TDerivedEntity>();
 
         public override ObservableCollection<TEntity> Local => _items;
     }

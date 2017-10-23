@@ -9,6 +9,7 @@ using TrackableEntities.EF6;
 
 namespace Repository.Pattern.Ef6
 {
+    [Obsolete("DataContext has been deprecated. Instead use UnitOfWork which uses DbContext.")]
     public class DataContext : DbContext, IDataContextAsync
     {
         private readonly Guid _instanceId;

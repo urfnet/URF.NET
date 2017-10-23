@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Data.Entity.Core.Objects;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Practices.ServiceLocation;
-using Repository.Pattern.DataContext;
 using Repository.Pattern.Repositories;
 using Repository.Pattern.UnitOfWork;
 using TrackableEntities;
@@ -16,76 +15,17 @@ namespace Repository.Pattern.Ef6
 {
     public class UnitOfWork : IUnitOfWorkAsync
     {
-        private IDataContextAsync _dataContext;
-        private bool _disposed;
-        private ObjectContext _objectContext;
-        private DbTransaction _transaction;
-        private Dictionary<string, dynamic> _repositories;
+        private readonly DbContext _context;
+        protected DbTransaction Transaction;
+        protected Dictionary<string, dynamic> Repositories;
 
-        public UnitOfWork(IDataContextAsync dataContext)
+        public UnitOfWork(DbContext context)
         {
-            _dataContext = dataContext;
-            _repositories = new Dictionary<string, dynamic>();
+            _context = context;
+            Repositories = new Dictionary<string, dynamic>();
         }
 
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        // NOTE: Leave out the finalizer altogether if this class doesn't 
-        // own unmanaged resources itself, but leave the other methods
-        // exactly as they are. 
-        ~UnitOfWork()
-        {
-            // Finalizer calls Dispose(false)
-            Dispose(false);
-        }
-
-        // The bulk of the clean-up code is implemented in Dispose(bool)
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_disposed)
-            {
-                if (disposing)
-                {
-                    // free other managed objects that implement
-                    // IDisposable only
-
-                    try
-                    {
-                        if (_objectContext != null)
-                        {
-                            if (_objectContext.Connection.State == ConnectionState.Open)
-                                _objectContext.Connection.Close();
-
-                            _objectContext.Dispose();
-                            _objectContext = null;
-                        }
-                        if (_dataContext != null)
-                        {
-                            _dataContext.Dispose();
-                            _dataContext = null;
-                        }
-                    }
-                    catch (ObjectDisposedException)
-                    {
-                        // do nothing, the objectContext has already been disposed
-                    }
-                    _repositories = null;
-                }
-
-                _disposed = true;
-            }            
-        }
-
-        public int SaveChanges()
-        {
-            return _dataContext.SaveChanges();
-        }
-
-        public IRepository<TEntity> Repository<TEntity>() where TEntity : class, ITrackable
+        public virtual IRepository<TEntity> Repository<TEntity>() where TEntity : class, ITrackable
         {
             if (ServiceLocator.IsLocationProviderSet)
             {
@@ -95,63 +35,63 @@ namespace Repository.Pattern.Ef6
             return RepositoryAsync<TEntity>();
         }
 
+        public virtual int SaveChanges() => _context.SaveChanges();
+
         public Task<int> SaveChangesAsync()
         {
-            return _dataContext.SaveChangesAsync();
+            return _context.SaveChangesAsync();
         }
 
-        public Task<int> SaveChangesAsync(CancellationToken cancellationToken)
+        public virtual Task<int> SaveChangesAsync(CancellationToken cancellationToken)
         {
-            return _dataContext.SaveChangesAsync(cancellationToken);
+            return _context.SaveChangesAsync(cancellationToken);
         }
 
-        public IRepositoryAsync<TEntity> RepositoryAsync<TEntity>() where TEntity : class, ITrackable
+        public virtual IRepositoryAsync<TEntity> RepositoryAsync<TEntity>() where TEntity : class, ITrackable
         {
             if (ServiceLocator.IsLocationProviderSet)
             {
                 return ServiceLocator.Current.GetInstance<IRepositoryAsync<TEntity>>();
             }
 
-            if (_repositories == null)
+            if (Repositories == null)
             {
-                _repositories = new Dictionary<string, dynamic>();
+                Repositories = new Dictionary<string, dynamic>();
             }
 
             var type = typeof(TEntity).Name;
 
-            if (_repositories.ContainsKey(type))
+            if (Repositories.ContainsKey(type))
             {
-                return (IRepositoryAsync<TEntity>)_repositories[type];
+                return (IRepositoryAsync<TEntity>)Repositories[type];
             }
 
             var repositoryType = typeof(Repository<>);
 
-            _repositories.Add(type, Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)), _dataContext, this));
+            Repositories.Add(type, Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)), _context, this));
 
-            return _repositories[type];
+            return Repositories[type];
         }
 
-        public void BeginTransaction(IsolationLevel isolationLevel = IsolationLevel.Unspecified)
+        public virtual void BeginTransaction(IsolationLevel isolationLevel = IsolationLevel.Unspecified)
         {
-            _objectContext = ((IObjectContextAdapter) _dataContext).ObjectContext;
-            if (_objectContext.Connection.State != ConnectionState.Open)
+            var objectContext = ((IObjectContextAdapter) _context).ObjectContext;
+            if (objectContext.Connection.State != ConnectionState.Open)
             {
-                _objectContext.Connection.Open();
+                objectContext.Connection.Open();
             }
-
-            _transaction = _objectContext.Connection.BeginTransaction(isolationLevel);
+            Transaction = objectContext.Connection.BeginTransaction(isolationLevel);
         }
 
-        public bool Commit()
+        public virtual bool Commit()
         {
-            _transaction.Commit();
+            Transaction.Commit();
             return true;
         }
 
-        public void Rollback()
+        public virtual void Rollback()
         {
-            _transaction.Rollback();
-            _dataContext.SyncObjectsStatePostCommit();
+            Transaction.Rollback();
         }
     }
 }
