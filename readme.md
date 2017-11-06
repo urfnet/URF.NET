@@ -245,6 +245,8 @@ public class CustomerService : Service<Customer>, ICustomerService
 
 #### URF Sample DI & IoC Configuration with Framework of your choice, exampled here using Microsoft Unity DI & IoC ####
 
+[UnityConfig.cs](https://github.com/lelong37/URF/blob/master/main/Sample/Northwind.Web/App_Start/UnityConfig.cs)
+
 ```csharp
 public class UnityConfig
 {
