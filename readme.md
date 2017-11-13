@@ -294,3 +294,18 @@ https://github.com/TrackableEntities/observable-entities-js
 - URF v5 RC1 ETA: 10/2017 - https://github.com/lelong37/URF/releases/tag/v5.0-alpha
 
 URF v5 major feature will include (self) Trackable Entities across physical boundaries without DbConext/DataConext, coming soon...! [Tony Sneed](https://twitter.com/tonysneed) from the [Trackable Entities Team](https://github.com/TrackableEntities/trackable-entities) will be leading this effort and collaboration..! Please tweet us [@tonysneed](https://twitter.com/tonysneed), [@lelong37](https://twitter.com/lelong37) for any questions or comments. Special thanks [@reddy6ue](https://github.com/reddy6ue) for helping out with migrating our docs from CodePlex.
+
+### URF Features & Benefits ###
+
+* **Repository Pattern** - 100% extensible ready
+* **Unit of Work Pattern** - 100% atomic & transaction ready
+* **Service Pattern** - pattern for implementing business, domain specific logic with 100% separation of concerns e.g. ICustomerService, IOrderService
+* Minimize footprint of your ORM and data access layer
+* **DI & IoC** 100% ready
+* REST, Web API & **OData** 100% ready
+* 100% testable & mockable
+* 100% support for Stored Procedures
+* Repository Pattern supports IEnumerable and/or IQueryable
+* [Trackable Entities](https://github.com/TrackableEntities) - When using URF, entities are 100% automatically self tracking, states are automatically trackable (New, Updated, Deleted, Unchanged), allowing entity or complex object graph states to be trackable across physical boundaries and application layers. Entity state can be tracked in Angular all the way to Web API.
+* Full (Northwind) [sample application](https://github.com/lelong37/URF/tree/master/main/Sample) (Angular, Web API, OData, Entity Framework, SQL)
+* 100% [unit tests & integration tests](https://github.com/lelong37/URF/blob/master/main/Sample/Northwind.Test/IntegrationTests/CustomerRepositoryTests.cs) - Integration tests, will drop and re-create NorthwindTest database everytime integration tests are ran
