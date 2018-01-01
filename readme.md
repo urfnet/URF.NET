@@ -291,7 +291,7 @@ public class UnityConfig
   * URF .NET Core will be a completey seperate rewrite and entirely new product, will have deep throught in it's new arcitecture and design for microservices world e.g. Azure Functions, AWS Lambdas, etc...
   * URF Sample will be updated to Angular v5 and Kendo UI for Angular (Kendo UI for Angular is also a complete new product line, which is now built from the ground up with Angular vs. Kendo UI for AngularJS which was jQuery widgets wrapped with AngularJS directives)
   * URF Sample app will also demonstrate lastest versionf of OData running in ASP.NET Core Web API
-  * Trackable Entites has already been included in current version of .NET URF, and will also be supported in .NET Core version. This is a very powerful feature, which allows Entites to self track their state (e.g. Added, Modified, Delete, None) without DbContext. This is extremely helful for tracking object graphs and maintaning all entity states in a complex  object graph accross physical boundaries, again while doing so with zero dependency on DbContext and more importantly doing so with zero dependency on Entity Framework or any other data provider.
+  * [Trackable Entities Team](https://github.com/TrackableEntities/trackable-entities) has already been included in current version of .NET URF, and will also be supported in .NET Core version. This is a very powerful feature, which allows Entites to self track their state (e.g. Added, Modified, Delete, None) without DbContext. This is extremely helful for tracking object graphs and maintaning all entity states in a complex  object graph accross physical boundaries, again while doing so with zero dependency on DbContext and more importantly doing so with zero dependency on Entity Framework or any other data provider. We've already released [Trackable Entities for TypeScript/Javascript as an NPM package](https://www.npmjs.com/package/trackable-entities), allowing teams to take advantage of self Tracking Entities not only across physical boundaries but across different runtimes as well. Most common usecase for this is SPA (Angular, ReactJS, Aurelia, etc.) while using Trackable Entities for TypeScript /Javascript and passing object graphs with their states to Web APIs using URF.
 
 URF v5 will have fully Trackable Entites with Trackable Entites and Observable Entities both for server-side and client-side e.g Angular, React, Vue.js, etc.
 
@@ -303,8 +303,6 @@ https://github.com/TrackableEntities/observable-entities-js
 - URF v5 Alpha ETA: 9/2017 - https://github.com/lelong37/URF/releases/tag/v5.0-alpha
 - URF v5 Beta ETA: 10/2017 - https://github.com/lelong37/URF/releases/tag/v5.0-alpha
 - URF v5 RC1 ETA: 10/2017 - https://github.com/lelong37/URF/releases/tag/v5.0-alpha
-
-URF v5 major feature will include (self) Trackable Entities across physical boundaries without DbConext/DataConext, coming soon...! [Tony Sneed](https://twitter.com/tonysneed) from the [Trackable Entities Team](https://github.com/TrackableEntities/trackable-entities) will be leading this effort and collaboration..! Please tweet us [@tonysneed](https://twitter.com/tonysneed), [@lelong37](https://twitter.com/lelong37) for any questions or comments. Special thanks [@reddy6ue](https://github.com/reddy6ue) for helping out with migrating our docs from CodePlex.
 
 ### URF Features & Benefits ###
 
