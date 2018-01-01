@@ -280,7 +280,16 @@ public class UnityConfig
 
 ```
 
-### Roadmap ###
+### Roadmap // URF .NET Core (alpha-release) ###
+
+  Examples of improving extensiblity from a develope experience
+  * Easily implement customizations e.g. adding audit trKenailes with a abstraction  ()such as IAuditable
+  * Quickly get up and running with URF under a minute, we've recently just started publishing [URF to NuGet](https://www.nuget.org/pwackages?q=urf), we're already approaching 1000 downloads. Shipping URF as NuGet packages is definitely something we did not realize as an added value. We were mistaken that most teams would like to clone/fork and include URF projects directly in their solution for infinite customizations possibilities however this was actually not the case. In reality, most teams use URF as is, right out the box, with zero customizations.
+  * Although we'll be shipping URF as NuGet packages, new .NET Core version we'll have a lazer focus on modularity. Meaning we will several URF pacakges to further open opportunities such as creating other providers for URF other than Entity Framework Core e.g. NHibernate, MongoDB, DocumentDb, Cosmos, etc...
+  * Tooling, tooling, tooling. The new URF .NET Core version architeture and design will set the stage for tooling such as code generation with templating with .NET Handlbars and/or Razor. We are considering to have full parity across different runtimes .NET Core is able to run in e.g. Mac, Linux, Windows, etc. We will performing rigurous due-dilligence to ensure this (XPLAT).
+  * URF .NET Core will be a completey seperate rewrite and entirely new product, will have deep throught in it's new arcitecture and design for microservices world e.g. Azure Functions, AWS Lambdas, etc...
+  * URF Sample will be updated to Angular v5 and Kendo UI for Angular (Kendo UI for Angular is also a complete new product line, which is now built from the ground up with Angular vs. Kendo UI for AngularJS which was jQuery widgets wrapped with AngularJS directives)
+  * URF Sample app will also demonstrate lastest versionf of OData running in ASP.NET Core Web API
 
 URF v5 will have fully Trackable Entites with Trackable Entites and Observable Entities both for server-side and client-side e.g Angular, React, Vue.js, etc.
 
