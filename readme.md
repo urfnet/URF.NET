@@ -282,6 +282,7 @@ public class UnityConfig
 
 ### Roadmap: URF .NET Core (alpha-release) ETA: February 2018 ###
 
+  * Intial URF .NET Core release will ship with default provider Entity Framework Core. 
   * First and foremost, learning from current .NET URF through comments, suggestions, real world feedback from enterprise level teams, URF team's actual experiences working with other teams/projects as a guidance practice to improve while implementing new URF .NET Core version. This list is quite the list, far to much to list here, however we'll include and generate a list specific to each of our releases moving forward in URF .NET Core versions.
   * Easily implement customizations e.g. adding audit trails with adding a simple abstraction such as IAuditable to our Entity.cs base class for your Entities.
   * Quickly get up and running with URF under a minute, we've recently just started publishing [URF to NuGet](https://www.nuget.org/pwackages?q=urf), we're already approaching 1000 downloads. Shipping URF as NuGet packages is definitely something we did not realize as an added value. We were mistaken that most teams would like to clone/fork and include URF projects directly in their solution for infinite customizations possibilities however this was actually not the case. In reality, most teams use URF as is, right out the box, with zero customizations.
