@@ -291,6 +291,7 @@ public class UnityConfig
   * URF .NET Core will be a completey seperate rewrite and entirely new product, will have deep throught in it's new arcitecture and design for microservices world e.g. Azure Functions, AWS Lambdas, etc...
   * URF Sample will be updated to Angular v5 and Kendo UI for Angular (Kendo UI for Angular is also a complete new product line, which is now built from the ground up with Angular vs. Kendo UI for AngularJS which was jQuery widgets wrapped with AngularJS directives)
   * URF Sample app will also demonstrate lastest versionf of OData running in ASP.NET Core Web API
+  * Trackable Entites has already been included in current version of .NET URF, and will also be supported in .NET Core version. This is a very powerful feature, which allows Entites to self track their state (e.g. Added, Modified, Delete, None) without DbContext. This is extremely helful for tracking object graphs and maintaning all entity states in a complex  object graph accross physical boundaries, again while doing so with zero dependency on DbContext and more importantly doing so with zero dependency on Entity Framework or any other data provider.
 
 URF v5 will have fully Trackable Entites with Trackable Entites and Observable Entities both for server-side and client-side e.g Angular, React, Vue.js, etc.
 
