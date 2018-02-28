@@ -30,7 +30,7 @@ namespace Northwind.Web
         /// </summary>
         public static IUnityContainer GetConfiguredContainer()
         {
-            return container.Value;
+            return container.Value; 
         }
         #endregion
 
