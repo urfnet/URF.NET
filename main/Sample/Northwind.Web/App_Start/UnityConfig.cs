@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using CommonServiceLocator;
 using Microsoft.Practices.Unity;
 using Northwind.Entities.Models;
 using Northwind.Service;
@@ -52,6 +54,8 @@ namespace Northwind.Web
                 .RegisterType<ICustomerService, CustomerService>()
                 .RegisterType<INorthwindStoredProcedures, NorthwindContext>(new PerRequestLifetimeManager())
                 .RegisterType<IStoredProcedureService, StoredProcedureService>();
+
+            ServiceLocator.SetLocatorProvider(() => new UnityServiceLocatorAdapter(container));
         }
     }
 }

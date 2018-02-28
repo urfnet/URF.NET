@@ -6,7 +6,7 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Practices.ServiceLocation;
+using CommonServiceLocator;
 using Repository.Pattern.Repositories;
 using Repository.Pattern.UnitOfWork;
 using TrackableEntities;
